@@ -4,6 +4,9 @@ import { Input, styled } from "@mui/joy";
 import Link from '@mui/joy/Link';
 import MenuButton from '@mui/joy/MenuButton';
 import Menu from '@mui/joy/Menu';
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { Avatar } from "@mui/joy";
 
 
 
@@ -12,14 +15,17 @@ export const NavBarWrapper = styled('div')(({ theme }) => ({
     padding: '0.75rem 2.5rem',
     display : 'flex',
     backgroundColor: theme.palette.primary[100],
-    color: theme.palette.primary[50]
+    color: theme.palette.primary[50],
+    gap: '3.75rem',
+    justifyContent: 'space-between'
 }));
 
 export const ButtonContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: '3.75rem'
+    gap: '3.75rem',
+    flexShrink: 0,
 }));
 
 export const Navtitle = styled('span')(({ theme }) => ({
@@ -42,28 +48,43 @@ export const MenuButtonStyled = styled(MenuButton)(({ theme, isActive }) => ({
     fontSize: theme.vars.fontSize.md,
     fontWeight: theme.vars.fontSize.md,
     ":hover": {
-        background : 'transparent'
+        background : 'transparent',
+        color: theme.palette.primary[50],
     }
 }));
 
 
 export const InputBox = styled(Input)(({ theme }) => ({
     fontSize: theme.vars.fontSize.md,
-    marginRight: '7.81rem',
     width: '37.5rem',
-    margin: 'auto'
+    border: 'none'
 }));
 
 
 export const ActionIconsWrapper = styled('div')(({theme})=> ({
     display: 'flex',
     gap: '2rem',
-    alignItems: 'center'
+    alignItems: 'center',
 }))
 
 
 export const MenuWraper = styled(Menu)(({ theme }) => ({
     padding: '0.62rem 0'
+}));
+
+export const NotificationIcon = styled(NotificationsNoneOutlinedIcon)(({ theme }) => ({
+    width: '1.5rem',
+    height: '1.5rem'
+}));
+
+export const SettingsIcon = styled(SettingsOutlinedIcon)(({ theme }) => ({
+    width: '1.5rem',
+    height: '1.5rem'
+}));
+
+export const UserProfile = styled(Avatar)(({ theme }) => ({
+    width: '2.5rem',
+    height: '2.5rem'
 }));
 
 
