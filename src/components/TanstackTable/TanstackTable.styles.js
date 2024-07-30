@@ -89,16 +89,6 @@ export const StyledTableBody = styled("tbody")(() => ({
 
 export const StyledTableCell = styled("td")(() => ({
   textAlign: "center",
-  // '&.MuiTableCell-body': {
-  //   paddingTop : 0,
-  //   paddingBottom: 0,
-  //   overflow: 'hidden',
-  //   [theme.breakpoints.down('md')]: {
-  //     paddingTop : '1rem',
-  //     paddingBottom: '1rem',
-  //     overflow: 'hidden',
-  //   },
-  // }
 }));
 
 export const StyledTableRow = styled("tr")(() => ({
@@ -276,4 +266,17 @@ export const StyledBulkSelect = styled('div')(() => ({
 export const StyledCheckBox = styled(Checkbox)(()=> ({
   width: '1.5rem',
   height: '1.5rem'
+}))
+
+
+
+export const HeaderColumn = styled('span')(({isFirstColumn})=> ({
+  display: isFirstColumn ? 'flex' : 'block',
+  gap: '2rem'
+}))
+
+export const BodyElement = styled('span')(({isFirstDataCell})=> ({
+  display: isFirstDataCell ? 'flex' : 'block',
+  marginLeft: isFirstDataCell ? '1rem' : '0',
+  gap: '2rem'
 }))

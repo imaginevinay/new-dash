@@ -1,7 +1,8 @@
+import AllFavTabs from "../../components/AllFavTabs/AllFavTabs";
 import HomeTabs from "../../components/HomeTabs/HomeTabs";
 import * as Styled from "./Home.styles";
-import TanstackTable from "../../components/TanstackTable/TanstackTable";
-import { DATA_COLS, DATA } from "../../utils/dummyData";
+// import TanstackTable from "../../components/TanstackTable/TanstackTable";
+// import { DATA_COLS, DATA } from "../../utils/dummyData";
 
 const Home = () => {
   return (
@@ -23,9 +24,10 @@ const Home = () => {
       </Styled.Wrapper>
 
       {/* Home table */}
-      <Styled.TableContainer>
+      <AllFavTabs />
+      {/* <Styled.TableContainer>
         <TanstackTable tableData={DATA} columnData={DATA_COLS} />
-      </Styled.TableContainer>
+      </Styled.TableContainer> */}
     </>
   );
 };

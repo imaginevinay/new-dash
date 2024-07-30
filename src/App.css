@@ -1,7 +1,7 @@
 html, body, #root{
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  width: 100vw;
+  max-width: 1920px;
+  max-height: 1080px;
   margin: 0;
   padding: 0;
-  /* overflow-x: hidden; */
 }

@@ -40,8 +40,8 @@ export const Wrapper = styled('div')(()=> ({
     marginRight: '2.5rem',
 }));
 
-export const TableContainer = styled('div')(()=> ({
-    marginTop: '3rem',
-    marginLeft: '2.5rem',
-    marginRight: '2.5rem',
-}));
+// export const TableContainer = styled('div')(()=> ({
+//     marginTop: '3rem',
+//     marginLeft: '2.5rem',
+//     marginRight: '2.5rem',
+// }));

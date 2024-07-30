@@ -1,7 +1,14 @@
 // TanstackTable.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 // import Swal from "sweetalert2";
 // import { AppContext } from "utils/AppContext";
 // import { getColumnNames } from "../../utils/common";
@@ -25,7 +32,8 @@ import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel
 // import InfoIcon from "assets/icons/info.svg?react";
 // import ViewDetailsIcon from "assets/icons/frame.svg?react";
 // import UserProfileIcon from "assets/icons/userProfile.svg?react";
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import RowSelection from "./RowSelection";
 import {
   MainWrapper,
   // SecondaryWrapper,
@@ -39,6 +47,8 @@ import {
   StyledTableBody,
   StyledBulkSelect,
   StyledCheckBox,
+  HeaderColumn,
+  BodyElement,
   // StyledButton,
   // PaginationWrapper,
   // PaginationButton,
@@ -54,7 +64,7 @@ import {
   // ViewDetailsWrapper,
   // PageTextWrapper
 } from "./TanstackTable.styles";
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import MiniSearchBar from "./MiniSearchBar";
 
 const TanstackTableStyled = ({
@@ -74,6 +84,8 @@ const TanstackTableStyled = ({
   const [globalFiltering, setGlobalFiltering] = useState("");
   const [columnFiltering, setColumnFiltering] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [enableBullkSelection, setEnableBullkSelection] = useState(false);
   // const [openBaseModal, setOpenBaseModal] = useState(false);
   // const [openViewMoreModal, setOpenViewMoreModal] = useState(false);
   // const [openInfoModal, setOpenInfoModal] = useState(false);
@@ -148,6 +160,7 @@ const TanstackTableStyled = ({
       globalFilter: globalFiltering,
       columnFilters: columnFiltering,
       columnVisibility: columnVisibility,
+      rowSelection: rowSelection,
       pagination,
     },
     getCoreRowModel: getCoreRowModel(),
@@ -158,6 +171,8 @@ const TanstackTableStyled = ({
     getPaginationRowModel: getPaginationRowModel(),
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    enableRowSelection: true,
   });
 
   // let definiteColumns = table.getAllLeafColumns();
@@ -206,7 +221,7 @@ const TanstackTableStyled = ({
   //       </StyledButton>
   //     )}
   //     {showViewMore && (
-  //       <ViewDetailsIcon        
+  //       <ViewDetailsIcon
   //        onClick={() => openDetailsHandler(row)}
   //       />
   //     )}
@@ -261,69 +276,97 @@ const TanstackTableStyled = ({
       </SecondaryWrapper> */}
 
       <StyledTableContainer className="tableContainer">
-        <StyledTable aria-label="simple table" stickyHeader className="table" borderAxis='xBetween'>
+        <StyledTable
+          aria-label="simple table"
+          stickyHeader
+          className="table"
+          borderAxis="xBetween"
+        >
           {/* {!isMobileScreen && ( */}
-            <StyledTableHead className="TableHead">
-              <StyledTableRow className="StyledTableRow">
-                {table.getHeaderGroups().map((headerGroups) =>
-                  headerGroups.headers.map((header) => (
-                    <StyledTableCell
-                      key={header.id}
-                      className="StyledTableCell"
+          <StyledTableHead className="TableHead">
+            <StyledTableRow className="StyledTableRow">
+              {table.getHeaderGroups().map((headerGroups) =>
+                headerGroups.headers.map((header, idx) => (
+                  <StyledTableCell key={header.id} className="StyledTableCell">
+                    {/* {!isMobileScreen && ( */}
+                    <MiniSearchWrapper>
+                      <MiniSearchBar
+                        filterByColumn={header?.column?.columnDef?.accessorKey}
+                        columnFiltering={columnFiltering}
+                        setColumnFiltering={setColumnFiltering}
+                      />
+                    </MiniSearchWrapper>
+                    {/* )} */}
+                    <HeaderColumn
+                      onClick={header.column.getToggleSortingHandler()}
+                      isFirstColumn={idx === 0 && enableBullkSelection}
                     >
-                      {/* {!isMobileScreen && ( */}
-                        <MiniSearchWrapper>
-                          <MiniSearchBar
-                            filterByColumn={header?.column?.columnDef?.accessorKey}
-                            columnFiltering={columnFiltering}
-                            setColumnFiltering={setColumnFiltering}
-                          />
-                        </MiniSearchWrapper>
-                      {/* )} */}
-                      <span onClick={header.column.getToggleSortingHandler()}>
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {/* {header.column.getCanSort() && <SwapVertIcon />} */}
-                      </span>
-                    </StyledTableCell>
-                  ))
-                )}
-                <StyledTableCell className="StyledTableCell">
-                  <StyledBulkSelect><StyledCheckBox className="checkbox"/><span>Bulk Select</span></StyledBulkSelect>
-                  Action
-                </StyledTableCell>
-              </StyledTableRow>
-            </StyledTableHead>
+                      {idx === 0 && enableBullkSelection && (
+                        <RowSelection
+                          {...{
+                            checked: table.getIsAllRowsSelected(),
+                            indeterminate: table.getIsSomeRowsSelected(),
+                            onChange: table.getToggleAllRowsSelectedHandler(),
+                          }}
+                        />
+                      )}
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {/* {header.column.getCanSort() && <SwapVertIcon />} */}
+                    </HeaderColumn>
+                  </StyledTableCell>
+                ))
+              )}
+              <StyledTableCell className="StyledTableCell">
+                <StyledBulkSelect>
+                  <StyledCheckBox className="checkbox" onChange={() => setEnableBullkSelection(!enableBullkSelection)}/>
+                  <span>Bulk Select</span>
+                </StyledBulkSelect>
+                Action
+              </StyledTableCell>
+            </StyledTableRow>
+          </StyledTableHead>
           {/* )} */}
           {/* {!isMobileScreen ? ( */}
-            <StyledTableBody className="StyledTableBody">
-              {table.getRowModel().rows.map((row) => (
-                <StyledTableRow
-                  className="StyledTableRow"
-                  key={row.id}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <StyledTableCell key={cell.id} className="StyledTableCell" onClick={() => openDetailsHandler(row)}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </StyledTableCell>
-                  ))}
-                  {/* {!isMdScreen && ( */}
-                    <StyledTableCell className="StyledTableCell">
-                      <ActionButtonsWrapper className="ActionButtonsWrapper">
-                        {/* {actionButtons(row)} */}
-                        <FileUploadOutlinedIcon />
-                        <MoreVertOutlinedIcon />
-                      </ActionButtonsWrapper>
-                    </StyledTableCell>
-                  {/* )} */}
-                </StyledTableRow>
-              ))}
-            </StyledTableBody>
+          <StyledTableBody className="StyledTableBody">
+            {table.getRowModel().rows.map((row) => (
+              <StyledTableRow className="StyledTableRow" key={row.id}>
+                {row.getVisibleCells().map((cell, idx) => (
+                  <StyledTableCell
+                    key={cell.id}
+                    className="StyledTableCell"
+                    onClick={() => openDetailsHandler(row)}
+                  >
+                    
+                    <BodyElement isFirstDataCell={idx === 0 && enableBullkSelection}>
+                    {idx === 0 && enableBullkSelection && (
+                      <RowSelection
+                        {...{
+                          checked: row.getIsSelected(),
+                          disabled: !row.getCanSelect(),
+                          indeterminate: row.getIsSomeSelected(),
+                          onChange: row.getToggleSelectedHandler(),
+                        }}
+                      />
+                    )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </BodyElement>
+                  </StyledTableCell>
+                ))}
+                {/* {!isMdScreen && ( */}
+                <StyledTableCell className="StyledTableCell">
+                  <ActionButtonsWrapper className="ActionButtonsWrapper">
+                    {/* {actionButtons(row)} */}
+                    <FileUploadOutlinedIcon />
+                    <MoreVertOutlinedIcon />
+                  </ActionButtonsWrapper>
+                </StyledTableCell>
+                {/* )} */}
+              </StyledTableRow>
+            ))}
+          </StyledTableBody>
           {/* ) : (
             table.getRowModel().rows.map((row) => (
               <MobileRowWrapper key={row.id}>
