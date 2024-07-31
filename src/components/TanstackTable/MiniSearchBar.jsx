@@ -1,5 +1,5 @@
-import SearchIcon from "@mui/icons-material/Search";
-import PropTypes from "prop-types";
+// import SearchIcon from "@mui/icons-material/Search";
+// import PropTypes from "prop-types";
 import {StyledInput} from './TanstackTable.styles'
 
 export default function MiniSearchBar({filterByColumn,columnFiltering,setColumnFiltering}) {
@@ -23,5 +23,5 @@ export default function MiniSearchBar({filterByColumn,columnFiltering,setColumnF
 }
 
 MiniSearchBar.propTypes = {
-  placeholder: PropTypes.string.isRequired,
+  // placeholder: PropTypes.string.isRequired,
 };

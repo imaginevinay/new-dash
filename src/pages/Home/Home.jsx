@@ -1,4 +1,5 @@
 import AllFavTabs from "../../components/AllFavTabs/AllFavTabs";
+import HomeActionBtns from "../../components/HomeActionBtns/HomeActionBtns";
 import HomeTabs from "../../components/HomeTabs/HomeTabs";
 import * as Styled from "./Home.styles";
 // import TanstackTable from "../../components/TanstackTable/TanstackTable";
@@ -7,17 +8,9 @@ import * as Styled from "./Home.styles";
 const Home = () => {
   return (
     <>
-      <Styled.ButtonWrapper aria-label="outlined primary button group">
-        <Styled.ChartButton>
-          <Styled.AddIconWhite color="primary" />
-          <span>Create Report</span>
-        </Styled.ChartButton>
-        <Styled.ChartButton>
-          <Styled.AddIconWhite color="primary" />
-          <span>Create Chart</span>
-        </Styled.ChartButton>
-      </Styled.ButtonWrapper>
-
+      {/* Home action btns Create Report + create Chart */}
+      <HomeActionBtns />
+      
       {/* Home Tabs */}
       <Styled.Wrapper>
         <HomeTabs />
