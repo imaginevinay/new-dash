@@ -8,7 +8,7 @@ const theme = extendTheme({
           "50": "#FFFFFF",
           "100": "#D4AF37",
           "200": "#212121",
-          "300": undefined,
+          "300": "#808080",
           "400": undefined,
           "500": undefined,
           "600": undefined,
