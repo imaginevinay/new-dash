@@ -66,11 +66,17 @@ import {
 } from "./TanstackTable.styles";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import MiniSearchBar from "./MiniSearchBar";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
-const TanstackTableStyled = ({
+const TanstackTable = ({
   tableData,
   columnData,
   reqType,
+  showColumnSearch,
+  showBulkSelect,
+  deleteIcon, 
+  exportIcon, 
+  moreIcon
   // showColVisibilityDropDown,
   // showExportAsDropDown,
   // showApprove,
@@ -289,13 +295,13 @@ const TanstackTableStyled = ({
                 headerGroups.headers.map((header, idx) => (
                   <StyledTableCell key={header.id} className="StyledTableCell">
                     {/* {!isMobileScreen && ( */}
-                    <MiniSearchWrapper>
+                    {showColumnSearch && <MiniSearchWrapper>
                       <MiniSearchBar
                         filterByColumn={header?.column?.columnDef?.accessorKey}
                         columnFiltering={columnFiltering}
                         setColumnFiltering={setColumnFiltering}
                       />
-                    </MiniSearchWrapper>
+                    </MiniSearchWrapper>}
                     {/* )} */}
                     <HeaderColumn
                       onClick={header.column.getToggleSortingHandler()}
@@ -320,10 +326,10 @@ const TanstackTableStyled = ({
                 ))
               )}
               <StyledTableCell className="StyledTableCell">
-                <StyledBulkSelect>
+                {showBulkSelect && <StyledBulkSelect>
                   <StyledCheckBox className="checkbox" onChange={() => setEnableBullkSelection(!enableBullkSelection)}/>
                   <span>Bulk Select</span>
-                </StyledBulkSelect>
+                </StyledBulkSelect>}
                 Action
               </StyledTableCell>
             </StyledTableRow>
@@ -359,8 +365,9 @@ const TanstackTableStyled = ({
                 <StyledTableCell className="StyledTableCell">
                   <ActionButtonsWrapper className="ActionButtonsWrapper">
                     {/* {actionButtons(row)} */}
-                    <FileUploadOutlinedIcon />
-                    <MoreVertOutlinedIcon />
+                    {deleteIcon && <DeleteOutlinedIcon />}
+                    {exportIcon && <FileUploadOutlinedIcon />}
+                    {moreIcon && <MoreVertOutlinedIcon />}
                   </ActionButtonsWrapper>
                 </StyledTableCell>
                 {/* )} */}
@@ -491,7 +498,7 @@ const TanstackTableStyled = ({
   );
 };
 
-export default TanstackTableStyled;
+export default TanstackTable;
 
 // TanstackTable.propTypes = {
 //   tableData: PropTypes.array,

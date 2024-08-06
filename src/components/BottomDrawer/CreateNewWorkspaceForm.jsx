@@ -5,7 +5,7 @@ import {
   Textarea,
 } from "@mui/joy";
 import * as Styled from "./BottomDrawers.styles";
-import AutocompleteInput from "./AutocompleteInput";
+import AutocompleteInput from "../AutocompleteInput/AutocompleteInput";
 import UploadIcon from "../../assets/images/upload-cloud.svg";
 import ResetIcon from "../../assets/images/reset-icon.svg";
 import NotFoundIcon from '../../assets/images/not-found.svg';
@@ -20,7 +20,7 @@ const CreateNewWorkspaceForm = () => {
 
       <Styled.FlexColumn gap={"1rem"}>
         <FormLabel>Description</FormLabel>
-        <Textarea placeholder="Describe this workspace" minRows={4} />
+        <Textarea placeholder="Describe this workspace" minRows={3} />
       </Styled.FlexColumn>
       <Styled.FlexColumn gap={"1rem"}>
         <FormLabel>Contact List</FormLabel>

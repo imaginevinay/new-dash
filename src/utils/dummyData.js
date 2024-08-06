@@ -274,3 +274,131 @@ export const DATA = [
     status: 'Published'
   },
 ];
+
+export const WORKSPACES_COLS = [
+  {
+    header: "Name",
+    accessorKey: "name",
+  },
+  {
+    header: "Type",
+    accessorKey: "type",
+  },
+  {
+    header: "Access Level",
+    accessorKey: "accessLevel",
+  },
+  {
+    header: "Status",
+    accessorKey: "status",
+  },
+  {
+    header: "Refreshed",
+    accessorKey: "refreshed",
+  },
+  {
+    header: "Next Refresh",
+    accessorKey: "nextRefresh",
+  },
+];
+export const WORKSPACES_DATA = [
+  {
+    id: 1,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 2,
+    name: 'Restaurant Data',
+    type: 'Charts',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 3,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 4,
+    name: 'Restaurant Data',
+    type: 'Charts',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 5,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 6,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 7,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 8,
+    name: 'Restaurant Data',
+    type: 'Charts',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 9,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 10,
+    name: 'Restaurant Data',
+    type: 'Charts',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+  {
+    id: 11,
+    name: 'Auto Generated Report',
+    type: 'Reports',
+    accessLevel: 'Can View',
+    status: 'Published',
+    refreshed: '2/6/24, 10:44:33',
+    nextRefresh: 'N/A'
+  },
+];

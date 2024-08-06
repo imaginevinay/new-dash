@@ -1,0 +1,15 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame" clip-path="url(#clip0_1_5811)">
+<g id="329-Document Report">
+<path id="Vector" d="M6.25 1.25L2.5 5V20H17.5V1.25H6.25Z" stroke="#89939E" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6.25 1.25V5H2.5" stroke="#89939E" stroke-width="2" stroke-linejoin="round"/>
+<path id="Vector_3" d="M5.625 8.125V16.875H15" stroke="#89939E" stroke-linejoin="round"/>
+<path id="Vector_4" d="M5.625 16.875L10 12.5L11.875 14.375L15 11.25" stroke="#89939E" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_1_5811">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>

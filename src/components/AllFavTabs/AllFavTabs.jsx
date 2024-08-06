@@ -13,10 +13,10 @@ export default function AllFavTabs() {
         <Styled.StyledTab><StarBorderOutlinedIcon />Favorite</Styled.StyledTab>
       </TabList>
       <Styled.TabPanelWrapper value={0}>
-        <TanstackTable tableData={DATA} columnData={DATA_COLS} />
+        <TanstackTable tableData={DATA} columnData={DATA_COLS} showColumnSearch showBulkSelect exportIcon moreIcon/>
       </Styled.TabPanelWrapper>
       <Styled.TabPanelWrapper value={1}>
-        <TanstackTable tableData={DATA} columnData={DATA_COLS} />
+        <TanstackTable tableData={DATA} columnData={DATA_COLS} showColumnSearch showBulkSelect exportIcon moreIcon/>
       </Styled.TabPanelWrapper>
     </Styled.TabsWrapper>
   );
