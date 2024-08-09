@@ -59,7 +59,7 @@ import {
   // MobileDataLabel,
   // MobileDataValue,
   // MobileBtnWrapper,
-  // // SearchBarWrapper,
+  SearchBarWrapper,
   // UserLabelTitleWrapper,
   // ViewDetailsWrapper,
   // PageTextWrapper
@@ -67,12 +67,14 @@ import {
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import MiniSearchBar from "./MiniSearchBar";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import SearchBar from "./SearchBar";
 
 const TanstackTable = ({
   tableData,
   columnData,
   reqType,
   showColumnSearch,
+  showMainSearch,
   showBulkSelect,
   deleteIcon, 
   exportIcon, 
@@ -257,7 +259,14 @@ const TanstackTable = ({
   };
 
   return (
-    <MainWrapper className="main">
+    <MainWrapper className="main" isSearchBarVisible={true}>
+      {showMainSearch && <SearchBarWrapper>
+            <SearchBar
+              placeholder="Search"
+              globalFiltering={globalFiltering}
+              setGlobalFiltering={setGlobalFiltering}
+            />
+      </SearchBarWrapper>}
       {/* <SecondaryWrapper
         className="secondary"
         showColVisibilityDropDown={showColVisibilityDropDown}

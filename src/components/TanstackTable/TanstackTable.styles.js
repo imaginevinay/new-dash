@@ -2,7 +2,9 @@
 import { Input, styled } from "@mui/joy";
 import { Box, Button, Sheet, Table, Typography, Checkbox } from "@mui/joy";
 
-export const MainWrapper = styled(Box)(() => ({}));
+export const MainWrapper = styled(Box)(() => ({
+  position: 'relative'
+}));
 
 export const SecondaryWrapper = styled(Box)(
   ({ theme, showColVisibilityDropDown, showExportAsDropDown }) => ({
@@ -20,8 +22,10 @@ export const SecondaryWrapper = styled(Box)(
   })
 );
 export const SearchBarWrapper = styled(Box)(() => ({
-  padding: "1rem 1.25rem",
-  width: "100%",
+  position: 'absolute',
+  zIndex: 2,
+  left: '82%',
+  top: '-20%'
 }));
 export const StyledTableContainer = styled(Sheet)(() => ({
   boxShadow: "none",

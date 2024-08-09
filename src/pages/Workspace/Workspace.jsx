@@ -20,15 +20,14 @@ const Workspace = () => {
 
   const filterWorkspaceTable = (type) => {
     return WORKSPACES_DATA.filter(workspace => {
-      if(type === 'all') return workspace.type === 'Reports' || workspace.type === 'Charts';
+      if(type === 'all') return true;
       if(type === 'reports') return workspace.type === 'Reports';
       if(type === 'charts') return workspace.type === 'Charts';
     });
   }
 
   useEffect(() => {
-    console.log('seletedbutton', selectedButton)
-    setTableData(filterWorkspaceTable(selectedButton));
+;    setTableData(filterWorkspaceTable(selectedButton));
   }, [selectedButton])
   
 
@@ -59,7 +58,7 @@ const Workspace = () => {
       </Styled.Header>
       <Styled.MidRow>
         <Styled.ButtonWrapper>
-          <CreateNewMenu />
+          <CreateNewMenu setTableData={setTableData}/>
           <Styled.ButtonItem isSelected={selectedButton==='all'} onClick={() => setSelectedButton('all')}>
             <FolderOutlinedIcon />
             <span>All</span>
@@ -75,7 +74,7 @@ const Workspace = () => {
         </Styled.ButtonWrapper>
       </Styled.MidRow>
 
-      <TanstackTable tableData={tableData} columnData={WORKSPACES_COLS} deleteIcon exportIcon moreIcon/>
+      <TanstackTable tableData={tableData} columnData={WORKSPACES_COLS} deleteIcon exportIcon moreIcon showMainSearch/>
 
       <BottomDrawer onClick={handleBottomDrawerClick} />
       <WorkspacesDrawer

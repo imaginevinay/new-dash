@@ -9,7 +9,7 @@ const theme = extendTheme({
           "100": "#D4AF37",
           "200": "#212121",
           "300": "#808080",
-          "400": undefined,
+          "400": "#F5F7FA",
           "500": undefined,
           "600": undefined,
           "700": undefined,
@@ -57,6 +57,43 @@ const theme = extendTheme({
     "dark": {
       "palette": {}
     }
+  },
+  components: {
+    JoyInput: {
+      styleOverrides: {
+        root:{
+          '--Input-focusedHighlight' : 'transparent !important'
+        }
+      }
+    },
+    // JoyButton: {
+    //   styleOverrides: {
+    //     root: {
+    //       "&:hover": {
+    //         background: 'inherit !important'
+    //       }
+    //     }
+    //   }
+    // }
+    JoyRadio: {
+      styleOverrides: {
+        root: () => ({
+          "& .MuiRadio-radio": {
+            backgroundColor: '#FFFFFF',
+            borderColor: "#212121",
+        
+            "& .MuiRadio-icon": {
+              backgroundColor: '#D4AF37',
+            },
+        
+            "&:hover": {
+              backgroundColor: '#FFFFFF',
+              borderColor: "#212121",
+            },
+          },
+        }),
+      },
+    },
   }
 })
 
