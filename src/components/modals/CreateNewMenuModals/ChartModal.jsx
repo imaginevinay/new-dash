@@ -10,7 +10,7 @@ import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 export default function ChartModal({ open, handleChartModalOnClose }) {
   const [inputVal, setInputVal] = useState(null);
   const handleSave = () => {
-    handleChartModalOnClose(inputVal);
+    handleChartModalOnClose(inputVal, 'save');
   };
 
   const handleCancel = () => {

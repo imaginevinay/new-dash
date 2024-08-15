@@ -8,11 +8,15 @@ import Workspace from "./pages/Workspace/Workspace";
 function App() {
   return (
     <AppContext>
-    <Navbar />
-    <Routes>
+      <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+        <Navbar />
+        <div style={{flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden'}}>
+          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/workspace" element={<Workspace />} />
           </Routes>
+        </div>
+      </div>
     </AppContext>
   );
 }

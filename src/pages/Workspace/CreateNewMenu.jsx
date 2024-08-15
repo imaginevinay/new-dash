@@ -18,7 +18,7 @@ import DataFlowModal from '../../components/modals/CreateNewMenuModals/DataFlowM
 import {randomNumberGenerator} from '../../utils/common'
 import { useState } from "react";
 
-export default function CreateNewMenu({setTableData}) {
+export default function CreateNewMenu({setTableData, setShowChartCreation}) {
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false)
   const [isReportModalOpen, setIsReportModalOpen] = useState(false)
   const [isChartModalOpen, setIsChartModalOpen] = useState(false)
@@ -46,8 +46,10 @@ export default function CreateNewMenu({setTableData}) {
     setIsReportModalOpen(false);
   }
 
-  const handleChartModalOnClose = () => {
+  const handleChartModalOnClose = (value, type) => {
+    console.log('value, type', value, type)
     setIsChartModalOpen(false);
+    setShowChartCreation(true);
   }
 
   const handleDataFlowModalOnClose = () => {
@@ -66,7 +68,7 @@ export default function CreateNewMenu({setTableData}) {
 
       <NewFolderModal open={isFolderModalOpen} handleFolderModalOnClose={handleFolderModalOnClose}/>
       <ReportModal open={isReportModalOpen} handleReportModalOnClose={handleReportModalOnClose}/>
-      <ChartModal open={isChartModalOpen} handleChartModalOnClose={handleChartModalOnClose}/>
+      <ChartModal open={isChartModalOpen} handleChartModalOnClose={(value, type) => handleChartModalOnClose(value, type)}/>
       <DataFlowModal open={isDataflowModalOpen} handleDataFlowModalOnClose={handleDataFlowModalOnClose}/>
       
     </Dropdown>

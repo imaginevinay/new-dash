@@ -6,31 +6,32 @@ import GroupIcon from "../../assets/images/groupIcon.svg";
 import * as Styled from "./Workspace.styles";
 import SettingsDrawer from "../../components/SettingsDrawer/SettingsDrawer";
 import CreateNewMenu from "./CreateNewMenu";
-import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
-import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
-import SummarizeOutlinedIcon from '@mui/icons-material/SummarizeOutlined';
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import EqualizerOutlinedIcon from "@mui/icons-material/EqualizerOutlined";
+import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import TanstackTable from "../../components/TanstackTable/TanstackTable";
 import { WORKSPACES_COLS, WORKSPACES_DATA } from "../../utils/dummyData";
+import ChartCreationLeftMenu from "../../components/ChartCreationLeftMenu/ChartCreationLeftMenu";
+import ChartCreationGrid from "../../components/ChartCreationGrid/ChartCreationGrid";
 
 const Workspace = () => {
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
-  const [selectedButton, setSelectedButton] = useState('all');
+  const [selectedButton, setSelectedButton] = useState("all");
   const [tableData, setTableData] = useState([]);
+  const [showChartCreation, setShowChartCreation] = useState(true);
 
   const filterWorkspaceTable = (type) => {
-    return WORKSPACES_DATA.filter(workspace => {
-      if(type === 'all') return true;
-      if(type === 'reports') return workspace.type === 'Reports';
-      if(type === 'charts') return workspace.type === 'Charts';
+    return WORKSPACES_DATA.filter((workspace) => {
+      if (type === "all") return true;
+      if (type === "reports") return workspace.type === "Reports";
+      if (type === "charts") return workspace.type === "Charts";
     });
-  }
+  };
 
   useEffect(() => {
-;    setTableData(filterWorkspaceTable(selectedButton));
-  }, [selectedButton])
-  
-
+    setTableData(filterWorkspaceTable(selectedButton));
+  }, [selectedButton]);
 
   const handleBottomDrawerClick = () => {
     setBottomDrawerOpen(true);
@@ -44,7 +45,7 @@ const Workspace = () => {
     setSettingsDrawerOpen(false);
   };
 
-  return (
+  return !showChartCreation ? (
     <div>
       <Styled.Header>
         <Styled.WorkspaceTitle>
@@ -58,23 +59,39 @@ const Workspace = () => {
       </Styled.Header>
       <Styled.MidRow>
         <Styled.ButtonWrapper>
-          <CreateNewMenu setTableData={setTableData}/>
-          <Styled.ButtonItem isSelected={selectedButton==='all'} onClick={() => setSelectedButton('all')}>
+          <CreateNewMenu setTableData={setTableData} setShowChartCreation={setShowChartCreation}/>
+          <Styled.ButtonItem
+            isSelected={selectedButton === "all"}
+            onClick={() => setSelectedButton("all")}
+          >
             <FolderOutlinedIcon />
             <span>All</span>
           </Styled.ButtonItem>
-          <Styled.ButtonItem isSelected={selectedButton==='reports'} onClick={() => setSelectedButton('reports')}>
+          <Styled.ButtonItem
+            isSelected={selectedButton === "reports"}
+            onClick={() => setSelectedButton("reports")}
+          >
             <SummarizeOutlinedIcon />
             <span>Reports</span>
           </Styled.ButtonItem>
-          <Styled.ButtonItem isSelected={selectedButton==='charts'} onClick={() => setSelectedButton('charts')}>
-            <EqualizerOutlinedIcon/>
+          <Styled.ButtonItem
+            isSelected={selectedButton === "charts"}
+            onClick={() => setSelectedButton("charts")}
+          >
+            <EqualizerOutlinedIcon />
             <span>Charts</span>
           </Styled.ButtonItem>
         </Styled.ButtonWrapper>
       </Styled.MidRow>
 
-      <TanstackTable tableData={tableData} columnData={WORKSPACES_COLS} deleteIcon exportIcon moreIcon showMainSearch/>
+      <TanstackTable
+        tableData={tableData}
+        columnData={WORKSPACES_COLS}
+        deleteIcon
+        exportIcon
+        moreIcon
+        showMainSearch
+      />
 
       <BottomDrawer onClick={handleBottomDrawerClick} />
       <WorkspacesDrawer
@@ -86,6 +103,11 @@ const Workspace = () => {
         onClose={handleSettingsDrawerClose}
       />
     </div>
+  ) : (
+    <Styled.ChartCreationWrapper>
+      <ChartCreationLeftMenu />
+      <ChartCreationGrid />
+    </Styled.ChartCreationWrapper>
   );
 };
 
