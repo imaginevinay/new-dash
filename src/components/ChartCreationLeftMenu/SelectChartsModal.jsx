@@ -18,6 +18,12 @@ export default function SelectChartsModal({ open, handleClose }) {
     setSelectedChartType(chartType);
   };
 
+  const handleSelectedCloseHandler = () => {
+    handleClose({category: selectedCategory, type: selectedChartType})
+    setSelectedChartType(null);
+    setSelectedChartType(null);
+  }
+
   return (
     <Modal
       aria-labelledby="modal-title"
@@ -76,7 +82,7 @@ export default function SelectChartsModal({ open, handleClose }) {
                 <>
                   <Styled.PreviewHeader>
                     <span>{selectedChartType.name}</span>
-                    <Styled.ApplyChart>Apply Chart</Styled.ApplyChart>
+                    <Styled.ApplyChart onClick={() => handleSelectedCloseHandler()}>Apply Chart</Styled.ApplyChart>
                   </Styled.PreviewHeader>
                   <Styled.Image
                     src={selectedChartType.previewImage}

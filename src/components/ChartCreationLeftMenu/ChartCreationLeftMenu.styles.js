@@ -1,4 +1,6 @@
 import {
+  AccordionDetails,
+  AccordionSummary,
   Button,
   Sheet,
   styled,
@@ -281,4 +283,88 @@ export const Image = styled('img')({
   width: '31.25rem',
   height: '21.72331rem',
   margin: 'auto'
+})
+
+
+export const WrapperBox = styled('div')({
+  marginTop: '3.75rem',
+  fontSize: '0.875rem', 
+})
+
+export const AccordionSummaryBtn = styled(AccordionSummary)(({theme})=>({
+  // padding: '0.75rem',
+  "&:hover": {
+    backgroundColor: theme.palette.primary['accordionHover'],
+    "& p" : {
+      color: theme.palette.primary[100],
+    },
+    "& span svg": {
+      color: theme.palette.primary[100]
+    },
+  },
+  "& .MuiAccordionSummary-button:hover" : {
+    backgroundColor: theme.palette.primary['accordionHover'],
+  },
+"& .MuiAccordionSummary-button" : {
+  padding: '0.75rem',
+}
+}))
+
+export const SelectedAccordionSummaryBtn = styled(AccordionSummary)(({theme, yearBtn})=>({
+  backgroundColor: yearBtn ? theme.palette.primary[50] : theme.palette.primary[400],
+  borderRadius: '0.25rem',
+  "& .MuiAccordionSummary-button:hover" : {
+    backgroundColor: yearBtn ? theme.palette.primary[50] : theme.palette.primary[400],
+  },
+  "& .MuiAccordionSummary-button" : {
+    padding: yearBtn ? '0.75rem 2.5rem' : '0.75rem 1.25rem 0.75rem 2.5rem',
+  },
+  "& .Mui-expanded:not(.MuiAccordionSummary-indicator)" : {
+    borderBottom: yearBtn ? 'none':'1px solid rgba(128, 128, 128, 0.25)'
+  }
+}))
+
+export const AccordionDetailsWrapper = styled(AccordionDetails)({
+  "& .MuiAccordionDetails-content": {
+    gap: '1rem',
+    // marginTop: '1.5rem'
+  }
+})
+
+export const AxisButton = styled(Button)(({theme})=>({
+  backgroundColor:theme.palette.primary[400],
+  padding: '0.75rem 1.25rem 0.75rem 2.5rem',
+  color: theme.palette.primary[300],
+  borderRadius: '0.25rem',
+  fontWeight: 400,
+  "&:hover": {
+    background: theme.palette.primary['accordionHover'],
+    color: theme.palette.primary[100],
+  }
+}))
+
+
+export const SelectedAxisText = styled(Typography)({
+  fontSize: '0.875rem',
+  fontWeight: 400,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '1rem'
+})
+
+export const SMFlexRow = styled('div')({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '1rem' 
+})
+
+export const SMFlexCol = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  marginTop: '1.5rem'
+})
+
+export const YearAccordionDetails = styled(AccordionDetails)({
+  padding: '1.25rem'
 })

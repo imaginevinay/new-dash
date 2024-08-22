@@ -15,6 +15,7 @@ const theme = extendTheme({
           700: undefined,
           800: undefined,
           900: undefined,
+          'accordionHover': 'rgba(212, 175, 55, 0.10)'
         },
         danger: {
           50: undefined,
@@ -113,6 +114,15 @@ const theme = extendTheme({
           "&>[data-first-child]": {
             borderRight: 0
           }
+        }
+      }
+    },
+    JoyAccordionSummary: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
         }
       }
     }
