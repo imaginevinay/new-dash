@@ -24,7 +24,7 @@ const Navbar = () => {
         {buttonList.map((item) =>
           item.type === "link" ? (
             <Styled.StyledLink
-              isActive={currentLocation === item.route}
+              className={currentLocation === item.route ? 'active': ''}
               component={RouterLink}
               to={item.route}
               key={item.id}

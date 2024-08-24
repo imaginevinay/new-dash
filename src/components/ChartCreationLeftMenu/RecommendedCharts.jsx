@@ -2,7 +2,7 @@ import { Grid, ToggleButtonGroup } from "@mui/joy";
 import * as Styled from "./ChartCreationLeftMenu.styles";
 import { useEffect, useState } from "react";
 import SelectChartsModal from "./SelectChartsModal";
-import BuildVisuals from "./BuildVisuals";
+import VisualsAccordions from "./VisualsAccordions";
 
 const buttonLabels = [
   {
@@ -63,18 +63,18 @@ const RecommendedCharts = () => {
 
 
 // !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // useEffect(() => {
-  //   const selectedType = {
-  //     icon : "/src/assets/charts/chart-types/vBar.svg",
-  //     label :  "Vertical Bar"
-  //   }
-  //   const viewMore = {
-  //     icon: "/src/assets/icons/viewMore.svg",
-  //     label: "View More",
-  //   }
-  //   setRecoCharts([selectedType, viewMore]);
-  //   setIsChartTypeSelected(true);
-  // }, [])
+  useEffect(() => {
+    const selectedType = {
+      icon : "/src/assets/charts/chart-types/vBar.svg",
+      label :  "Vertical Bar"
+    }
+    const viewMore = {
+      icon: "/src/assets/icons/viewMore.svg",
+      label: "View More",
+    }
+    setRecoCharts([selectedType, viewMore]);
+    setIsChartTypeSelected(true);
+  }, [])
   
 
   useEffect(() => {
@@ -139,10 +139,10 @@ const RecommendedCharts = () => {
         </Grid>
       </ToggleButtonGroup>
         
-      {!isChartTypeSelected && <Styled.PreviewChartButton isActive={selected !== null && selected !== 'View More'}>
+      {!isChartTypeSelected && <Styled.PreviewChartButton isactive={selected !== null && selected !== 'View More' ? 'true': 'false'}>
         Preview Chart
       </Styled.PreviewChartButton>}
-      {isChartTypeSelected && <BuildVisuals />}
+      {isChartTypeSelected && <VisualsAccordions />}
       <SelectChartsModal open={openSelectChartModal} handleClose={handleSelectChartModalClose}/>
     </Styled.RecommendedChartsWrapper>
   );

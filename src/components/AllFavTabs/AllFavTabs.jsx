@@ -8,7 +8,7 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 export default function AllFavTabs() {
   return (
     <Styled.TabsWrapper aria-label="Basic tabs" defaultValue={0}>
-      <TabList underlinePlacement="none">
+      <TabList disableUnderline>
         <Styled.StyledTab><InsertDriveFileOutlinedIcon />All</Styled.StyledTab>
         <Styled.StyledTab><StarBorderOutlinedIcon />Favorite</Styled.StyledTab>
       </TabList>

@@ -74,22 +74,17 @@ export const RecommendedChartsWrapper = styled("div")(() => ({
   },
 }));
 
-export const PreviewChartButton = styled(Button)(({ theme, isActive }) => ({
+export const PreviewChartButton = styled(Button)(({ theme, isactive }) => ({
   width: "100%",
   borderRadius: "2.0625rem",
-  background: isActive
-    ? theme.palette.primary[100]
-    : theme.palette.primary[400],
+  background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
   color: theme.palette.primary[500],
   fontSize: "1rem",
   fontWeight: 400,
   marginTop: "6.5rem",
   "&:hover": {
-    background: isActive
-      ? theme.palette.primary[100]
-      : theme.palette.primary[400],
+    background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
   },
-  //   marginBottom: "3.75rem",
 }));
 
 export const ButtonWrapper = styled("div")(() => ({
@@ -166,7 +161,7 @@ export const CategoriesSection = styled(Section)({
   width: "20%",
 });
 
-const FlexCol = styled("div")({
+export const FlexCol = styled("div")({
   display: "flex",
   flexDirection: "column",
 });
@@ -358,7 +353,7 @@ export const SMFlexRow = styled('div')({
   gap: '1rem' 
 })
 
-export const SMFlexCol = styled('div')({
+export const SMFlexCol = styled(FlexCol)({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
@@ -368,3 +363,67 @@ export const SMFlexCol = styled('div')({
 export const YearAccordionDetails = styled(AccordionDetails)({
   padding: '1.25rem'
 })
+
+
+export const VisualsTitle = styled(AccordionSummary)(({theme})=>({
+  backgroundColor: theme.palette.primary[50],
+  borderRadius: '0.25rem',
+  "& .MuiAccordionSummary-button:hover" : {
+    backgroundColor: theme.palette.primary[50],
+  },
+  "& .MuiAccordionSummary-button" : {
+    fontWeight: 400
+  }
+}))
+
+
+export const VisualsAccordionDetails = styled(AccordionDetails)(({theme})=>({
+  "& .MuiAccordionDetails-content.Mui-expanded": {
+    backgroundColor: theme.palette.primary[400],
+  }
+}))
+
+export const ValuesWrapper = styled(FlexCol)(({theme})=>({
+  padding: '1.25rem',
+  gap: '1.25rem',
+  backgroundColor: theme.palette.primary[50],
+  fontSize: '0.875rem',
+  fontWeight: 400,
+
+  "& .flexCol-lg": {
+    display: "flex",
+    flexDirection: "column",
+    gap: '2.5rem'
+  },
+
+  "& .flexCol-md": {
+    display: "flex",
+    flexDirection: "column",
+    gap: '1rem',
+
+    '& .title': {
+      fontSize: '0.875rem',
+      fontWeight: 400
+    },
+  },
+  
+  "& .flexRow": {
+    display: "flex",
+    flexDirection: "row",
+    gap: '1rem',
+    
+    "& .font-selector": {
+      width: '70%',
+      fontSize: '0.875rem',
+      fontWeight: 400,
+    }
+  },
+  "& .flexSpaceBetween": {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-between'
+  }
+
+
+}))
+

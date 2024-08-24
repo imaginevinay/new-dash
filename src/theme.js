@@ -125,6 +125,27 @@ const theme = extendTheme({
           },
         }
       }
+    },
+    JoySwitch: {
+      styleOverrides: {
+        root : {
+          '--Switch-trackBackground': "#D4AF37 !important"
+        }
+      }
+    },
+    JoyOption: {
+      styleOverrides: {
+        root: {
+          "&:not(.Mui-selected, [aria-selected='true']):hover": {
+            backgroundColor: 'rgba(212, 175, 55, 0.10)',
+            color: "#D4AF37"
+          },
+          "&.MuiOption-highlighted.Mui-selected": {
+            backgroundColor: 'rgba(212, 175, 55, 0.10)',
+            color: "#D4AF37"
+          }
+        }
+      }
     }
   },
 });

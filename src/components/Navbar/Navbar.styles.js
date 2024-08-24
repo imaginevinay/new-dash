@@ -33,8 +33,10 @@ export const Navtitle = styled('span')(({ theme }) => ({
     fontWeight: theme.vars.fontWeight.xl
 }));
 
-export const StyledLink = styled(Link)(({ isActive }) => ({
-    textDecorationLine : isActive ? 'underline' : 'none',
+export const StyledLink = styled(Link)(() => ({
+    '&.active': {
+        textDecorationLine: 'underline'
+    }
 }));
 
 

@@ -27,7 +27,7 @@ const SettingsDrawer = ({ open, onClose }) => {
           <img src={CloseIcon} onClick={onClose}/>
         </Styled.FlexSpace>
         <Styled.SettingTabs orientation="vertical">
-          <Styled.TabItemWrapper underlinePlacement="none">
+          <Styled.TabItemWrapper disableUnderline>
             <Styled.TabItem indicatorPlacement="left"><img src={InfoIcon} alt="InfoIcon" />Edit About</Styled.TabItem>
             <Styled.TabItem indicatorPlacement="left"><img src={UserIcon} alt="InfoIcon" />Manage Access</Styled.TabItem>
           </Styled.TabItemWrapper>

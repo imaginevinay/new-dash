@@ -8,7 +8,7 @@ import HorizontalCarousel from "./HorizontalCarousel";
 export default function HomeTabs() {
   return (
     <Styled.TabsWrapper aria-label="userTabs" defaultValue={0}>
-      <TabList underlinePlacement="none">
+      <TabList disableUnderline>
         <Styled.StyledTab>Recently Viewed</Styled.StyledTab>
         <Styled.StyledTab>Pinned By Me (5)</Styled.StyledTab>
       </TabList>

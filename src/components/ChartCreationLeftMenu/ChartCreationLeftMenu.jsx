@@ -16,7 +16,7 @@ const ChartCreationLeftMenu = () => {
       </Styled.MenuTitle>
 
       <Styled.TabsWrapper defaultValue={0}>
-        <Styled.TabListWrapper underlinePlacement="none">
+        <Styled.TabListWrapper disableUnderline>
           <Styled.TabButton disableIndicator>Visualization</Styled.TabButton>
           <Styled.TabButton disableIndicator>Dataflow</Styled.TabButton>
         </Styled.TabListWrapper>
