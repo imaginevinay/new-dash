@@ -23,6 +23,7 @@ import TitlesAccordion from "./TitlesAccordion";
 import DateRangeAccordion from "./DateRangeAccordion";
 import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
+import { allNotNull } from "../../utils/common";
 
 const sqlData = [
   {
@@ -34,6 +35,7 @@ const sqlData = [
         label: "Order Date",
         icon: CalendarIcon,
         isChecked: false,
+        
       },
       {
         id: 3,
@@ -198,16 +200,43 @@ const formatVObj = [
   },
 ];
 
-const VisualsAccordions = () => {
+const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
+  const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(false);
   const [formatVisualsData, setFormatVisualsData] = useState(formatVObj);
+
   const [selectedItems, setSelectedItems] = useState({
     xAxis: null,
     yAxis: null,
     legend: null,
   });
+
+  const createAxisData = (val) => {
+    const obj = {
+      axisData: selectedItems,
+      visualsData: formatVisualsData
+    }
+    if(val) {
+      setLeftMenuData(obj)
+    } else {
+      setLeftMenuData(null)
+    }
+  }
+
+  useEffect(()=> {
+    console.log('selected items', selectedItems)
+    if(allNotNull(selectedItems)){
+      setIsVisualizeActive(true);
+      setIsFormatVisualsActive(true);
+      createAxisData(true);
+    } else {
+      setIsVisualizeActive(false);
+      setIsFormatVisualsActive(false);
+    }
+  },[selectedItems, setIsVisualizeActive])
+  
   const [expandedSubAccordion, setExpandedSubAccordion] = useState(null);
   const handleAccordionChange = (subAccordion, isExpanded) => {
     setExpandedSubAccordion(isExpanded ? subAccordion : null);
@@ -379,7 +408,7 @@ const VisualsAccordions = () => {
     );
   }, []);
 
-  useEffect(()=> {console.log('data changed >>>>', formatVisualsData)},[formatVisualsData])
+  // useEffect(()=> {console.log('data changed >>>>', formatVisualsData)},[formatVisualsData])
 
   const xValuesAccordionDisplay = useCallback((data, subAccordionId) => (
     <Styled.ValuesWrapper>
@@ -459,7 +488,7 @@ const VisualsAccordions = () => {
             </Styled.SMFlexCol>
           </Styled.AccordionDetailsWrapper>
         </Accordion>
-        <Accordion>
+        <Accordion disabled={!isFormatVisualsActive}>
           <Styled.AccordionSummaryBtn className="formatVisuals">
             <Typography>Format Visuals</Typography>
           </Styled.AccordionSummaryBtn>

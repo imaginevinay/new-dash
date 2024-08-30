@@ -10,3 +10,5 @@ export const getColumnNames = (columns) => {
 export const randomNumberGenerator = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+export const allNotNull = (obj) => Object.values(obj).every(value => value !== null);

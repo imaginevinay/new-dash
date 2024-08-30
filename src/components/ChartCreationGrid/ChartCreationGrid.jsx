@@ -1,7 +1,7 @@
 import * as Styled from "./ChartCreationGrid.styles";
 import SettingsIcon from '../../assets/icons/settings.svg'; 
 
-const ChartCreationGrid = () => {
+const  ChartCreationGrid = () => {
   return (
     <Styled.CanvasGridWrapper>
       <div className="header">

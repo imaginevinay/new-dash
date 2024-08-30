@@ -15,7 +15,8 @@ const theme = extendTheme({
           700: undefined,
           800: undefined,
           900: undefined,
-          'accordionHover': 'rgba(212, 175, 55, 0.10)'
+          'accordionHover': 'rgba(212, 175, 55, 0.10)',
+          'disabledText': '#89939E'
         },
         danger: {
           50: undefined,

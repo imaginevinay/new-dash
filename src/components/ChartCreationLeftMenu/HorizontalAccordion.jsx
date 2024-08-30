@@ -69,7 +69,6 @@ const HorizontalAccordion = memo(({ onValuesChange, data }) => {
 
       <div className="flexCol-md">
         <span className="title">Transparency</span>
-        {console.log('transparency', localData.transparency)}
         <div className="flexSpaceBetween">
           <Slider
             sx={{width: '50%'}}

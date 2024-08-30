@@ -87,6 +87,21 @@ export const PreviewChartButton = styled(Button)(({ theme, isactive }) => ({
   },
 }));
 
+
+export const VisualiseButton = styled(Button)(({ theme, isactive }) => ({
+  width: "100%",
+  borderRadius: "2.0625rem",
+  background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
+  color: isactive==='true' ? theme.palette.primary[50]:theme.palette.primary['disabledText'],
+  fontSize: "1rem",
+  fontWeight: 400,
+  marginTop: 'auto',
+  marginBottom: '2.56rem',
+  "&:hover": {
+    background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
+  },
+}));
+
 export const ButtonWrapper = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
