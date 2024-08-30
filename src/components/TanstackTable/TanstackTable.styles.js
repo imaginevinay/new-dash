@@ -78,6 +78,9 @@ export const StyledTableHead = styled("thead")(() => ({
   "& tr": {
     fontSize: '1.125rem',
     fontWeight: 600,
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
   }
 }));
 
