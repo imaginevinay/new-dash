@@ -1,0 +1,21 @@
+table data left aligned
+table data pagination mui joy paginate
+column headers coloured
+hover effects rechedck
+navbar spacing issue
+navbar -> data dropdown change text in items
+pinned by me -> pin icons
+pinned by me -> cards -> menu items -> add fucntionality
+homescreen -> table -> more options -> add fav& pin report menu + functionality
+overflow homepage show 10 items in table everywhere
+search column under column title, search placeholder center
+
+Workspaces-
+workspace settings -> on hover text & icon color change
+workspaces drawer pe backshadow
+increase width of search bar
+workspaces table on hover show tooltip
+workspaces table -> actions -> add menu items
+workspaces drawer -> items on hover show pin and more 3dots icon -> on pin click pin the item
+create workspaces -> apply and cancel colors different
+
