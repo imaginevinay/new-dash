@@ -1,6 +1,4 @@
-// TanstackTable.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   flexRender,
   getCoreRowModel,
@@ -9,34 +7,21 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-// import Swal from "sweetalert2";
-// import { AppContext } from "utils/AppContext";
-// import { getColumnNames } from "../../utils/common";
-// import MiniSearchBar from "components/ui/MiniSearchBar";
-// import SearchBar from "components/ui/SearchBar";
-// import ColumnVisDropDown from "components/DropDowns/ColumnVisDropDown";
-// import ExportDropDown from "components/DropDowns/ExportDropDown";
-// import ApproveRejectModal from "components/Modals/ApproveRejectModal";
-// import ViewMoreModal from "components/Modals/ViewMoreModal";
-// import InfoModal from "components/Modals/InfoModal";
-// import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
-// import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-// import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-// import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-// import TrashIcon from "@mui/icons-material/Delete";
-// import CheckIcon from "@mui/icons-material/Check";
-// import CrossIcon from "@mui/icons-material/Close";
-// import EyeIcon from "@mui/icons-material/RemoveRedEye";
-// import SwapVertIcon from "@mui/icons-material/SwapVert";
-// import ChevronRightSharpIcon from '@mui/icons-material/ChevronRightSharp';
-// import InfoIcon from "assets/icons/info.svg?react";
-// import ViewDetailsIcon from "assets/icons/frame.svg?react";
-// import UserProfileIcon from "assets/icons/userProfile.svg?react";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import FavoriteIcon from '../../assets/icons/star.svg';
+import PinnedDarkIcon from "../../assets/icons/pin-dark.svg";
 import RowSelection from "./RowSelection";
+import MiniSearchBar from "./MiniSearchBar";
+import SearchBar from "./SearchBar";
+import { Select, Typography, Option, Dropdown, MenuButton, IconButton, Menu, MenuItem } from "@mui/joy";
+import { Tooltip } from "@mui/joy";
 import {
   MainWrapper,
-  // SecondaryWrapper,
+  ArrowBtnWrapper,
   StyledTableContainer,
   StyledTable,
   StyledTableHead,
@@ -49,117 +34,34 @@ import {
   StyledCheckBox,
   HeaderColumn,
   BodyElement,
-  // StyledButton,
-  // PaginationWrapper,
-  // PaginationButton,
-  // MobileRowWrapper,
-  // MobileRowContent,
-  // UserProfileIconWrapper,
-  // MobileDataWrapper,
-  // MobileDataLabel,
-  // MobileDataValue,
-  // MobileBtnWrapper,
+  PaginationWrapper,
+  PaginationButton,
   SearchBarWrapper,
-  // UserLabelTitleWrapper,
-  // ViewDetailsWrapper,
-  // PageTextWrapper
+  PageTextWrapper,
 } from "./TanstackTable.styles";
-import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import MiniSearchBar from "./MiniSearchBar";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import SearchBar from "./SearchBar";
+
+
+
 
 const TanstackTable = ({
   tableData,
   columnData,
-  reqType,
   showColumnSearch,
   showMainSearch,
   showBulkSelect,
-  deleteIcon, 
-  exportIcon, 
-  moreIcon
-  // showColVisibilityDropDown,
-  // showExportAsDropDown,
-  // showApprove,
-  // showReject,
-  // showRevoke,
-  // showRemoveRequest,
-  // showViewMore,
-  // showViewDetails,
-  // showInfo,
+  deleteIcon,
+  exportIcon,
+  moreIcon,
 }) => {
   const [globalFiltering, setGlobalFiltering] = useState("");
   const [columnFiltering, setColumnFiltering] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
   const [enableBullkSelection, setEnableBullkSelection] = useState(false);
-  // const [openBaseModal, setOpenBaseModal] = useState(false);
-  // const [openViewMoreModal, setOpenViewMoreModal] = useState(false);
-  // const [openInfoModal, setOpenInfoModal] = useState(false);
-  // const [action, setAction] = useState("");
-  // const [rowData, setRowData] = useState({});
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
-
-  // const { isMdScreen, isMobileScreen } = useContext(AppContext);
-  const navigateTo = useNavigate();
-
-  // const handleOpenBaseModal = (action, rowData) => {
-  //   setOpenBaseModal(true);
-  //   setAction(action);
-  //   setRowData(rowData);
-  // };
-
-  // const handleOpenViewDataModal = (action, rowData) => {
-  //   setOpenViewMoreModal(true);
-  //   setAction(action);
-  //   setRowData(rowData);
-  // };
-
-  // const handleOpenInfoModal = (action, rowData) => {
-  //   setOpenInfoModal(true);
-  //   setAction(action);
-  //   setRowData(rowData);
-  // };
-
-  // const handleCloseBaseModal = (submit = false) => {
-  //   setOpenBaseModal(false);
-  //   setAction("");
-  //   setRowData({});
-  //   if (action === "approve" && submit) {
-  //     Swal.fire({
-  //       title: "Approved!",
-  //       text: "Other approver's are notified about it",
-  //       icon: "success",
-  //       confirmButtonText: "OK",
-  //       confirmButtonColor: "#39B001",
-  //     });
-  //   }
-  //   if (action === "reject" && submit) {
-  //     Swal.fire({
-  //       title: "Rejected!",
-  //       text: "Request is rejected",
-  //       icon: "error",
-  //       confirmButtonText: "OK",
-  //       confirmButtonColor: "#FF3131",
-  //     });
-  //   }
-  // };
-
-  // const handleCloseViewMoreModal = () => {
-  //   setOpenViewMoreModal(false);
-  //   setAction("");
-  //   setRowData({});
-  // };
-
-  // const handleCloseInfoModal = () => {
-  //   setOpenInfoModal(false);
-  //   setAction("");
-  //   setRowData({});
-  // };
 
   const table = useReactTable({
     data: tableData,
@@ -183,113 +85,17 @@ const TanstackTable = ({
     enableRowSelection: true,
   });
 
-  // let definiteColumns = table.getAllLeafColumns();
-  // let columnNames = getColumnNames(definiteColumns);
-
-  // const actionButtons = (row) => (
-  //   <>
-  //     {showApprove && (
-  //       <StyledButton
-  //         variant={isMdScreen ? "contained" : "outlined"}
-  //         color="success"
-  //         onClick={() => handleOpenBaseModal("approve", row)}
-  //       >
-  //         <CheckIcon className="mr-2 z-10"/>
-  //         <span>Approve</span>
-  //       </StyledButton>
-  //     )}
-  //     {showReject && (
-  //       <StyledButton
-  //         variant={isMdScreen ? "contained" : "outlined"}
-  //         color="error"
-  //         onClick={() => handleOpenBaseModal("reject", row)}
-  //       >
-  //         <CrossIcon className="mr-2"/>
-  //         <span>Reject</span>
-  //       </StyledButton>
-  //     )}
-  //     {showRevoke && (
-  //       <StyledButton
-  //         variant={isMdScreen ? "contained" : "outlined"}
-  //         color="error"
-  //         onClick={() => handleOpenBaseModal("reject", row)}
-  //       >
-  //         <CrossIcon className="mr-2"/>
-  //         <span>Revoke</span>
-  //       </StyledButton>
-  //     )}
-  //     {showRemoveRequest && (
-  //       <StyledButton
-  //         variant={isMdScreen ? "contained" : "outlined"}
-  //         color="error"
-  //         onClick={() => handleOpenBaseModal("reject", row)}
-  //       >
-  //         <TrashIcon className="mr-2"/>
-  //         <span>Remove Request</span>
-  //       </StyledButton>
-  //     )}
-  //     {showViewMore && (
-  //       <ViewDetailsIcon
-  //        onClick={() => openDetailsHandler(row)}
-  //       />
-  //     )}
-  //     {showViewDetails && (
-  //       <StyledButton
-  //         variant={isMdScreen ? "contained" : "outlined"}
-  //         // onClick={() => handleOpenViewDataModal("viewMore", row)}
-  //         onClick={() => openDetailsHandler(row)}
-  //       >
-  //         <EyeIcon className="mr-2"/>
-  //         <span>View Details</span>
-  //       </StyledButton>
-  //     )}
-  //     {showInfo && (
-  //       <InfoIcon
-  //         onClick={() => handleOpenInfoModal("info", row)}
-  //       />
-  //     )}
-  //   </>
-  // );
-
-  const openDetailsHandler = (row) => {
-    const { original } = row;
-    navigateTo(`/view-details/${original.id}`, {
-      state: { ...original, reqType: reqType },
-    });
-  };
-
   return (
     <MainWrapper className="main" isSearchBarVisible={true}>
-      {showMainSearch && <SearchBarWrapper>
-            <SearchBar
-              placeholder="Search"
-              globalFiltering={globalFiltering}
-              setGlobalFiltering={setGlobalFiltering}
-            />
-      </SearchBarWrapper>}
-      {/* <SecondaryWrapper
-        className="secondary"
-        showColVisibilityDropDown={showColVisibilityDropDown}
-        showExportAsDropDown={showExportAsDropDown}
-      >
-        {!isMdScreen && showColVisibilityDropDown && (
-          <ColumnVisDropDown
-            columns={table.getAllLeafColumns()}
-            columnNames={columnNames}
+      {showMainSearch && (
+        <SearchBarWrapper>
+          <SearchBar
+            placeholder="Search"
+            globalFiltering={globalFiltering}
+            setGlobalFiltering={setGlobalFiltering}
           />
-        )}
-        {!isMdScreen && showExportAsDropDown && <ExportDropDown />}
-        {isMdScreen && (
-          <SearchBarWrapper>
-            <SearchBar
-              placeholder="Search"
-              globalFiltering={globalFiltering}
-              setGlobalFiltering={setGlobalFiltering}
-            />
-          </SearchBarWrapper>
-        )}
-      </SecondaryWrapper> */}
-
+        </SearchBarWrapper>
+      )}
       <StyledTableContainer className="tableContainer">
         <StyledTable
           aria-label="simple table"
@@ -297,21 +103,11 @@ const TanstackTable = ({
           className="table"
           borderAxis="xBetween"
         >
-          {/* {!isMobileScreen && ( */}
           <StyledTableHead className="TableHead">
             <StyledTableRow className="StyledTableRow">
               {table.getHeaderGroups().map((headerGroups) =>
                 headerGroups.headers.map((header, idx) => (
                   <StyledTableCell key={header.id} className="StyledTableCell">
-                    {/* {!isMobileScreen && ( */}
-                    {showColumnSearch && <MiniSearchWrapper>
-                      <MiniSearchBar
-                        filterByColumn={header?.column?.columnDef?.accessorKey}
-                        columnFiltering={columnFiltering}
-                        setColumnFiltering={setColumnFiltering}
-                      />
-                    </MiniSearchWrapper>}
-                    {/* )} */}
                     <HeaderColumn
                       onClick={header.column.getToggleSortingHandler()}
                       isFirstColumn={idx === 0 && enableBullkSelection}
@@ -329,196 +125,157 @@ const TanstackTable = ({
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                      {/* {header.column.getCanSort() && <SwapVertIcon />} */}
                     </HeaderColumn>
+                    {showColumnSearch && (
+                      <MiniSearchWrapper>
+                        <MiniSearchBar
+                          filterByColumn={
+                            header?.column?.columnDef?.accessorKey
+                          }
+                          columnFiltering={columnFiltering}
+                          setColumnFiltering={setColumnFiltering}
+                        />
+                      </MiniSearchWrapper>
+                    )}
                   </StyledTableCell>
                 ))
               )}
               <StyledTableCell className="StyledTableCell">
-                {showBulkSelect && <StyledBulkSelect>
-                  <StyledCheckBox className="checkbox" onChange={() => setEnableBullkSelection(!enableBullkSelection)}/>
-                  <span>Bulk Select</span>
-                </StyledBulkSelect>}
                 Action
+                {showBulkSelect && (
+                  <StyledBulkSelect>
+                    <StyledCheckBox
+                      className="checkbox"
+                      onChange={() =>
+                        setEnableBullkSelection(!enableBullkSelection)
+                      }
+                    />
+                    <Typography
+                      level="body-lg"
+                      fontWeight="md"
+                      textColor="var(--joy-palette-primary-100)"
+                    >
+                      Bulk Select
+                    </Typography>
+                  </StyledBulkSelect>
+                )}
               </StyledTableCell>
             </StyledTableRow>
           </StyledTableHead>
-          {/* )} */}
-          {/* {!isMobileScreen ? ( */}
           <StyledTableBody className="StyledTableBody">
             {table.getRowModel().rows.map((row) => (
               <StyledTableRow className="StyledTableRow" key={row.id}>
                 {row.getVisibleCells().map((cell, idx) => (
-                  <StyledTableCell
-                    key={cell.id}
-                    className="StyledTableCell"
-                    onClick={() => openDetailsHandler(row)}
-                  >
-                    
-                    <BodyElement isFirstDataCell={idx === 0 && enableBullkSelection}>
-                    {idx === 0 && enableBullkSelection && (
-                      <RowSelection
-                        {...{
-                          checked: row.getIsSelected(),
-                          disabled: !row.getCanSelect(),
-                          indeterminate: row.getIsSomeSelected(),
-                          onChange: row.getToggleSelectedHandler(),
-                        }}
-                      />
-                    )}
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  <StyledTableCell key={cell.id} className="StyledTableCell">
+                    <BodyElement
+                      index={idx}
+                      isFirstDataCell={idx === 0 && enableBullkSelection}
+                    >
+                      {idx === 0 && enableBullkSelection && (
+                        <RowSelection
+                          {...{
+                            checked: row.getIsSelected(),
+                            disabled: !row.getCanSelect(),
+                            indeterminate: row.getIsSomeSelected(),
+                            onChange: row.getToggleSelectedHandler(),
+                          }}
+                        />
+                      )}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </BodyElement>
                   </StyledTableCell>
                 ))}
-                {/* {!isMdScreen && ( */}
                 <StyledTableCell className="StyledTableCell">
                   <ActionButtonsWrapper className="ActionButtonsWrapper">
-                    {/* {actionButtons(row)} */}
-                    {deleteIcon && <DeleteOutlinedIcon />}
-                    {exportIcon && <FileUploadOutlinedIcon />}
-                    {moreIcon && <MoreVertOutlinedIcon />}
+                    {deleteIcon && (
+                      <Tooltip
+                        placement="bottom"
+                        variant="outlined"
+                        arrow
+                        title="Delete"
+                      >
+                        <DeleteOutlinedIcon />
+                      </Tooltip>
+                    )}
+                    {exportIcon && (
+                      <Tooltip
+                        placement="bottom"
+                        variant="outlined"
+                        arrow
+                        title="Export"
+                      >
+                        <FileUploadOutlinedIcon />
+                      </Tooltip>
+                    )}
+                    {moreIcon && MoreDropdown()}
                   </ActionButtonsWrapper>
                 </StyledTableCell>
-                {/* )} */}
               </StyledTableRow>
             ))}
           </StyledTableBody>
-          {/* ) : (
-            table.getRowModel().rows.map((row) => (
-              <MobileRowWrapper key={row.id}>
-                <MobileRowContent className="MobileRowContent">
-                  <UserLabelTitleWrapper>
-                    <UserProfileIconWrapper className="UserProfileIconWrapper">
-                      <UserProfileIcon />
-                    </UserProfileIconWrapper>
-                    <MobileDataWrapper>
-                      <MobileDataLabel>
-                        {row?.original?.application}
-                      </MobileDataLabel>
-                      <MobileDataValue>{row?.original?.screen}</MobileDataValue>
-                    </MobileDataWrapper>
-                  </UserLabelTitleWrapper>
-                  <MobileBtnWrapper>
-                    {showApprove && (
-                      <StyledButton
-                        variant="outlined"
-                        color="success"
-                        onClick={() => handleOpenBaseModal("approve", row)}
-                      >
-                        <span>Approve</span>
-                      </StyledButton>
-                    )}
-                    {showReject && (
-                      <StyledButton
-                        variant="outlined"
-                        color="error"
-                        onClick={() => handleOpenBaseModal("reject", row)}
-                      >
-                        <span>Reject</span>
-                      </StyledButton>
-                    )}
-                    {showRevoke && (
-                      <StyledButton
-                        variant="outlined"
-                        color="error"
-                        onClick={() => handleOpenBaseModal("reject", row)}
-                      >
-                        <span>Revoke</span>
-                      </StyledButton>
-                    )}
-                  </MobileBtnWrapper>
-                </MobileRowContent>
-                <MobileRowContent>
-                  <MobileDataWrapper>
-                    <MobileDataLabel>Requested By</MobileDataLabel>
-                    <MobileDataValue isDetail>
-                      {row?.original?.requestedBy}
-                    </MobileDataValue>
-                  </MobileDataWrapper>
-                  <MobileDataWrapper>
-                    <MobileDataLabel>Requested On</MobileDataLabel>
-                    <MobileDataValue isDetail>
-                      {row?.original?.requestedOn}
-                    </MobileDataValue>
-                  </MobileDataWrapper>
-                  <MobileDataWrapper>
-                    <MobileDataLabel>Requested Time</MobileDataLabel>
-                    <MobileDataValue isDetail>
-                      {row?.original?.requestedTime}
-                    </MobileDataValue>
-                  </MobileDataWrapper>
-                </MobileRowContent>
-                <ViewDetailsWrapper onClick={() => openDetailsHandler(row)}>
-                  <ChevronRightSharpIcon />
-                </ViewDetailsWrapper>
-              </MobileRowWrapper>
-            ))
-          )} */}
         </StyledTable>
       </StyledTableContainer>
 
-      {/* <PaginationWrapper>
-        <PageTextWrapper>Page {pagination.pageIndex + 1} of {table.getPageCount()}</PageTextWrapper>
-        <PaginationButton
-          onClick={() => table.firstPage()}
-          disabled={!table.getCanPreviousPage()}
+      <PaginationWrapper>
+        <PageTextWrapper>Rows per page:</PageTextWrapper>
+        <Select
+          defaultValue={table.getState().pagination.pageSize}
+          onChange={(e, val) => {
+            table.setPageSize(val);
+          }}
         >
-          <KeyboardDoubleArrowLeftIcon />
-        </PaginationButton>
-        <PaginationButton
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          <KeyboardArrowLeftIcon />
-        </PaginationButton>
-        <PaginationButton
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          <KeyboardArrowRightIcon />
-        </PaginationButton>
-        <PaginationButton
-          onClick={() => table.lastPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          <KeyboardDoubleArrowRightIcon />
-        </PaginationButton>
-      </PaginationWrapper> */}
-
-      {/* <ApproveRejectModal
-        open={openBaseModal}
-        onClose={(data) => handleCloseBaseModal(data)}
-        action={action}
-        rowData={rowData}
-      />
-      <ViewMoreModal
-        open={openViewMoreModal}
-        onClose={handleCloseViewMoreModal}
-        action={action}
-        rowData={rowData}
-      />
-      <InfoModal
-        open={openInfoModal}
-        onClose={handleCloseInfoModal}
-        action={action}
-        rowData={rowData}
-      /> */}
+          {[10, 20, 50, 100].map((item) => (
+            <Option key={item} value={item}>
+              {item}
+            </Option>
+          ))}
+        </Select>
+        <PageTextWrapper>
+          Page {pagination.pageIndex + 1} of {table.getPageCount()}
+        </PageTextWrapper>
+        <ArrowBtnWrapper>
+          <PaginationButton
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            <KeyboardArrowLeftIcon />
+          </PaginationButton>
+          <PaginationButton
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <KeyboardArrowRightIcon />
+          </PaginationButton>
+        </ArrowBtnWrapper>
+      </PaginationWrapper>
     </MainWrapper>
   );
 };
 
 export default TanstackTable;
 
-// TanstackTable.propTypes = {
-//   tableData: PropTypes.array,
-//   columnData: PropTypes.array,
-//   showColVisibilityDropDown: PropTypes.bool,
-//   showExportAsDropDown: PropTypes.bool,
-//   showApprove: PropTypes.bool,
-//   showReject: PropTypes.bool,
-//   showRevoke: PropTypes.bool,
-//   showRemoveRequest: PropTypes.bool,
-//   showViewMore: PropTypes.bool,
-//   showViewDetails: PropTypes.bool,
-//   showInfo: PropTypes.bool,
-// };
+
+const MoreDropdown = () => (
+  <Dropdown>
+            <MenuButton
+              slots={{ root: IconButton }}
+              slotProps={{ root: { variant: "plain", color: "neutral" } }}
+              sx={{padding: 0, minWidth: '1.25rem'}}
+            >
+              <MoreVertOutlinedIcon className="more-icon" />
+            </MenuButton>
+            <Menu>
+              <MenuItem>
+                <img src={FavoriteIcon} />
+                <Typography level="body-md">Add to Favorites</Typography>
+              </MenuItem>
+              <MenuItem>
+                <img src={PinnedDarkIcon} />
+                <Typography level="body-md">Pin Report</Typography>
+              </MenuItem>
+            </Menu>
+          </Dropdown>
+)

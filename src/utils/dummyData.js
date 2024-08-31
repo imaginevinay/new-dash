@@ -273,6 +273,87 @@ export const DATA = [
     accessLevel: "Can Edit",
     status: 'Published'
   },
+  {
+    id: 12,
+    name: "Restaurant Inspection",
+    type: "Workspaces",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Published'
+  },
+  {
+    id: 13,
+    name: "Survey Population",
+    type: "Report",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can View",
+    status: 'Published'
+  },
+  {
+    id: 14,
+    name: "Time Booking",
+    type: "Semantic Model",
+    workspaces: "Time Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can View",
+    status: 'Draft'
+  },
+  {
+    id: 15,
+    name: "Restaurant Inspection",
+    type: "Dashboard",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Draft'
+  },
+  {
+    id: 16,
+    name: "Restaurant Inspection",
+    type: "Workspaces",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Published'
+  },
+  {
+    id: 17,
+    name: "Restaurant Inspection",
+    type: "Workspaces",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Published'
+  },
+  {
+    id: 18,
+    name: "Restaurant Inspection",
+    type: "Workspaces",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Published'
+  },
+  {
+    id: 19,
+    name: "Restaurant Inspection",
+    type: "Workspaces",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Published'
+  },
+  {
+    id: 20,
+    name: "Restaurant Inspection",
+    type: "Workspaces",
+    workspaces: "My Workspace",
+    createdBy: "Ashish Singh",
+    accessLevel: "Can Edit",
+    status: 'Published'
+  }
 ];
 
 export const WORKSPACES_COLS = [

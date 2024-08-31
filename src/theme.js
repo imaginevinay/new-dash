@@ -15,8 +15,12 @@ const theme = extendTheme({
           700: undefined,
           800: undefined,
           900: undefined,
+        },
+        secondary: {
           'accordionHover': 'rgba(212, 175, 55, 0.10)',
-          'disabledText': '#89939E'
+          'disabledText': '#89939E',
+          'lightYellow': 'rgba(212, 175, 55, 0.10)',
+          'dividerColor': 'rgba(99 107 116/0.2)'
         },
         danger: {
           50: undefined,
@@ -127,6 +131,15 @@ const theme = extendTheme({
         }
       }
     },
+    JoyCheckbox: {
+      styleOverrides: {
+        root: {
+          "& .MuiCheckbox-checkbox.Mui-checked": {
+            backgroundColor: 'var(--joy-palette-primary-100)'
+          }
+        }
+      }
+    },
     JoySwitch: {
       styleOverrides: {
         root : {
@@ -145,6 +158,13 @@ const theme = extendTheme({
             backgroundColor: 'rgba(212, 175, 55, 0.10)',
             color: "#D4AF37"
           }
+        }
+      }
+    },
+    JoyTypography: {
+      styleOverrides: {
+        root: {
+          color : '#212121'
         }
       }
     }

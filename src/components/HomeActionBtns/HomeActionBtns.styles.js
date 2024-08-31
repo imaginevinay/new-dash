@@ -15,16 +15,16 @@ export const ButtonWrapper = styled(ButtonGroup)(()=> ({
 
 
 export const ChartButton = styled(Button)(({theme})=> ({
-    background: theme.palette.primary[100],
+    background: theme.palette.secondary['lightYellow'],
     borderRadius: '0.25rem',
-    color: theme.palette.primary[50],
+    color: theme.palette.primary[100],
     border: 'none',
     borderLeft: 'none !important',
     borderRight: 'none !important',
     display: 'flex',
     gap: '0.62rem',
     ":hover": {
-        background : theme.palette.primary[100],
+        background : theme.palette.secondary['lightYellow'],
     }
 }))
 

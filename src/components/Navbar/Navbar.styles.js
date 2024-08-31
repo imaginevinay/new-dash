@@ -43,13 +43,12 @@ export const StyledLink = styled(Link)(() => ({
 export const MenuButtonStyled = styled(MenuButton)(({ theme, isActive }) => ({
     display: 'flex',
     alignItems: 'center',
-    gap: '0.62rem',
     color: theme.palette.primary[50],
     textDecorationLine : isActive ? 'underline' : 'none',
     padding: 0,
     fontSize: theme.vars.fontSize.md,
     fontWeight: theme.vars.fontSize.md,
-    ":hover": {
+    "&:hover": {
         background : 'transparent',
         color: theme.palette.primary[50],
     }

@@ -92,7 +92,7 @@ export const VisualiseButton = styled(Button)(({ theme, isactive }) => ({
   width: "100%",
   borderRadius: "2.0625rem",
   background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
-  color: isactive==='true' ? theme.palette.primary[50]:theme.palette.primary['disabledText'],
+  color: isactive==='true' ? theme.palette.primary[50]:theme.palette.secondary['disabledText'],
   fontSize: "1rem",
   fontWeight: 400,
   marginTop: 'auto',
@@ -304,7 +304,7 @@ export const WrapperBox = styled('div')({
 export const AccordionSummaryBtn = styled(AccordionSummary)(({theme})=>({
   // padding: '0.75rem',
   "&:hover": {
-    backgroundColor: theme.palette.primary['accordionHover'],
+    backgroundColor: theme.palette.secondary['accordionHover'],
     "& p" : {
       color: theme.palette.primary[100],
     },
@@ -313,7 +313,7 @@ export const AccordionSummaryBtn = styled(AccordionSummary)(({theme})=>({
     },
   },
   "& .MuiAccordionSummary-button:hover" : {
-    backgroundColor: theme.palette.primary['accordionHover'],
+    backgroundColor: theme.palette.secondary['accordionHover'],
   },
 "& .MuiAccordionSummary-button" : {
   padding: '0.75rem',
@@ -348,7 +348,7 @@ export const AxisButton = styled(Button)(({theme})=>({
   borderRadius: '0.25rem',
   fontWeight: 400,
   "&:hover": {
-    background: theme.palette.primary['accordionHover'],
+    background: theme.palette.secondary['accordionHover'],
     color: theme.palette.primary[100],
   }
 }))

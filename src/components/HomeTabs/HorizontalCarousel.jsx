@@ -14,13 +14,14 @@ const CustomArrow = ({ direction, onClick }) => (
       position: "absolute",
       top: "-4rem",
       right: direction === "next" ? "0" : "40px",
+      "&:hover": {backgroundColor: 'inherit'}
     }}
   >
     {direction === "next" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
   </IconButton>
 );
 
-function HorizontalCarousel({ data }) {
+function HorizontalCarousel({ data, pinned }) {
   const settings = {
     dots: false,
     infinite: false,
@@ -35,7 +36,7 @@ function HorizontalCarousel({ data }) {
     <Styled.Wrapper className="slider-container">
       <Slider {...settings} className="CardsView">
         {data.map((item) => (
-          <CardsView key={item.id} cardData={item} />
+          <CardsView key={item.id} cardData={item} pinned={pinned}/>
         ))}
       </Slider>
     </Styled.Wrapper>

@@ -30,19 +30,11 @@ export const SearchBarWrapper = styled(Box)(() => ({
 export const StyledTableContainer = styled(Sheet)(() => ({
   boxShadow: "none",
   background: "#FFF",
-  height: '35vh',
   overflow: 'auto',
   position: 'relative',
-  // width: '100%',
-  // overflowX: 'hidden',
-  // [theme.breakpoints.down('md')]: {
-  //   height: '62vh',
-  //   border: 'none',
-  // },
-  // [theme.breakpoints.down('xs')]: {
-  //   height: '51.6vh',
-  //   overflowX: 'hidden',
-  // },
+  height: '57rem',
+  // border: `1px solid ${theme.palette.secondary['dividerColor']}`,
+  // borderTop: 0
 }));
 
 export const StyledTable = styled(Table)(() => ({
@@ -56,7 +48,6 @@ export const StyledTable = styled(Table)(() => ({
       borderBottom: '1px solid rgba(128, 128, 128, 0.25)',
     }
   },
-
   "& tbody": {
     "& td" : {
       padding : 0
@@ -67,14 +58,10 @@ export const StyledTable = styled(Table)(() => ({
 }));
 
 export const MiniSearchWrapper = styled(Box)(() => ({
-  marginBottom: "2rem",
+  marginTop: "1rem",
 }));
 
-export const StyledTableHead = styled("thead")(() => ({
-  // "& .MuiTableCell-head": {
-  //   backgroundColor: theme.palette.background.paper
-  // }
-  
+export const StyledTableHead = styled("thead")(() => ({  
   "& tr": {
     fontSize: '1.125rem',
     fontWeight: 600,
@@ -85,9 +72,6 @@ export const StyledTableHead = styled("thead")(() => ({
 }));
 
 export const StyledTableBody = styled("tbody")(() => ({
-  // "& .MuiTableCell-head": {
-  //   backgroundColor: theme.palette.background.paper
-  // }
   "& tr": {
     fontSize: '1.125rem',
     fontWeight: 400
@@ -118,49 +102,36 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const PaginationWrapper = styled(Box)(({ theme }) => ({
+export const PaginationWrapper = styled(Box)(() => ({
   display: "flex",
   flexDirection: "row",
   gap: "1.5rem",
   alignItems: "center",
   justifyContent: "flex-end",
   padding: "1rem",
-  border: "1px solid #dcdcdc",
-  borderTop: 0,
-  boxShadow: "0px 0px 6px 0px rgba(185, 187, 190, 0.25)",
-  [theme.breakpoints.down("xs")]: {
-    gap: "0.5rem",
-    padding: "1.4rem",
-    marginTop: 0,
-    justifyContent: "center",
-  },
+  // border: `1px solid ${theme.palette.secondary['dividerColor']}`,
+  // borderTop: 0
 }));
 
 export const PaginationButton = styled(Button)(({ theme, disabled }) => ({
-  border: "0.5px solid #212121",
+  border: `0.5px solid ${theme.palette.secondary['disabledText']}`,
   padding: "5px",
   width: "2rem",
-  borderRadius: "2.75rem",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   opacity: disabled ? 0.6 : 1,
   minWidth: "auto",
-  background: "#F5F6FA",
+  background: theme.palette.primary[400],
   cursor: disabled ? "not-allowed" : "pointer",
   "& svg": {
     width: "2rem",
     height: "1.2rem",
-    color: theme.palette.text.primary,
+    color: theme.palette.primary[200],
   },
-  [theme.breakpoints.down("xs")]: {
-    padding: "4px",
-    width: "2rem",
-    "& svg": {
-      width: "2rem",
-      height: "1rem",
-    },
-  },
+  "&:hover": {
+    background: theme.palette.primary[400]
+  }
 }));
 
 export const MobileRowWrapper = styled(Box)(({ theme }) => ({
@@ -247,27 +218,27 @@ export const StyledInput = styled(Input)(({theme}) => ({
   fontSize: '0.875rem',
   fontWeight: 400,
   color: '#ABB7C2',
-  borderRadius: '0.625rem'
+  borderRadius: '0.625rem',
+  "& ::placeholder": {
+      textAlign: "center"
+    }
 }));
 
-export const StyledBulkSelect = styled('div')(() => ({
+export const StyledBulkSelect = styled('div')(({theme}) => ({
   border: 'none',
   padding: '0.75rem 1.5rem',
-  background: '#F5F5F5',
-  boxShadow: '0px 4px 12px 0px rgba(13, 10, 44, 0.06)',
+  background: theme.palette.secondary['lightYellow'],
   fontSize: '1.125rem',
   fontWeight: 500,
-  color: '#212121',
   borderRadius: '0.25rem',
-  marginBottom: '2rem',
+  marginTop: '1rem',
   display: 'flex',
   gap: '0.62rem',
   alignItems: 'center',
   justifyContent:'center',
-  "& span": {
-    minWidth: 'fit-content'
+  "& .MuiTypography-root": {
+    color: theme.palette.primary[100]
   }
-  
 }));
 
 export const StyledCheckBox = styled(Checkbox)(()=> ({
@@ -282,8 +253,17 @@ export const HeaderColumn = styled('span')(({isFirstColumn})=> ({
   gap: '2rem'
 }))
 
-export const BodyElement = styled('span')(({isFirstDataCell})=> ({
+export const BodyElement = styled('span')(({isFirstDataCell, index})=> ({
   display: isFirstDataCell ? 'flex' : 'block',
   marginLeft: isFirstDataCell ? '1rem' : '0',
-  gap: '2rem'
+  gap: '2rem',
+  textAlign: index === 0 ? 'left': 'center',
+  width: index === 0 ? 'fit-content': 'auto',
+  paddingLeft: index === 0 ? '1rem': '0'
 }))
+
+
+export const ArrowBtnWrapper = styled('div')({
+  display: 'flex',
+  gap: '0.5rem'
+})

@@ -12,6 +12,7 @@ const buttonList = [
   { id: 4, label: "Goals", type: "link", route: "/goals" },
   { id: 5, label: "Apps", type: "link", route: "/apps" },
   { id: 6, label: "Monitor", type: "link", route: "/monitor" },
+  { id: 7, label: "Help & Support", type: "link", route: "/help" },
 ];
 
 const Navbar = () => {

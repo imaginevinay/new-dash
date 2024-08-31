@@ -93,6 +93,7 @@ export const CardContentWrapper = styled(CardContent)(() => ({
   justifyContent: "space-between",
   fontSize: "0.75rem",
   color: "#212121",
+  alignItems: 'center',
   "& .details": {
     display: "flex",
     alignItems: "center",

@@ -16,11 +16,10 @@ export const TabsWrapper = styled(Tabs)(({ theme }) => ({
 
 export const StyledTab = styled(Tab)(({ theme }) => ({
     opacity: '0.5',
-    marginRight: '2.5rem',
+    marginRight: '1.25rem',
     borderRadius: '2.5rem',
-    border: '1px solid #89939E',
     "&:hover": {
-      backgroundColor: "transparent !important",
+      backgroundColor: "inherit",
     },
     "&.Mui-selected": {
       backgroundColor: theme.palette.primary[100],
@@ -31,6 +30,19 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
         background: 'transparent',
       },
     },
+    "&:not(.Mui-selected, [aria-selected='true'])": {
+      color: theme.palette.primary[100],
+      backgroundColor: theme.palette.primary[50],
+      border: `1px solid ${theme.palette.primary[100]}`,
+      opacity: 1, 
+      "& .MuiSvgIcon-root": {
+        color: theme.palette.primary[100],
+      }
+    },
+    "&:not(.Mui-selected, [aria-selected='true']):hover": {
+      backgroundColor: 'inherit',
+      color: theme.palette.primary[100],
+    }
   }));
 
 

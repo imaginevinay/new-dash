@@ -8,9 +8,9 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 export default function AllFavTabs() {
   return (
     <Styled.TabsWrapper aria-label="Basic tabs" defaultValue={0}>
-      <TabList disableUnderline>
+      <TabList disableUnderline sx={{mb: '2.75rem'}}>
         <Styled.StyledTab><InsertDriveFileOutlinedIcon />All</Styled.StyledTab>
-        <Styled.StyledTab><StarBorderOutlinedIcon />Favorite</Styled.StyledTab>
+        <Styled.StyledTab><StarBorderOutlinedIcon />Favorites</Styled.StyledTab>
       </TabList>
       <Styled.TabPanelWrapper value={0}>
         <TanstackTable tableData={DATA} columnData={DATA_COLS} showColumnSearch showBulkSelect exportIcon moreIcon/>
