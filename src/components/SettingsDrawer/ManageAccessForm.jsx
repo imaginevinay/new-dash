@@ -100,7 +100,7 @@ const ManageAccessForm = () => {
             <Styled.CreateWorkspaceBtn width={"auto"}>
               Apply
             </Styled.CreateWorkspaceBtn>
-            <Styled.CreateWorkspaceBtn width={"auto"}>
+            <Styled.CreateWorkspaceBtn width={"auto"} cancelBtn={true}>
               Cancel
             </Styled.CreateWorkspaceBtn>
           </Styled.FlexEnd>

@@ -22,8 +22,13 @@ export const SettingsBtn = styled(Button)(({ theme }) => ({
   background: theme.palette.primary[50],
   fontSize: "1.25rem",
   fontWeight: 400,
+  // boxShadow: theme.shadow.md,
   "&:hover": {
-    background: "transparent",
+    background: theme.palette.secondary['lightYellow'],
+    color: theme.palette.primary[100],
+    "& svg": {
+      filter: 'brightness(0) saturate(100%) invert(64%) sepia(94%) saturate(320%) hue-rotate(6deg) brightness(92%) contrast(91%)'
+    }
   },
 }));
 
@@ -64,6 +69,15 @@ export const MenuButtonItem = styled(MenuButton)(({ theme }) => ({
   fontSize: theme.vars.fontSize.md,
   width: "11.625rem",
   justifyContent: "space-between",
+  backgroundColor: theme.palette.secondary['lightYellow'],
+  color: theme.palette.primary[100],
+  border: 0,
+  "& .MuiSvgIcon-root": {
+    color: theme.palette.primary[100],
+  },
+  "&:hover": {
+    backgroundColor: theme.palette.secondary['lightYellow'],
+  }
 }));
 
 export const ChartCreationWrapper = styled("div")(() => ({

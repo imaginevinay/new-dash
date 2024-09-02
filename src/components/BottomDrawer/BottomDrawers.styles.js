@@ -16,6 +16,7 @@ export const SheetMenu = styled(Sheet)(({ theme }) => ({
   border: "1px solid #B9BBBE",
   background: theme.palette.primary[50],
   cursor: "pointer",
+  boxShadow: theme.shadow.lg
 }));
 
 export const MenuTitle = styled(Typography)(({ theme }) => ({
@@ -61,19 +62,25 @@ export const FlexSpace = styled(Box)(() => ({
     marginBottom: '2.5rem'
 }));
 
-export const SearchBox = styled(Input)(() => ({
+export const SearchBox = styled(Input)(({theme}) => ({
    width: '100%',
    padding: '0.62rem 1.25rem',
-   fontSize: '1rem'
+   fontSize: '1rem',
+   backgroundColor: theme.palette.primary[50],
+   border: `1px solid ${theme.palette.secondary['secondary-hover']}`
 }));
 
-export const FlexColumn = styled(Box)(({gap = '1.75rem', noMarginBottom = false}) => ({
+export const FlexColumn = styled(Box)(({theme, gap = '1.75rem', noMarginBottom = false}) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: gap,
     marginBottom: !noMarginBottom ? '2rem' : 0,
     "& .MuiFormLabel-root": {
         fontSize: '1rem'
+    },
+    "& .MuiInput-root,.MuiTextarea-root,.MuiAutocomplete-root": {
+        backgroundColor: theme.palette.primary[50],
+        border:  `1px solid ${theme.palette.secondary['secondary-hover']}`
     }
 }));
 
@@ -84,10 +91,20 @@ export const Title = styled(Typography)(({theme}) => ({
  }));
 
 
- export const FlexGap = styled(Box)(({gap = '0.75rem'}) => ({
+ export const FlexGap = styled(Box)(({theme, gap = '0.75rem'}) => ({
     display: 'flex',
     gap: gap,
-    alignItems: 'center'
+    alignItems: 'center',
+    "& .showOnHover": {
+        display:'none'
+    },
+    "&.workspace-item:hover": {
+        fontWeight: 500,
+        background: theme.palette.secondary['secondary-hover'],
+        "& .showOnHover": {
+        display:'flex'
+    },
+    }
 }));
 
  export const WorkspaceName = styled(Typography)(({theme}) => ({
@@ -99,8 +116,9 @@ export const Title = styled(Typography)(({theme}) => ({
     
  }));
 
- export const CreateWorkspaceBtn = styled(Button)(({theme, width="100%"}) => ({
-    background: theme.palette.primary[100],
+ export const CreateWorkspaceBtn = styled(Button)(({theme, width="100%", cancelBtn=false}) => ({
+    background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+    color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     width: width,
     marginTop: 'auto',
     fontSize: '1.125rem',
@@ -150,4 +168,13 @@ export const ActionBtns = styled(Button)(({theme})=> ({
         background: theme.palette.primary[50], 
     }
 }));
+
+
+export const MoreActionsWrapper = styled("div")({
+    marginLeft: 'auto',
+    display: 'flex',
+    gap: '0.5rem',
+    alignItems: 'center',
+    marginRight: '0.5rem'
+})
 

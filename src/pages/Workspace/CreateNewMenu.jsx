@@ -3,7 +3,7 @@ import Menu from '@mui/joy/Menu';
 import MenuItem from '@mui/joy/MenuItem';
 import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
 import Dropdown from '@mui/joy/Dropdown';
-import DataFlowIcon from '../../assets/images/cursor-rays.svg'
+import DataFlowIcon from '../../assets/images/cursor-rays.svg?react'
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
 import SummarizeOutlinedIcon from '@mui/icons-material/SummarizeOutlined';
@@ -63,7 +63,7 @@ export default function CreateNewMenu({setTableData, setShowChartCreation}) {
         <MenuItem onClick={() => setIsFolderModalOpen(true)}><FolderOutlinedIcon/><span>Folder</span></MenuItem>
         <MenuItem onClick={() => setIsReportModalOpen(true)}><SummarizeOutlinedIcon/><span>Report</span></MenuItem>
         <MenuItem onClick={() => setIsChartModalOpen(true)}><EqualizerOutlinedIcon/><span>Chart</span></MenuItem>
-        <MenuItem onClick={() => setIsDataflowModalOpen(true)}><img src={DataFlowIcon}/><span>Dataflow</span></MenuItem>
+        <MenuItem onClick={() => setIsDataflowModalOpen(true)}><DataFlowIcon className="data-flow-icon"/><span>Dataflow</span></MenuItem>
       </Menu>
 
       <NewFolderModal open={isFolderModalOpen} handleFolderModalOnClose={handleFolderModalOnClose}/>

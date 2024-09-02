@@ -14,7 +14,7 @@ export const NavBarWrapper = styled('div')(({ theme }) => ({
     height: '4rem',
     padding: '0.75rem 2.5rem',
     display : 'flex',
-    backgroundColor: theme.palette.primary[100],
+    backgroundColor: theme.palette.primary[200],
     color: theme.palette.primary[50],
     gap: '3.75rem',
     justifyContent: 'space-between'

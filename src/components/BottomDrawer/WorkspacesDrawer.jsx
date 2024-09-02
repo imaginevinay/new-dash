@@ -7,6 +7,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CreateNewWorkspaceForm from "./CreateNewWorkspaceForm";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import PinnedDarkIcon from "../../assets/icons/pin-dark.svg?react";
 
 const myWorkspace = [{ id: 1, name: "My Workspace" }];
 const allWorkspaces = [
@@ -19,6 +21,7 @@ const WorkspacesDrawer = ({ open, onClose }) => {
 
   return (
     <Styled.BottomDrawer
+      className="drawer-bottom"
       anchor="bottom"
       open={open}
       onClose={onClose}
@@ -57,18 +60,26 @@ const WorkspacesDrawer = ({ open, onClose }) => {
             <Styled.FlexColumn>
               <Styled.Title>My Workspace</Styled.Title>
               {myWorkspace.map((item) => (
-                <Styled.FlexGap key={item.id}>
+                <Styled.FlexGap key={item.id} className="workspace-item">
                   <Styled.AvatarIcon src={WorkspaceImg} alt="workspace" />
                   <Styled.WorkspaceName>{item.name}</Styled.WorkspaceName>
+                  <Styled.MoreActionsWrapper className="showOnHover">
+                    <PinnedDarkIcon />
+                    <MoreVertOutlinedIcon sx={{width: '1rem', height: '1.5rem'}}/>
+                  </Styled.MoreActionsWrapper>
                 </Styled.FlexGap>
               ))}
             </Styled.FlexColumn>
             <Styled.FlexColumn>
               <Styled.Title>All</Styled.Title>
               {allWorkspaces.map((item) => (
-                <Styled.FlexGap key={item.id}>
+                <Styled.FlexGap key={item.id} className="workspace-item">
                   <img src={GroupIcon} alt="workspace" loading="lazy" />
                   <Styled.WorkspaceName>{item.name}</Styled.WorkspaceName>
+                  <Styled.MoreActionsWrapper className="showOnHover">
+                    <PinnedDarkIcon />
+                    <MoreVertOutlinedIcon sx={{width: '1rem', height: '1.5rem'}}/>
+                  </Styled.MoreActionsWrapper>
                 </Styled.FlexGap>
               ))}
             </Styled.FlexColumn>
@@ -84,8 +95,8 @@ const WorkspacesDrawer = ({ open, onClose }) => {
           </Styled.CreateWorkspaceBtn>
         ) : (
           <Styled.FlexEnd>
+            <Styled.CreateWorkspaceBtn width={'auto'} onClick={() => setIsCreateWorkspace(false)} cancelBtn={true}>Cancel</Styled.CreateWorkspaceBtn>
             <Styled.CreateWorkspaceBtn width={'auto'}>Apply</Styled.CreateWorkspaceBtn>
-            <Styled.CreateWorkspaceBtn width={'auto'} onClick={() => setIsCreateWorkspace(false)}>Cancel</Styled.CreateWorkspaceBtn>
           </Styled.FlexEnd>
         )}
       </Styled.Container>

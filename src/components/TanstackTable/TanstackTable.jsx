@@ -169,6 +169,7 @@ const TanstackTable = ({
                   <StyledTableCell key={cell.id} className="StyledTableCell">
                     <BodyElement
                       index={idx}
+                      isWorkspaceTable={showMainSearch}
                       isFirstDataCell={idx === 0 && enableBullkSelection}
                     >
                       {idx === 0 && enableBullkSelection && (

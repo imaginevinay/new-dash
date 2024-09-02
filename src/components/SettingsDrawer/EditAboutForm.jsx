@@ -50,7 +50,7 @@ import {
 
         <Styled.FlexEnd>
             <Styled.CreateWorkspaceBtn width={'auto'}>Apply Changes</Styled.CreateWorkspaceBtn>
-            <Styled.CreateWorkspaceBtn width={'auto'}>Cancel</Styled.CreateWorkspaceBtn>
+            <Styled.CreateWorkspaceBtn width={'auto'} cancelBtn={true}>Cancel</Styled.CreateWorkspaceBtn>
           </Styled.FlexEnd>
       </FormControl>
     );

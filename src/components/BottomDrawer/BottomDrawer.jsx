@@ -5,7 +5,7 @@ import { IconButton } from '@mui/joy';
 
 const BottomDrawer = ({ onClick }) => {
     return (
-        <Styled.SheetMenu onClick={onClick}>
+        <Styled.SheetMenu onClick={onClick} className='workspaces-drawer'>
           <Styled.MenuTitle>Workspaces</Styled.MenuTitle>
           <IconButton>
             <Styled.MoreIcon />

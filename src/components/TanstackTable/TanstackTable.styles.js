@@ -3,7 +3,9 @@ import { Input, styled } from "@mui/joy";
 import { Box, Button, Sheet, Table, Typography, Checkbox } from "@mui/joy";
 
 export const MainWrapper = styled(Box)(() => ({
-  position: 'relative'
+  position: 'relative',
+  width: '100%',
+  // height: '100%',
 }));
 
 export const SecondaryWrapper = styled(Box)(
@@ -21,18 +23,21 @@ export const SecondaryWrapper = styled(Box)(
     },
   })
 );
+
 export const SearchBarWrapper = styled(Box)(() => ({
   position: 'absolute',
   zIndex: 2,
-  left: '82%',
-  top: '-20%'
+  right: '45px', // Changed from left: '73.5%' to right: '0' for better responsiveness
+  top: '-4rem', // Adjusted from top: '-7%' to a fixed value
+  width: '29.1875rem'
 }));
+
 export const StyledTableContainer = styled(Sheet)(() => ({
   boxShadow: "none",
   background: "#FFF",
   overflow: 'auto',
-  position: 'relative',
-  height: '57rem',
+  // position: 'relative',
+  // height: '100%',
   // border: `1px solid ${theme.palette.secondary['dividerColor']}`,
   // borderTop: 0
 }));
@@ -253,13 +258,18 @@ export const HeaderColumn = styled('span')(({isFirstColumn})=> ({
   gap: '2rem'
 }))
 
-export const BodyElement = styled('span')(({isFirstDataCell, index})=> ({
+export const BodyElement = styled('span')(({isFirstDataCell, index, isWorkspaceTable})=> ({
   display: isFirstDataCell ? 'flex' : 'block',
   marginLeft: isFirstDataCell ? '1rem' : '0',
   gap: '2rem',
   textAlign: index === 0 ? 'left': 'center',
   width: index === 0 ? 'fit-content': 'auto',
-  paddingLeft: index === 0 ? '1rem': '0'
+  paddingLeft: (() => {
+    if (index === 0) {
+      return isWorkspaceTable ? '3rem' : '1rem';
+    }
+    return '0';
+  })()
 }))
 
 

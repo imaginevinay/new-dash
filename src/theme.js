@@ -20,7 +20,9 @@ const theme = extendTheme({
           'accordionHover': 'rgba(212, 175, 55, 0.10)',
           'disabledText': '#89939E',
           'lightYellow': 'rgba(212, 175, 55, 0.10)',
-          'dividerColor': 'rgba(99 107 116/0.2)'
+          'dividerColor': 'rgba(99 107 116/0.2)',
+          'secondary-hover': '#89939e40',
+          'secondaryBtnColor': '#F5F5F5'
         },
         danger: {
           50: undefined,
@@ -147,6 +149,38 @@ const theme = extendTheme({
         }
       }
     },
+    JoyMenuItem: {
+      styleOverrides: {
+        root: {
+          "&:not(.Mui-selected, [aria-selected='true']):hover": {
+            backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
+            color: "var(--joy-palette-primary-100)",
+            "& .MuiSvgIcon-root": {
+              color: "var(--joy-palette-primary-100)",
+            },
+            "& .data-flow-icon": {
+              filter: 'brightness(0) saturate(100%) invert(64%) sepia(94%) saturate(320%) hue-rotate(6deg) brightness(92%) contrast(91%)'
+            }
+          }
+        }
+      }
+    },
+    JoySelect: {
+      styleOverrides: {
+        root: {
+          border: 0,
+          backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
+          color: "var(--joy-palette-primary-100)",
+          "&:hover": {
+            backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
+            color: "var(--joy-palette-primary-100)",
+          },
+          "& .MuiSelect-indicator": {
+            '--Icon-color': 'var(--joy-palette-primary-100)'
+          }
+        }
+      }
+    },
     JoyOption: {
       styleOverrides: {
         root: {
@@ -165,6 +199,16 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           color : '#212121'
+        }
+      }
+    },
+    JoyAutocomplete: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused": {
+            '--Input-focusedHighlight': 'var(--joy-palette-secondary-secondary-hover)'
+          }
+          
         }
       }
     }

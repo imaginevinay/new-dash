@@ -81,7 +81,7 @@ export const TabPannnel = styled(TabPanel)(() => ({
 }));
 
 export const FlexColumn = styled(Box)(
-  ({ gap = "1.75rem", noMarginBottom = false }) => ({
+  ({ theme, gap = "1.75rem", noMarginBottom = false }) => ({
     display: "flex",
     flexDirection: "column",
     gap: gap,
@@ -89,6 +89,10 @@ export const FlexColumn = styled(Box)(
     "& .MuiFormLabel-root": {
       fontSize: "1rem",
     },
+    "& .MuiInput-root,.MuiTextarea-root,.MuiAutocomplete-root": {
+        backgroundColor: theme.palette.primary[50],
+        border:  `1px solid ${theme.palette.secondary['secondary-hover']}`
+    }
   })
 );
 
@@ -135,8 +139,9 @@ export const ActionBtns = styled(Button)(({ theme }) => ({
 }));
 
 export const CreateWorkspaceBtn = styled(Button)(
-  ({ theme, width = "100%" }) => ({
-    background: theme.palette.primary[100],
+  ({ theme, width = "100%" , cancelBtn=false}) => ({
+    background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+    color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     width: width,
     marginTop: "auto",
     fontSize: "1.125rem",
@@ -163,10 +168,12 @@ export const MenuButtonStyled = styled(MenuButton)(({ theme, isActive }) => ({
   },
 }));
 
-export const SearchBox = styled(Input)(() => ({
+export const SearchBox = styled(Input)(({ theme }) => ({
   width: "100%",
   padding: "0.63rem 1.25rem",
   fontSize: "1rem",
+  backgroundColor: theme.palette.primary[50],
+  border: `1px solid ${theme.palette.secondary["secondary-hover"]}`,
 }));
 
 export const Title = styled(Typography)(({ theme }) => ({

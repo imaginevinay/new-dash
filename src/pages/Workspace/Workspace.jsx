@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import BottomDrawer from "../../components/BottomDrawer/BottomDrawer";
 import WorkspacesDrawer from "../../components/BottomDrawer/WorkspacesDrawer";
-import SettingsIcon from "../../assets/images/settings.svg";
-import GroupIcon from "../../assets/images/groupIcon.svg";
+import SettingsIcon from "../../assets/icons/settings.svg?react";
+import GroupIcon from "../../assets/icons/groupIcon.svg?react";
 import * as Styled from "./Workspace.styles";
 import SettingsDrawer from "../../components/SettingsDrawer/SettingsDrawer";
 import CreateNewMenu from "./CreateNewMenu";
@@ -19,7 +19,7 @@ const Workspace = () => {
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState("all");
   const [tableData, setTableData] = useState([]);
-  const [showChartCreation, setShowChartCreation] = useState(true);
+  const [showChartCreation, setShowChartCreation] = useState(false);
 
   const filterWorkspaceTable = (type) => {
     return WORKSPACES_DATA.filter((workspace) => {
@@ -49,11 +49,11 @@ const Workspace = () => {
     <div>
       <Styled.Header>
         <Styled.WorkspaceTitle>
-          <img src={GroupIcon} alt="workspace" loading="lazy" />
+          <GroupIcon />
           <span>Restaurant Inspections</span>
         </Styled.WorkspaceTitle>
         <Styled.SettingsBtn onClick={() => setSettingsDrawerOpen(true)}>
-          <img src={SettingsIcon} alt="settings" loading="lazy" />
+          <SettingsIcon />
           Workspace Settings
         </Styled.SettingsBtn>
       </Styled.Header>
