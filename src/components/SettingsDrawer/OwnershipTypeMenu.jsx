@@ -18,12 +18,12 @@ export default function WorkspaceTypeMenu({ selectedItem, onSelect }) {
         onChange={handleSelect}
       >
         <Option value="view">
-        <img src={EyeIcon}/>
-        <span>Can View</span>
+          <img src={EyeIcon} />
+          <span>Can View</span>
         </Option>
         <Option value="edit">
-        <img src={EditIcon}/>
-        <span>Can Edit</span>
+          <img src={EditIcon} />
+          <span>Can Edit</span>
         </Option>
       </Select>
     );

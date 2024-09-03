@@ -198,8 +198,7 @@ export const WorkspaceName = styled(Typography)(({ theme }) => ({
 
 export const Wrapper = styled(Box)(() => ({
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+  flexDirection: 'column',
   marginBottom: "2.5rem",
   "& span": {
     fontSize: "1.125rem",
@@ -210,7 +209,16 @@ export const Wrapper = styled(Box)(() => ({
     cursor: "pointer",
   },
 }));
-
+export const AddPeopleButton = styled(Button)(({theme}) => ({
+  gap: '1rem',
+  alignItems: 'center',
+  background: theme.palette.primary[100],
+  color: theme.palette.primary[50],
+  "&:hover": {
+    background: theme.palette.primary[100],
+    color: theme.palette.primary[50],
+  }
+}))
 export const div = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
@@ -227,4 +235,24 @@ export const SettingsIcon = styled(SettingsOutlinedIcon)(() => ({
 export const MenuStyled = styled(Menu)(() => ({
     zIndex: 10000,
 
+}));
+
+export const AddPeopleTitle = styled("div")({
+  display: 'flex',
+  gap: '1.25rem',
+  alignItems: 'center',
+  cursor: 'pointer'
+})
+
+
+export const AddBtn = styled(Button)(({ theme }) => ({
+  background: theme.palette.primary[100],
+  color: theme.palette.primary[50],
+  padding: '0 1.5rem',
+  fontSize: '1rem',
+  lineHeight: 'normal',
+  "&:hover": {
+    background: theme.palette.primary[100],
+    color: theme.palette.primary[50],
+  }
 }));
