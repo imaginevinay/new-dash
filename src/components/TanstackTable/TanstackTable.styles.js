@@ -259,9 +259,10 @@ export const HeaderColumn = styled('span')(({isFirstColumn})=> ({
 }))
 
 export const BodyElement = styled('span')(({isFirstDataCell, index, isWorkspaceTable})=> ({
-  display: isFirstDataCell ? 'flex' : 'block',
+  display: isFirstDataCell ? 'flex' : index===0 ? 'flex' : 'block',
+  alignItems: 'center',
   marginLeft: isFirstDataCell ? '1rem' : '0',
-  gap: '2rem',
+  gap: isFirstDataCell ? '2rem' : index===0 ? '0.5rem': 0,
   textAlign: index === 0 ? 'left': 'center',
   width: index === 0 ? 'fit-content': 'auto',
   paddingLeft: (() => {

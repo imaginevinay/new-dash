@@ -12,12 +12,23 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
-import FavoriteIcon from '../../assets/icons/star.svg';
+import FavoriteIcon from "../../assets/icons/star.svg";
 import PinnedDarkIcon from "../../assets/icons/pin-dark.svg";
+import FavoriteFilledIcon from '../../assets/icons/favorite-filled.svg?react';
+import PinnedFilledIcon from '../../assets/icons/pinned-filled.svg?react'
 import RowSelection from "./RowSelection";
 import MiniSearchBar from "./MiniSearchBar";
 import SearchBar from "./SearchBar";
-import { Select, Typography, Option, Dropdown, MenuButton, IconButton, Menu, MenuItem } from "@mui/joy";
+import {
+  Select,
+  Typography,
+  Option,
+  Dropdown,
+  MenuButton,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/joy";
 import { Tooltip } from "@mui/joy";
 import {
   MainWrapper,
@@ -40,9 +51,6 @@ import {
   PageTextWrapper,
 } from "./TanstackTable.styles";
 
-
-
-
 const TanstackTable = ({
   tableData,
   columnData,
@@ -52,6 +60,8 @@ const TanstackTable = ({
   deleteIcon,
   exportIcon,
   moreIcon,
+  onToggleFavorite,
+  onTogglePinned,
 }) => {
   const [globalFiltering, setGlobalFiltering] = useState("");
   const [columnFiltering, setColumnFiltering] = useState([]);
@@ -73,6 +83,7 @@ const TanstackTable = ({
       rowSelection: rowSelection,
       pagination,
     },
+    initialState: { columnVisibility: { isFavorite: false } },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFiltering,
@@ -84,6 +95,29 @@ const TanstackTable = ({
     onRowSelectionChange: setRowSelection,
     enableRowSelection: true,
   });
+
+  const MoreDropdown = (val) => (
+    <Dropdown>
+      <MenuButton
+        slots={{ root: IconButton }}
+        slotProps={{ root: { variant: "plain", color: "neutral" } }}
+        sx={{ padding: 0, minWidth: "1.25rem" }}
+      >
+        <MoreVertOutlinedIcon className="more-icon" />
+      </MenuButton>
+      <Menu>
+        <MenuItem onClick={() => onToggleFavorite(val)}>
+          <img src={FavoriteIcon} />
+          <Typography level="body-md">Add to Favorites</Typography>
+        </MenuItem>
+        <MenuItem onClick={() => onTogglePinned(val)}>
+          <img src={PinnedDarkIcon} />
+          <Typography level="body-md">Pin Report</Typography>
+        </MenuItem>
+      </Menu>
+    </Dropdown>
+  );
+  
 
   return (
     <MainWrapper className="main" isSearchBarVisible={true}>
@@ -182,10 +216,9 @@ const TanstackTable = ({
                           }}
                         />
                       )}
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell,cell.getContext())}
+                      {idx === 0 && row.original.isFavorite && <FavoriteFilledIcon/>}
+                      {idx === 0 && row.original.isPinned && <PinnedFilledIcon/>}
                     </BodyElement>
                   </StyledTableCell>
                 ))}
@@ -211,7 +244,7 @@ const TanstackTable = ({
                         <FileUploadOutlinedIcon />
                       </Tooltip>
                     )}
-                    {moreIcon && MoreDropdown()}
+                    {moreIcon && MoreDropdown(Number(row.id)+1)}
                   </ActionButtonsWrapper>
                 </StyledTableCell>
               </StyledTableRow>
@@ -258,25 +291,3 @@ const TanstackTable = ({
 
 export default TanstackTable;
 
-
-const MoreDropdown = () => (
-  <Dropdown>
-            <MenuButton
-              slots={{ root: IconButton }}
-              slotProps={{ root: { variant: "plain", color: "neutral" } }}
-              sx={{padding: 0, minWidth: '1.25rem'}}
-            >
-              <MoreVertOutlinedIcon className="more-icon" />
-            </MenuButton>
-            <Menu>
-              <MenuItem>
-                <img src={FavoriteIcon} />
-                <Typography level="body-md">Add to Favorites</Typography>
-              </MenuItem>
-              <MenuItem>
-                <img src={PinnedDarkIcon} />
-                <Typography level="body-md">Pin Report</Typography>
-              </MenuItem>
-            </Menu>
-          </Dropdown>
-)

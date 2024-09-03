@@ -171,7 +171,7 @@ export const DATA_COLS = [
   {
     header: "Status",
     accessorKey: "status",
-  },
+  }
 ];
 export const DATA = [
   {
@@ -181,7 +181,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 2,
@@ -190,7 +192,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can View",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 3,
@@ -199,7 +203,9 @@ export const DATA = [
     workspaces: "Time Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can View",
-    status: 'Draft'
+    status: 'Draft',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 4,
@@ -208,7 +214,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Draft'
+    status: 'Draft',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 5,
@@ -217,7 +225,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 6,
@@ -226,7 +236,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 7,
@@ -235,7 +247,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 8,
@@ -244,7 +258,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 9,
@@ -253,7 +269,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 10,
@@ -262,7 +280,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 11,
@@ -271,7 +291,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 12,
@@ -280,7 +302,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 13,
@@ -289,7 +313,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can View",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 14,
@@ -298,7 +324,9 @@ export const DATA = [
     workspaces: "Time Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can View",
-    status: 'Draft'
+    status: 'Draft',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 15,
@@ -307,7 +335,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Draft'
+    status: 'Draft',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 16,
@@ -316,7 +346,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 17,
@@ -325,7 +357,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 18,
@@ -334,7 +368,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 19,
@@ -343,7 +379,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   },
   {
     id: 20,
@@ -352,7 +390,9 @@ export const DATA = [
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
     accessLevel: "Can Edit",
-    status: 'Published'
+    status: 'Published',
+    isFavorite: false,
+    isPinned: false
   }
 ];
 
