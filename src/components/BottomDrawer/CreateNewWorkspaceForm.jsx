@@ -24,7 +24,7 @@ const CreateNewWorkspaceForm = () => {
       </Styled.FlexColumn>
       <Styled.FlexColumn gap={"1rem"}>
         <FormLabel>Contact List</FormLabel>
-        <AutocompleteInput placeholder={"Enter Users or groups"}/>
+        <AutocompleteInput placeholder={"Enter Users or groups"} isContactList={true}/>
       </Styled.FlexColumn>
 
       <Styled.FlexColumn gap={"1rem"}>

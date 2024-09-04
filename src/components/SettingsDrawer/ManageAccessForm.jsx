@@ -22,10 +22,12 @@ import ArrowLeftIcon from "../../assets/icons/arrow-left.svg?react";
 import { ArrowDropDown, KeyboardArrowDown } from "@mui/icons-material";
 import EyeIcon from "../../assets/icons/eye.svg?react";
 import EditIcon from "../../assets/icons/edit.svg?react";
+import AutocompleteInput from "../AutocompleteInput/AutocompleteInput";
 
 const ManageAccessForm = () => {
   const [menuSelect, setMenuSelect] = useState("workspace");
   const [showAddPeople, setShowAddPeople] = useState(false);
+  const [showFileAccessBox,setShowFileAccessBox] = useState(false)
   const [adminUsers] = useState([
     {
       id: 1,
@@ -66,14 +68,11 @@ const ManageAccessForm = () => {
     );
   };
 
-  // const handleAddPeople = () => {
-  //   setShowAddPeople(true)
-  // }
-
   return (
     <>
       {!showAddPeople ? (
         <Styled.Wrapper>
+          {showFileAccessBox && <ArrowLeftIcon style={{marginRight : '1rem', cursor: 'pointer'}} onClick={() => setShowFileAccessBox(false)}/> }
           <WorkspaceTypeMenu
             selectedItem={menuSelect}
             onSelect={handleMenuSelect}
@@ -140,7 +139,7 @@ const ManageAccessForm = () => {
           </Styled.div>
         ) : (
           <Styled.div>
-            <Styled.Wrapper>
+            {!showFileAccessBox && <><Styled.Wrapper>
               <Styled.SearchBox
                 placeholder="Search the report or charts"
                 startDecorator={<SearchIcon />}
@@ -160,10 +159,34 @@ const ManageAccessForm = () => {
               ))}
             </Styled.FlexColumn>
             <Styled.FlexEnd>
-              <Styled.CreateWorkspaceBtn width={"auto"}>
+              <Styled.CreateWorkspaceBtn width={"auto"} onClick={() => setShowFileAccessBox(true)}>
                 Next
               </Styled.CreateWorkspaceBtn>
+            </Styled.FlexEnd></>}
+            {showFileAccessBox && <>
+              <Styled.FlexColumn>
+                <Typography level="body-sm">Selected Files</Typography>
+                <AutocompleteInput placeholder={"Selected Files"} isFilesAutoComplete={true}/>
+              </Styled.FlexColumn>
+              <Styled.FlexColumn>
+                <Typography level="body-sm">Users with Edit Access</Typography>
+                <AutocompleteInput placeholder={"Select Users"} isContactList={true}/>
+              </Styled.FlexColumn>
+              <Styled.FlexColumn>
+                <Typography level="body-sm">Users with View Access</Typography>
+                <AutocompleteInput placeholder={"Select Users"} isContactList={true}/>
+              </Styled.FlexColumn>
+
+              <Styled.FlexEnd>
+              <Styled.CreateWorkspaceBtn width={"auto"}>
+                Apply
+              </Styled.CreateWorkspaceBtn>
+              <Styled.CreateWorkspaceBtn width={"auto"} cancelBtn={true}>
+                Cancel
+              </Styled.CreateWorkspaceBtn>
             </Styled.FlexEnd>
+              
+            </>}
           </Styled.div>
         )
       ) : (

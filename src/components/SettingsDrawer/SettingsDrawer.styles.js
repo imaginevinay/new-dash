@@ -198,8 +198,8 @@ export const WorkspaceName = styled(Typography)(({ theme }) => ({
 
 export const Wrapper = styled(Box)(() => ({
   display: "flex",
-  flexDirection: 'column',
   marginBottom: "2.5rem",
+  alignItems: 'center',
   "& span": {
     fontSize: "1.125rem",
   },
