@@ -51,9 +51,9 @@ export const ButtonItem = styled(Button)(({ theme, isSelected }) => ({
   fontSize: theme.vars.fontSize.md,
   fontWeight: 400,
   "&:hover": {
-    background: isSelected
-      ? theme.palette.primary[100]
-      : theme.palette.primary[50],
+    background: theme.palette.primary[100],
+    color: theme.palette.primary[50],
+    border: "1px solid #D4AF37"
   },
 }));
 
@@ -69,14 +69,14 @@ export const MenuButtonItem = styled(MenuButton)(({ theme }) => ({
   fontSize: theme.vars.fontSize.md,
   width: "11.625rem",
   justifyContent: "space-between",
-  backgroundColor: theme.palette.secondary['lightYellow'],
-  color: theme.palette.primary[100],
+  backgroundColor: theme.palette.primary[400],
+  // color: theme.palette.primary[100],
   border: 0,
   "& .MuiSvgIcon-root": {
-    color: theme.palette.primary[100],
+    // color: theme.palette.primary[100],
   },
   "&:hover": {
-    backgroundColor: theme.palette.secondary['lightYellow'],
+    backgroundColor: theme.palette.primary[400],
   }
 }));
 

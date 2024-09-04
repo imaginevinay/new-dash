@@ -34,14 +34,17 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
       color: theme.palette.primary[100],
       backgroundColor: theme.palette.primary[50],
       border: `1px solid ${theme.palette.primary[100]}`,
-      opacity: 1, 
+      opacity: 1,
       "& .MuiSvgIcon-root": {
         color: theme.palette.primary[100],
-      }
+      },
     },
     "&:not(.Mui-selected, [aria-selected='true']):hover": {
-      backgroundColor: 'inherit',
-      color: theme.palette.primary[100],
+      backgroundColor: theme.palette.primary[100],
+      color: theme.palette.primary[50],
+      "& .MuiSvgIcon-root": {
+        color: theme.palette.primary[50],
+      },
     }
   }));
 

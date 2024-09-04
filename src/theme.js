@@ -155,13 +155,13 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           "&:not(.Mui-selected, [aria-selected='true']):hover": {
-            backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
-            color: "var(--joy-palette-primary-100)",
+            // backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
+            // color: "var(--joy-palette-primary-100)",
             "& .MuiSvgIcon-root": {
-              color: "var(--joy-palette-primary-100)",
+              // color: "var(--joy-palette-primary-100)",
             },
             "& .data-flow-icon": {
-              filter: 'brightness(0) saturate(100%) invert(64%) sepia(94%) saturate(320%) hue-rotate(6deg) brightness(92%) contrast(91%)'
+              // filter: 'brightness(0) saturate(100%) invert(64%) sepia(94%) saturate(320%) hue-rotate(6deg) brightness(92%) contrast(91%)'
             }
           }
         }
@@ -171,14 +171,14 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           border: 0,
-          backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
-          color: "var(--joy-palette-primary-100)",
+          // backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
+          // color: "var(--joy-palette-primary-100)",
           "&:hover": {
-            backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
-            color: "var(--joy-palette-primary-100)",
+            // backgroundColor: 'var(--joy-palette-secondary-lightYellow)',
+            // color: "var(--joy-palette-primary-100)",
           },
           "& .MuiSelect-indicator": {
-            '--Icon-color': 'var(--joy-palette-primary-100)'
+            // '--Icon-color': 'var(--joy-palette-primary-100)'
           }
         }
       }
@@ -187,12 +187,12 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           "&:not(.Mui-selected, [aria-selected='true']):hover": {
-            backgroundColor: 'rgba(212, 175, 55, 0.10)',
-            color: "#D4AF37"
+            // backgroundColor: 'rgba(212, 175, 55, 0.10)',
+            // color: "#D4AF37"
           },
           "&.MuiOption-highlighted.Mui-selected": {
-            backgroundColor: 'rgba(212, 175, 55, 0.10)',
-            color: "#D4AF37"
+            // backgroundColor: 'rgba(212, 175, 55, 0.10)',
+            // color: "#D4AF37"
           }
         }
       }
