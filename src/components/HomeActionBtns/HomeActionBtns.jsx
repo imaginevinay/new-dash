@@ -15,7 +15,6 @@ const HomeActionBtns = () => {
           <Styled.AddIconWhite color="primary" />
           <Typography
             level="body-lg"
-            textColor="var(--joy-palette-primary-100)"
             fontWeight="md"
           >
             Create Charts
@@ -25,7 +24,6 @@ const HomeActionBtns = () => {
           <Styled.AddIconWhite color="primary" />
           <Typography
             level="body-lg"
-            textColor="var(--joy-palette-primary-100)"
             fontWeight="md"
           >
             Create Report

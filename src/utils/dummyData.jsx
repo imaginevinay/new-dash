@@ -1,3 +1,4 @@
+// import IndeterminateCheckbox from '../components/TanstackTable/IndeterminateCheckbox';
 export const recentlyViewed = [
   {
     id: 1,
@@ -151,6 +152,9 @@ export const DATA_COLS = [
   {
     header: "Name",
     accessorKey: "name",
+    // cell: ({ row }) => {
+    //   return <div style={{textAlign: 'left'}}>{row.original.name}</div>
+    // }
   },
   {
     header: "Type",
@@ -187,7 +191,7 @@ export const DATA = [
   },
   {
     id: 2,
-    name: "Survey Population",
+    name: "Restaurant Inspection",
     type: "Report",
     workspaces: "My Workspace",
     createdBy: "Ashish Singh",
@@ -198,7 +202,7 @@ export const DATA = [
   },
   {
     id: 3,
-    name: "Time Booking",
+    name: "Restaurant Inspection",
     type: "Semantic Model",
     workspaces: "Time Workspace",
     createdBy: "Ashish Singh",

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function RowSelection({ indeterminate, ...rest }) {
+function IndeterminateCheckbox({ indeterminate, ...rest }) {
     const ref = useRef(null);
   
     useEffect(() => {
@@ -12,4 +12,4 @@ function RowSelection({ indeterminate, ...rest }) {
     return <input type="checkbox" ref={ref} {...rest} />;
   }
   
-  export default RowSelection;
+  export default IndeterminateCheckbox;

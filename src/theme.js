@@ -15,6 +15,8 @@ const theme = extendTheme({
           700: undefined,
           800: undefined,
           900: undefined,
+          solidBg: '#D4AF37',
+          solidColor: '#ffffff',
         },
         secondary: {
           'accordionHover': 'rgba(212, 175, 55, 0.10)',

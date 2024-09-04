@@ -15,8 +15,9 @@ import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import FavoriteIcon from "../../assets/icons/star.svg";
 import PinnedDarkIcon from "../../assets/icons/pin-dark.svg";
 import FavoriteFilledIcon from '../../assets/icons/favorite-filled.svg?react';
-import PinnedFilledIcon from '../../assets/icons/pinned-filled.svg?react'
-import RowSelection from "./RowSelection";
+import PinnedFilledIcon from '../../assets/icons/pinned-filled.svg?react';
+import ExportIcon from '../../assets/icons/upload.svg?react';
+// import RowSelection from "./RowSelection";
 import MiniSearchBar from "./MiniSearchBar";
 import SearchBar from "./SearchBar";
 import {
@@ -28,6 +29,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Button,
 } from "@mui/joy";
 import { Tooltip } from "@mui/joy";
 import {
@@ -41,22 +43,23 @@ import {
   StyledTableRow,
   ActionButtonsWrapper,
   StyledTableBody,
-  StyledBulkSelect,
-  StyledCheckBox,
-  HeaderColumn,
-  BodyElement,
+  // StyledBulkSelect,
+  // StyledCheckBox,
+  // HeaderColumn,
+  // BodyElement,
   PaginationWrapper,
   PaginationButton,
   SearchBarWrapper,
   PageTextWrapper,
 } from "./TanstackTable.styles";
+// import IndeterminateCheckbox from "./IndeterminateCheckbox";
 
 const TanstackTable = ({
   tableData,
   columnData,
   showColumnSearch,
   showMainSearch,
-  showBulkSelect,
+  // showBulkSelect,
   deleteIcon,
   exportIcon,
   moreIcon,
@@ -67,7 +70,7 @@ const TanstackTable = ({
   const [columnFiltering, setColumnFiltering] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
-  const [enableBullkSelection, setEnableBullkSelection] = useState(false);
+  // const [enableBullkSelection, setEnableBullkSelection] = useState(false);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -83,7 +86,6 @@ const TanstackTable = ({
       rowSelection: rowSelection,
       pagination,
     },
-    initialState: { columnVisibility: { isFavorite: false } },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFiltering,
@@ -118,9 +120,10 @@ const TanstackTable = ({
     </Dropdown>
   );
   
+  const selectedRows = table.getSelectedRowModel().flatRows;
 
   return (
-    <MainWrapper className="main" isSearchBarVisible={true}>
+    <MainWrapper className="main">
       {showMainSearch && (
         <SearchBarWrapper>
           <SearchBar
@@ -131,36 +134,26 @@ const TanstackTable = ({
         </SearchBarWrapper>
       )}
       <StyledTableContainer className="tableContainer">
-        <StyledTable
-          aria-label="simple table"
-          stickyHeader
-          className="table"
-          borderAxis="xBetween"
-        >
+        <StyledTable stickyHeader>
           <StyledTableHead className="TableHead">
-            <StyledTableRow className="StyledTableRow">
+            <StyledTableRow>
               {table.getHeaderGroups().map((headerGroups) =>
-                headerGroups.headers.map((header, idx) => (
-                  <StyledTableCell key={header.id} className="StyledTableCell">
-                    <HeaderColumn
-                      onClick={header.column.getToggleSortingHandler()}
-                      isFirstColumn={idx === 0 && enableBullkSelection}
-                    >
-                      {idx === 0 && enableBullkSelection && (
-                        <RowSelection
-                          {...{
-                            checked: table.getIsAllRowsSelected(),
-                            indeterminate: table.getIsSomeRowsSelected(),
-                            onChange: table.getToggleAllRowsSelectedHandler(),
-                          }}
-                        />
-                      )}
-                      {flexRender(
+                headerGroups.headers.map(header => (
+                  <th key={header.id} >
+                    {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
-                    </HeaderColumn>
-                    {showColumnSearch && (
+                  </th>
+                ))
+              )}
+              <th >Action</th>
+            </StyledTableRow>
+            <StyledTableRow className="StyledTableRow-withminisearch">
+              {table.getHeaderGroups().map((headerGroups) =>
+                headerGroups.headers.map(header => (
+                  <th key={header.id}  colSpan={1}>
+                    {showColumnSearch && header.id !== 'select' && (
                       <MiniSearchWrapper>
                         <MiniSearchBar
                           filterByColumn={
@@ -171,55 +164,28 @@ const TanstackTable = ({
                         />
                       </MiniSearchWrapper>
                     )}
-                  </StyledTableCell>
+                  </th>
                 ))
               )}
-              <StyledTableCell className="StyledTableCell">
-                Action
-                {showBulkSelect && (
-                  <StyledBulkSelect>
-                    <StyledCheckBox
-                      className="checkbox"
-                      onChange={() =>
-                        setEnableBullkSelection(!enableBullkSelection)
-                      }
-                    />
-                    <Typography
-                      level="body-lg"
-                      fontWeight="md"
-                      textColor="var(--joy-palette-primary-100)"
-                    >
-                      Bulk Select
-                    </Typography>
-                  </StyledBulkSelect>
-                )}
-              </StyledTableCell>
+              <th colSpan={1}></th>
             </StyledTableRow>
+            {selectedRows.length > 0 && <StyledTableRow>
+              <th colSpan={8}>
+                <span>{selectedRows.length} selected</span>
+                <Button><ExportIcon/>Export</Button>
+              </th> 
+            </StyledTableRow>}
           </StyledTableHead>
           <StyledTableBody className="StyledTableBody">
             {table.getRowModel().rows.map((row) => (
-              <StyledTableRow className="StyledTableRow" key={row.id}>
+              <StyledTableRow className={`${row.getIsSelected() ? "selected-row" : ""}`} key={row.id}>
                 {row.getVisibleCells().map((cell, idx) => (
                   <StyledTableCell key={cell.id} className="StyledTableCell">
-                    <BodyElement
-                      index={idx}
-                      isWorkspaceTable={showMainSearch}
-                      isFirstDataCell={idx === 0 && enableBullkSelection}
-                    >
-                      {idx === 0 && enableBullkSelection && (
-                        <RowSelection
-                          {...{
-                            checked: row.getIsSelected(),
-                            disabled: !row.getCanSelect(),
-                            indeterminate: row.getIsSomeSelected(),
-                            onChange: row.getToggleSelectedHandler(),
-                          }}
-                        />
-                      )}
+                    <div>
                       {flexRender(cell.column.columnDef.cell,cell.getContext())}
                       {idx === 0 && row.original.isFavorite && <FavoriteFilledIcon/>}
                       {idx === 0 && row.original.isPinned && <PinnedFilledIcon/>}
-                    </BodyElement>
+                    </div>
                   </StyledTableCell>
                 ))}
                 <StyledTableCell className="StyledTableCell">

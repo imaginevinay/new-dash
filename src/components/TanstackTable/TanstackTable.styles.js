@@ -27,8 +27,8 @@ export const SecondaryWrapper = styled(Box)(
 export const SearchBarWrapper = styled(Box)(() => ({
   position: 'absolute',
   zIndex: 2,
-  right: '45px', // Changed from left: '73.5%' to right: '0' for better responsiveness
-  top: '-4rem', // Adjusted from top: '-7%' to a fixed value
+  right: '45px',
+  top: '-4rem',
   width: '29.1875rem'
 }));
 
@@ -36,10 +36,6 @@ export const StyledTableContainer = styled(Sheet)(() => ({
   boxShadow: "none",
   background: "#FFF",
   overflow: 'auto',
-  // position: 'relative',
-  // height: '100%',
-  // border: `1px solid ${theme.palette.secondary['dividerColor']}`,
-  // borderTop: 0
 }));
 
 export const StyledTable = styled(Table)(() => ({
@@ -48,48 +44,127 @@ export const StyledTable = styled(Table)(() => ({
     top: 0,
     background: '#FFF',
     zIndex: 1,
-    "& td": {
-      padding: '1.25rem',
-      borderBottom: '1px solid rgba(128, 128, 128, 0.25)',
-    }
   },
-  "& tbody": {
-    "& td" : {
-      padding : 0
-    }
-  }
-
-  
 }));
 
 export const MiniSearchWrapper = styled(Box)(() => ({
-  marginTop: "1rem",
+  // marginTop: "1rem",
 }));
 
-export const StyledTableHead = styled("thead")(() => ({  
+export const StyledTableHead = styled("thead")(({theme}) => ({
   "& tr": {
-    fontSize: '1.125rem',
+    fontSize: "1.125rem",
     fontWeight: 600,
-    '&:hover': {
-      backgroundColor: 'transparent'
+    "th": {
+      backgroundColor: theme.palette.primary[50],
+      textAlign: 'center'
+    },
+    ".header-checkbox": {
+      visibility: "hidden",
+    },
+    ".header-checkbox:checked": {
+      visibility: 'visible'
+    },
+    "&:hover": {
+      backgroundColor: "transparent",
+      ".header-checkbox": {
+      visibility: "visible",
     }
+    },
+  },
+  "& tr:first-of-type": {
+    // borderTop: '1px solid rgba(128, 128, 128, 0.25)',
+    // borderCollapse: 'collapse',
+    "th": {
+      padding: '1.25rem',
+      borderTop: '1px solid rgba(128, 128, 128, 0.25)',
+      borderCollapse: 'collapse',
+    },
+    "th:first-of-type": {
+      borderLeft: '1px solid rgba(128, 128, 128, 0.25)',
+      borderTopLeftRadius: '0.5rem',
+    },
+    "th:nth-of-type(2)": {
+    },
+    "th:last-of-type": {
+      borderRight: '1px solid rgba(128, 128, 128, 0.25)',
+      borderTopRightRadius: '0.5rem',
+    }
+  },
+  "& tr:nth-of-type(2)": {
+    "th": {
+      padding: '1.25rem',
+      borderBottom: '1px solid rgba(217, 217, 217, 0.25)',
+    },
+  },
+  "& tr:nth-of-type(3)": {
+    "th": {
+      fontWeight: 400,
+      padding: '1.25rem 1.25rem 1.25rem 2rem',
+      border: '1px solid #D9D9D9',
+      borderTopLeftRadius: '0.5rem',
+      borderTopRightRadius: '0.5rem',
+      backgroundColor: theme.palette.primary[400],
+      textAlign: 'left',
+      "span": {
+        marginRight: '2.5rem'
+      },
+      ".MuiButton-root": {
+        borderRadius: 0,
+        padding: '0.75rem 1.5rem',
+        fontSize: '1rem',
+        fontWeight: 500,
+        "svg": {
+          marginRight: '0.62rem'
+        }
+      }
+    },
   }
 }));
 
 export const StyledTableBody = styled("tbody")(() => ({
   "& tr": {
     fontSize: '1.125rem',
-    fontWeight: 400
+    fontWeight: 400,
+    ".row-checkbox": {
+      visibility: "hidden",
+    },
+    ".row-checkbox:checked": {
+      visibility: 'visible'
+    },
+    "&:hover": {
+      ".row-checkbox": {
+      visibility: "visible",
+    }
+    },
+    "& td": {
+      padding: "1.25rem 1.88rem",
+      borderBottom: "1px solid rgba(128, 128, 128, 0.25)",
+      textAlign: 'center'
+    },
+    "& td:first-of-type": {
+      padding: "1.25rem",
+    }
   },
 }));
 
 export const StyledTableCell = styled("td")(() => ({
-  textAlign: "center",
+  // padding: "1.25rem 1.88rem",
+
 }));
 
 export const StyledTableRow = styled("tr")(() => ({
   cursor: "pointer",
+  "&.selected-row": {
+    background: "#F5F6FA"
+  },
   "&:hover": { background: "#F5F6FA" },
+  "& th": {
+    textAlign: 'center',
+  },
+  "& th:first-of-type": {
+    width: '50px'
+  },  
 }));
 
 export const ActionButtonsWrapper = styled(Box)(() => ({
@@ -98,7 +173,7 @@ export const ActionButtonsWrapper = styled(Box)(() => ({
   justifyContent: "center",
   flexDirection: "row",
   alignItems: "center",
-  padding: "1.25rem 1.25rem 1.25rem 0",
+  // padding: "1.25rem 1.25rem 1.25rem 0",
 }));
 
 export const StyledButton = styled(Button)(({ theme }) => ({
@@ -257,22 +332,6 @@ export const HeaderColumn = styled('span')(({isFirstColumn})=> ({
   display: isFirstColumn ? 'flex' : 'block',
   gap: '2rem'
 }))
-
-export const BodyElement = styled('span')(({isFirstDataCell, index, isWorkspaceTable})=> ({
-  display: isFirstDataCell ? 'flex' : index===0 ? 'flex' : 'block',
-  alignItems: 'center',
-  marginLeft: isFirstDataCell ? '1rem' : '0',
-  gap: isFirstDataCell ? '2rem' : index===0 ? '0.5rem': 0,
-  textAlign: index === 0 ? 'left': 'center',
-  width: index === 0 ? 'fit-content': 'auto',
-  paddingLeft: (() => {
-    if (index === 0) {
-      return isWorkspaceTable ? '3rem' : '1rem';
-    }
-    return '0';
-  })()
-}))
-
 
 export const ArrowBtnWrapper = styled('div')({
   display: 'flex',
