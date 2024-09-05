@@ -63,6 +63,7 @@ export const MidRow = styled("div")(() => ({
   justifyContent: "space-between",
   padding: "1.69rem 2.5rem",
   border: "1px solid rgba(137, 147, 158, 0.25)",
+  borderBottom: 0
 }));
 
 export const MenuButtonItem = styled(MenuButton)(({ theme }) => ({

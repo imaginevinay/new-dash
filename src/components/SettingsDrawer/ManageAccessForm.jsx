@@ -166,15 +166,22 @@ const ManageAccessForm = () => {
             {showFileAccessBox && <>
               <Styled.FlexColumn>
                 <Typography level="body-sm">Selected Files</Typography>
-                <AutocompleteInput placeholder={"Selected Files"} isFilesAutoComplete={true}/>
+                <div style={{width: '28.125rem'}}>
+                  <AutocompleteInput placeholder={"Selected Files"} isFilesAutoComplete={true}/>
+                </div>
+                
               </Styled.FlexColumn>
               <Styled.FlexColumn>
                 <Typography level="body-sm">Users with Edit Access</Typography>
-                <AutocompleteInput placeholder={"Select Users"} isContactList={true}/>
+                <div style={{width: '28.125rem'}}>
+                  <AutocompleteInput placeholder={"Select Users"} isContactList={true}/>
+                </div>
               </Styled.FlexColumn>
               <Styled.FlexColumn>
                 <Typography level="body-sm">Users with View Access</Typography>
-                <AutocompleteInput placeholder={"Select Users"} isContactList={true}/>
+                <div style={{width: '28.125rem'}}>
+                  <AutocompleteInput placeholder={"Select Users"} isContactList={true}/>
+                </div>
               </Styled.FlexColumn>
 
               <Styled.FlexEnd>

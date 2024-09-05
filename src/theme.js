@@ -213,6 +213,33 @@ const theme = extendTheme({
           
         }
       }
+    },
+    JoyChip: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'var(--joy-palette-primary-100)',
+          "& .MuiChip-label": {
+            color: 'var(--joy-palette-primary-50)'
+          },
+          "& .MuiChip-endDecorator": {
+            '.MuiChipDelete-root': {
+              backgroundColor: 'var(--joy-palette-primary-100)',
+              ".MuiSvgIcon-root": {
+                color: 'var(--joy-palette-primary-50)'
+              }
+            },
+            color: 'var(--joy-palette-primary-50)'
+          }
+        }
+      }
+    },
+    JoyIconButton: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            backgroundColor: 'inherit'
+          }
+        }}
     }
   },
 });

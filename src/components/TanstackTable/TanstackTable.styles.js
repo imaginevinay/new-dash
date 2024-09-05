@@ -188,13 +188,14 @@ export const PaginationWrapper = styled(Box)(() => ({
   gap: "1.5rem",
   alignItems: "center",
   justifyContent: "flex-end",
-  padding: "1rem",
+  padding: "1rem 5rem",
+  // marginRight: '5%';
   // border: `1px solid ${theme.palette.secondary['dividerColor']}`,
   // borderTop: 0
 }));
 
 export const PaginationButton = styled(Button)(({ theme, disabled }) => ({
-  border: `0.5px solid ${theme.palette.secondary['disabledText']}`,
+  // border: `0.5px solid ${theme.palette.secondary['disabledText']}`,
   padding: "5px",
   width: "2rem",
   display: "flex",
@@ -204,13 +205,14 @@ export const PaginationButton = styled(Button)(({ theme, disabled }) => ({
   minWidth: "auto",
   background: theme.palette.primary[400],
   cursor: disabled ? "not-allowed" : "pointer",
+  boxShadow: theme.shadow.lg,
   "& svg": {
     width: "2rem",
     height: "1.2rem",
     color: theme.palette.primary[200],
   },
   "&:hover": {
-    background: theme.palette.primary[400]
+    background: '#F0F4F8'
   }
 }));
 

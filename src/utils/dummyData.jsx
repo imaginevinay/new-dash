@@ -1,3 +1,5 @@
+import IndeterminateCheckbox from "../components/TanstackTable/IndeterminateCheckbox";
+
 // import IndeterminateCheckbox from '../components/TanstackTable/IndeterminateCheckbox';
 export const recentlyViewed = [
   {
@@ -150,11 +152,33 @@ export const pinnedByMe = [
 
 export const DATA_COLS = [
   {
+    id: "select",
+    size: "5px",
+    header: ({ table }) => (
+      <IndeterminateCheckbox
+        className="header-checkbox"
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row }) => (
+      <IndeterminateCheckbox
+        className="row-checkbox"
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          indeterminate: row.getIsSomeSelected(),
+          onChange: row.getToggleSelectedHandler(),
+        }}
+      />
+    ),        
+  },
+  {
     header: "Name",
     accessorKey: "name",
-    // cell: ({ row }) => {
-    //   return <div style={{textAlign: 'left'}}>{row.original.name}</div>
-    // }
   },
   {
     header: "Type",
@@ -401,6 +425,31 @@ export const DATA = [
 ];
 
 export const WORKSPACES_COLS = [
+  {
+    id: "select",
+    size: "5px",
+    header: ({ table }) => (
+      <IndeterminateCheckbox
+        className="header-checkbox"
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row }) => (
+      <IndeterminateCheckbox
+        className="row-checkbox"
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          indeterminate: row.getIsSomeSelected(),
+          onChange: row.getToggleSelectedHandler(),
+        }}
+      />
+    ),        
+  },
   {
     header: "Name",
     accessorKey: "name",

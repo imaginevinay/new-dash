@@ -31,17 +31,18 @@ export const StyledTab = styled(Tab)(({ theme }) => ({
       },
     },
     "&:not(.Mui-selected, [aria-selected='true'])": {
-      color: theme.palette.primary[100],
+      color: theme.palette.primary[200],
       backgroundColor: theme.palette.primary[50],
-      border: `1px solid ${theme.palette.primary[100]}`,
+      border: `1px solid ${theme.palette.primary[200]}`,
       opacity: 1,
       "& .MuiSvgIcon-root": {
-        color: theme.palette.primary[100],
+        color: theme.palette.primary[200],
       },
     },
     "&:not(.Mui-selected, [aria-selected='true']):hover": {
       backgroundColor: theme.palette.primary[100],
       color: theme.palette.primary[50],
+      border: `1px solid ${theme.palette.primary[100]}`,
       "& .MuiSvgIcon-root": {
         color: theme.palette.primary[50],
       },

@@ -127,7 +127,8 @@ export const Title = styled(Typography)(({theme}) => ({
     gap: '0.62rem',
     fontWeight: 500,
     "&:hover": {
-        background: theme.palette.primary[100],
+        background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+        color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     }
  }));
 

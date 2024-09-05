@@ -139,21 +139,16 @@ const TanstackTable = ({
             <StyledTableRow>
               {table.getHeaderGroups().map((headerGroups) =>
                 headerGroups.headers.map(header => (
-                  <th key={header.id} >
-                    {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                  </th>
+                  <th key={header.id}>{flexRender(header.column.columnDef.header,header.getContext())}</th>
                 ))
               )}
               <th >Action</th>
             </StyledTableRow>
-            <StyledTableRow className="StyledTableRow-withminisearch">
+            {showColumnSearch && <StyledTableRow className="StyledTableRow-withminisearch">
               {table.getHeaderGroups().map((headerGroups) =>
                 headerGroups.headers.map(header => (
                   <th key={header.id}  colSpan={1}>
-                    {showColumnSearch && header.id !== 'select' && (
+                    { header.id !== 'select' && (
                       <MiniSearchWrapper>
                         <MiniSearchBar
                           filterByColumn={
@@ -168,7 +163,7 @@ const TanstackTable = ({
                 ))
               )}
               <th colSpan={1}></th>
-            </StyledTableRow>
+            </StyledTableRow>}
             {selectedRows.length > 0 && <StyledTableRow>
               <th colSpan={8}>
                 <span>{selectedRows.length} selected</span>
