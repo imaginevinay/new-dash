@@ -14,7 +14,7 @@ export const SheetMenu = styled(Sheet)(({ theme }) => ({
   padding: "0 16px",
   borderRadius: "1rem 1rem 0rem 0rem",
   border: "1px solid #B9BBBE",
-  background: theme.palette.primary[50],
+  background: theme.palette.secondary[50],
   cursor: "pointer",
   boxShadow: theme.shadow.lg
 }));
@@ -67,7 +67,7 @@ export const SearchBox = styled(Input)(({theme}) => ({
    padding: '0.62rem 1.25rem',
    fontSize: '1rem',
    backgroundColor: theme.palette.primary[50],
-   border: `1px solid ${theme.palette.secondary['secondary-hover']}`
+   border: `1px solid ${theme.palette.secondary[400]}`
 }));
 
 export const FlexColumn = styled(Box)(({theme, gap = '1.75rem', noMarginBottom = false}) => ({
@@ -80,7 +80,7 @@ export const FlexColumn = styled(Box)(({theme, gap = '1.75rem', noMarginBottom =
     },
     "& .MuiInput-root,.MuiTextarea-root,.MuiAutocomplete-root": {
         backgroundColor: theme.palette.primary[50],
-        border:  `1px solid ${theme.palette.secondary['secondary-hover']}`
+        border:  `1px solid ${theme.palette.secondary[400]}`
     }
 }));
 
@@ -100,7 +100,7 @@ export const Title = styled(Typography)(({theme}) => ({
     },
     "&.workspace-item:hover": {
         fontWeight: 500,
-        background: theme.palette.secondary['secondary-hover'],
+        background: theme.palette.secondary[400],
         "& .showOnHover": {
         display:'flex'
     },
@@ -117,7 +117,7 @@ export const Title = styled(Typography)(({theme}) => ({
  }));
 
  export const CreateWorkspaceBtn = styled(Button)(({theme, width="100%", cancelBtn=false}) => ({
-    background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+    background: cancelBtn ? theme.palette.secondary[500]:theme.palette.primary[100],
     color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     width: width,
     marginTop: 'auto',
@@ -127,7 +127,7 @@ export const Title = styled(Typography)(({theme}) => ({
     gap: '0.62rem',
     fontWeight: 500,
     "&:hover": {
-        background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+        background: cancelBtn ? theme.palette.secondary[500]:theme.palette.primary[100],
         color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     }
  }));

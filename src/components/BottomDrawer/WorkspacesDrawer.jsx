@@ -10,14 +10,29 @@ import CreateNewWorkspaceForm from "./CreateNewWorkspaceForm";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import PinnedDarkIcon from "../../assets/icons/pin-dark.svg?react";
 
-const myWorkspace = [{ id: 1, name: "My Workspace" }];
+const myWorkspace = [{ id: 1, name: "My Workspace", imgSrc :  WorkspaceImg }];
 const allWorkspaces = [
-  { id: 1, name: "Restaurant Inspection" },
-  { id: 2, name: "Survey Population" },
+  { id: 2, name: "Restaurant Inspection", imgSrc :  GroupIcon},
+  { id: 3, name: "Survey Population", imgSrc :  GroupIcon },
 ];
 
 const WorkspacesDrawer = ({ open, onClose }) => {
   const [isCreateWorkspace, setIsCreateWorkspace] = useState(false);
+  const [pinnedWorkspace, setPinnedWorkspace] = useState([]);
+
+  const handleWorkspacePinning = (newItem) => {
+    setPinnedWorkspace(prevItems => {
+      const isDuplicate = prevItems.some(item => item.id === newItem.id);
+      if (!isDuplicate) {
+        return [...prevItems, newItem];
+      }
+      return prevItems;
+    });
+  }
+
+  const handleWorkspaceUnpin = (itemToRemove) => {
+    setPinnedWorkspace(prevItems => prevItems.filter(item => item !== itemToRemove));
+  };
 
   return (
     <Styled.BottomDrawer
@@ -57,14 +72,29 @@ const WorkspacesDrawer = ({ open, onClose }) => {
                 startDecorator={<SearchIcon />}
               />
             </Styled.FlexSpace>
+
+            {pinnedWorkspace.length>0 && <Styled.FlexColumn>
+              <Styled.Title>Pinned Workspaces</Styled.Title>
+              {pinnedWorkspace.map((item) => (
+                <Styled.FlexGap key={item.id} className="workspace-item">
+                  <Styled.AvatarIcon src={item.imgSrc} alt="workspace" />
+                  <Styled.WorkspaceName>{item.name}</Styled.WorkspaceName>
+                  <Styled.MoreActionsWrapper className="showOnHover">
+                    <PinnedDarkIcon style={{cursor: 'pointer'}} onClick={() => handleWorkspaceUnpin(item)}/>
+                    {/* <MoreVertOutlinedIcon sx={{width: '1rem', height: '1.5rem'}}/> */}
+                  </Styled.MoreActionsWrapper>
+                </Styled.FlexGap>
+              ))}
+            </Styled.FlexColumn>}
+
             <Styled.FlexColumn>
               <Styled.Title>My Workspace</Styled.Title>
               {myWorkspace.map((item) => (
                 <Styled.FlexGap key={item.id} className="workspace-item">
-                  <Styled.AvatarIcon src={WorkspaceImg} alt="workspace" />
+                  <Styled.AvatarIcon src={item.imgSrc} alt="workspace" />
                   <Styled.WorkspaceName>{item.name}</Styled.WorkspaceName>
                   <Styled.MoreActionsWrapper className="showOnHover">
-                    <PinnedDarkIcon />
+                    <PinnedDarkIcon style={{cursor: 'pointer'}} onClick={() => handleWorkspacePinning(item)}/>
                     <MoreVertOutlinedIcon sx={{width: '1rem', height: '1.5rem'}}/>
                   </Styled.MoreActionsWrapper>
                 </Styled.FlexGap>
@@ -74,10 +104,10 @@ const WorkspacesDrawer = ({ open, onClose }) => {
               <Styled.Title>All</Styled.Title>
               {allWorkspaces.map((item) => (
                 <Styled.FlexGap key={item.id} className="workspace-item">
-                  <img src={GroupIcon} alt="workspace" loading="lazy" />
+                  <Styled.AvatarIcon src={item.imgSrc} alt="workspace" />
                   <Styled.WorkspaceName>{item.name}</Styled.WorkspaceName>
                   <Styled.MoreActionsWrapper className="showOnHover">
-                    <PinnedDarkIcon />
+                    <PinnedDarkIcon style={{cursor: 'pointer'}} onClick={() => handleWorkspacePinning(item)}/>
                     <MoreVertOutlinedIcon sx={{width: '1rem', height: '1.5rem'}}/>
                   </Styled.MoreActionsWrapper>
                 </Styled.FlexGap>

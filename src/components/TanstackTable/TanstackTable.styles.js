@@ -96,8 +96,14 @@ export const StyledTableHead = styled("thead")(({theme}) => ({
       padding: '1.25rem',
       borderBottom: '1px solid rgba(217, 217, 217, 0.25)',
     },
+    "th:first-of-type": {
+      // borderLeft: "1px solid rgba(128, 128, 128, 0.25)",
+    },
+    "th:last-of-type": {
+      // borderRight: "1px solid rgba(128, 128, 128, 0.25)",
+    }
   },
-  "& tr:nth-of-type(3)": {
+  "& .selectedItemsWrapper": {
     "th": {
       fontWeight: 400,
       padding: '1.25rem 1.25rem 1.25rem 2rem',
@@ -110,7 +116,7 @@ export const StyledTableHead = styled("thead")(({theme}) => ({
         marginRight: '2.5rem'
       },
       ".MuiButton-root": {
-        borderRadius: 0,
+        // borderRadius: 0,
         padding: '0.75rem 1.5rem',
         fontSize: '1rem',
         fontWeight: 500,
@@ -144,6 +150,11 @@ export const StyledTableBody = styled("tbody")(() => ({
     },
     "& td:first-of-type": {
       padding: "1.25rem",
+      // borderLeft: "1px solid rgba(128, 128, 128, 0.25)",
+    },
+    "& td:last-of-type": {
+      padding: "1.25rem",
+      // borderRight: "1px solid rgba(128, 128, 128, 0.25)",
     }
   },
 }));
@@ -190,12 +201,12 @@ export const PaginationWrapper = styled(Box)(() => ({
   justifyContent: "flex-end",
   padding: "1rem 5rem",
   // marginRight: '5%';
-  // border: `1px solid ${theme.palette.secondary['dividerColor']}`,
+  // border: `1px solid ${theme.palette.secondary[300]}`,
   // borderTop: 0
 }));
 
 export const PaginationButton = styled(Button)(({ theme, disabled }) => ({
-  // border: `0.5px solid ${theme.palette.secondary['disabledText']}`,
+  // border: `0.5px solid ${theme.palette.secondary[100]}`,
   padding: "5px",
   width: "2rem",
   display: "flex",
@@ -309,7 +320,7 @@ export const StyledInput = styled(Input)(({theme}) => ({
 export const StyledBulkSelect = styled('div')(({theme}) => ({
   border: 'none',
   padding: '0.75rem 1.5rem',
-  background: theme.palette.secondary['lightYellow'],
+  background: theme.palette.secondary[50],
   fontSize: '1.125rem',
   fontWeight: 500,
   borderRadius: '0.25rem',

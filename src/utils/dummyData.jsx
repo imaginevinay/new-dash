@@ -478,7 +478,7 @@ export const WORKSPACES_COLS = [
 export const WORKSPACES_DATA = [
   {
     id: 1,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',
@@ -496,7 +496,7 @@ export const WORKSPACES_DATA = [
   },
   {
     id: 3,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',
@@ -514,7 +514,7 @@ export const WORKSPACES_DATA = [
   },
   {
     id: 5,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',
@@ -523,7 +523,7 @@ export const WORKSPACES_DATA = [
   },
   {
     id: 6,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',
@@ -532,7 +532,7 @@ export const WORKSPACES_DATA = [
   },
   {
     id: 7,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',
@@ -550,7 +550,7 @@ export const WORKSPACES_DATA = [
   },
   {
     id: 9,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',
@@ -568,7 +568,7 @@ export const WORKSPACES_DATA = [
   },
   {
     id: 11,
-    name: 'Auto Generated Report',
+    name: 'Restaurant Data',
     type: 'Reports',
     accessLevel: 'Can View',
     status: 'Published',

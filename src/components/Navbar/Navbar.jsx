@@ -4,11 +4,12 @@ import { useLocation } from "react-router-dom";
 import DataMenu from "./DataMenu";
 import SettingsMenu from "./SettingsMenu";
 import SearchIcon from "@mui/icons-material/Search";
+import WorkspaceMenu from "./WorkspaceMenu";
 
 const buttonList = [
   { id: 1, label: "Home", type: "link", route: "/" },
   { id: 2, label: "Data", type: "menu" },
-  { id: 3, label: "Workspace", type: "link", route: "/workspace" },
+  { id: 3, label: "Workspace", type: "menu" },
   { id: 4, label: "Goals", type: "link", route: "/goals" },
   { id: 5, label: "Apps", type: "link", route: "/apps" },
   { id: 6, label: "Monitor", type: "link", route: "/monitor" },
@@ -25,7 +26,7 @@ const Navbar = () => {
         {buttonList.map((item) =>
           item.type === "link" ? (
             <Styled.StyledLink
-              className={currentLocation === item.route ? 'active': ''}
+              className={currentLocation === item.route ? "active" : ""}
               component={RouterLink}
               to={item.route}
               key={item.id}
@@ -33,7 +34,10 @@ const Navbar = () => {
               {item.label}
             </Styled.StyledLink>
           ) : (
-            <DataMenu key={item.id} />
+            <>
+              {item.label === "Data" && <DataMenu key={item.id} />}
+              {item.label === "Workspace" && <WorkspaceMenu key={item.id} />}
+            </>
           )
         )}
       </Styled.ButtonContainer>

@@ -89,6 +89,15 @@ export const UserProfile = styled(Avatar)(({ theme }) => ({
 }));
 
 
+export const MenuWrapper = styled(Menu)(({ theme }) => ({
+    width: '25rem',
+    padding: '1.25rem 0.75rem',
+    gap: '0.875rem',
+    boxShadow: theme.shadow.md,
+    border: 0
+}));
+
+
 
 
 

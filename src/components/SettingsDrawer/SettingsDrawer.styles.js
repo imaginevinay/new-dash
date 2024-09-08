@@ -91,7 +91,7 @@ export const FlexColumn = styled(Box)(
     },
     "& .MuiInput-root,.MuiTextarea-root,.MuiAutocomplete-root": {
         backgroundColor: theme.palette.primary[50],
-        border:  `1px solid ${theme.palette.secondary['secondary-hover']}`
+        border:  `1px solid ${theme.palette.secondary[400]}`
     }
   })
 );
@@ -140,7 +140,7 @@ export const ActionBtns = styled(Button)(({ theme }) => ({
 
 export const CreateWorkspaceBtn = styled(Button)(
   ({ theme, width = "100%" , cancelBtn=false}) => ({
-    background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+    background: cancelBtn ? theme.palette.secondary[500]:theme.palette.primary[100],
     color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     width: width,
     marginTop: "auto",
@@ -150,7 +150,7 @@ export const CreateWorkspaceBtn = styled(Button)(
     gap: "0.62rem",
     fontWeight: 500,
     "&:hover": {
-      background: cancelBtn ? theme.palette.secondary['secondaryBtnColor']:theme.palette.primary[100],
+      background: cancelBtn ? theme.palette.secondary[500]:theme.palette.primary[100],
       color: cancelBtn ? theme.palette.primary[200] : theme.palette.primary[50],
     },
   })

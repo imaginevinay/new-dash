@@ -24,7 +24,7 @@ export const SettingsBtn = styled(Button)(({ theme }) => ({
   fontWeight: 400,
   // boxShadow: theme.shadow.md,
   "&:hover": {
-    background: theme.palette.secondary['lightYellow'],
+    background: theme.palette.secondary[50],
     color: theme.palette.primary[100],
     "& svg": {
       filter: 'brightness(0) saturate(100%) invert(64%) sepia(94%) saturate(320%) hue-rotate(6deg) brightness(92%) contrast(91%)'

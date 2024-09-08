@@ -14,10 +14,11 @@ import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import FavoriteIcon from "../../assets/icons/star.svg";
 import PinnedDarkIcon from "../../assets/icons/pin-dark.svg";
+import PinnedOutlinedIcon from '../../assets/icons/pin-outlined.svg?react';
+import TrashOutlinedIcon from '../../assets/icons/trash.svg?react';
+import StarOutlinedIcon from '../../assets/icons/star.svg?react';
 import FavoriteFilledIcon from '../../assets/icons/favorite-filled.svg?react';
 import PinnedFilledIcon from '../../assets/icons/pinned-filled.svg?react';
-import ExportIcon from '../../assets/icons/upload.svg?react';
-// import RowSelection from "./RowSelection";
 import MiniSearchBar from "./MiniSearchBar";
 import SearchBar from "./SearchBar";
 import {
@@ -164,10 +165,12 @@ const TanstackTable = ({
               )}
               <th colSpan={1}></th>
             </StyledTableRow>}
-            {selectedRows.length > 0 && <StyledTableRow>
+            {selectedRows.length > 0 && <StyledTableRow className="selectedItemsWrapper">
               <th colSpan={8}>
                 <span>{selectedRows.length} selected</span>
-                <Button><ExportIcon/>Export</Button>
+                  <Button sx={{mr: '1rem'}}><StarOutlinedIcon style={{filter: 'brightness(0) invert(1)', width: '1rem', height: '1rem'}}/>Favorite</Button>
+                  <Button sx={{mr: '1rem'}}><PinnedOutlinedIcon style={{filter: 'brightness(0) invert(1)', width: '1rem', height: '1rem'}}/>Pin</Button>
+                  <Button sx={{mr: '1rem'}}><TrashOutlinedIcon style={{filter: 'brightness(0) invert(1)', width: '1rem', height: '1rem'}}/>Delete</Button>                
               </th> 
             </StyledTableRow>}
           </StyledTableHead>

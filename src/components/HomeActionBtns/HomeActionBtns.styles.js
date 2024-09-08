@@ -12,7 +12,7 @@ export const ButtonWrapper = styled(ButtonGroup)(() => ({
 }));
 
 export const ChartButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary["lightYellow"],
+  backgroundColor: theme.palette.secondary[50],
   borderRadius: "0.25rem",
   color: theme.palette.primary[100],
   border: "none",

@@ -17,7 +17,7 @@ const HomeActionBtns = () => {
             level="body-lg"
             fontWeight="md"
           >
-            Create Charts
+            Create Chart
           </Typography>
         </Styled.ChartButton>
         <Styled.ChartButton onClick={() => setOpenReportModal(true)}>

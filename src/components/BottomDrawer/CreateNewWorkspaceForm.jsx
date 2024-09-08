@@ -23,8 +23,8 @@ const CreateNewWorkspaceForm = () => {
         <Textarea placeholder="Describe this workspace" minRows={3} />
       </Styled.FlexColumn>
       <Styled.FlexColumn gap={"1rem"}>
-        <FormLabel>Contact List</FormLabel>
-        <AutocompleteInput placeholder={"Enter Users or groups"} isContactList={true}/>
+        <FormLabel>Administrators</FormLabel>
+        <AutocompleteInput placeholder={"Select Admin Users"} isContactList={true}/>
       </Styled.FlexColumn>
 
       <Styled.FlexColumn gap={"1rem"}>

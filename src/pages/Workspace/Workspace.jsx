@@ -84,7 +84,8 @@ const Workspace = () => {
         </Styled.ButtonWrapper>
       </Styled.MidRow>
 
-      <TanstackTable
+    <div style={{paddingLeft: '2.5rem', paddingRight: '2.5rem'}}>
+    <TanstackTable
         tableData={tableData}
         columnData={WORKSPACES_COLS}
         deleteIcon
@@ -92,6 +93,8 @@ const Workspace = () => {
         moreIcon
         showMainSearch
       />
+    </div>
+      
 
       <BottomDrawer onClick={handleBottomDrawerClick} />
       <WorkspacesDrawer

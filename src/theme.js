@@ -15,16 +15,32 @@ const theme = extendTheme({
           700: undefined,
           800: undefined,
           900: undefined,
-          solidBg: '#D4AF37',
-          solidColor: '#ffffff',
+          solidBg: 'var(--joy-palette-primary-100)',
+          solidColor: 'var(--joy-palette-primary-50)',
         },
         secondary: {
-          'accordionHover': 'rgba(212, 175, 55, 0.10)',
-          'disabledText': '#89939E',
-          'lightYellow': 'rgba(212, 175, 55, 0.10)',
-          'dividerColor': 'rgba(99 107 116/0.2)',
-          'secondary-hover': '#89939e40',
-          'secondaryBtnColor': '#F5F5F5'
+          50: 'rgba(212, 175, 55, 0.10)',
+          100: '#89939E',
+          200: 'rgba(212, 175, 55, 0.10)',
+          300: 'rgba(99 107 116/0.2)',
+          400: '#89939e40',
+          500: '#F5F5F5',
+          600: undefined,
+          700: undefined,
+          800: undefined,
+          900: undefined,
+          // solidBg: 'var(--joy-palette-secondary-400)',
+          // solidActiveBg: 'var(--joy-palette-secondary-500)',
+          // outlinedBorder: 'var(--joy-palette-secondary-500)',
+          // outlinedColor: 'var(--joy-palette-secondary-700)',
+          // outlinedActiveBg: 'var(--joy-palette-secondary-100)',
+          softColor: 'var(--joy-palette-primary-100)',
+          softHoverColor: 'var(--joy-palette-primary-50)',
+          softBg: 'var(--joy-palette-secondary-50)',
+          softActiveBg: 'var(--joy-palette-secondary-50)',
+          softHoverBg: 'var(--joy-palette-primary-100)'
+          // plainColor: 'var(--joy-palette-secondary-700)',
+          // plainActiveBg: 'var(--joy-palette-secondary-100)',
         },
         danger: {
           50: undefined,
@@ -73,28 +89,22 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           "--Input-focusedHighlight": "transparent !important",
+          '& .MuiInput-input::placeholder': {
+            fontSize: "var(--joy-fontSize-sm)"
+          },
         },
       },
     },
-    // JoyTab: {
-    //   styleOverrides: {
-    //     root: {
-    //       "&.Mui-selected": {
-    //         background: "#D4AF37",
-    //         color: "#FFFFFF",
-    //         "&:hover": {
-    //           background: "#D4AF37",
-    //         },
-    //       },
-    //       "&:not(.Mui-selected)": {
-    //         background: "#FFF",
-    //         "&:hover": {
-    //           background: "#FFF",
-    //         },
-    //       }
-    //     },
-    //   },
-    // },
+    JoyTextarea: {
+      styleOverrides: {
+        root: {
+          "--Input-focusedHighlight": "transparent !important",
+          '& .MuiTextarea-textarea::placeholder': {
+            fontSize: "var(--joy-fontSize-sm)"
+          },
+        },
+      },
+    },
     JoyRadio: {
       styleOverrides: {
         root: () => ({
@@ -209,7 +219,10 @@ const theme = extendTheme({
         root: {
           "&.Mui-focused": {
             '--Input-focusedHighlight': 'var(--joy-palette-secondary-secondary-hover)'
-          }
+          },
+          '& .MuiAutocomplete-input::placeholder': {
+            fontSize : 'var(--joy-fontSize-sm)'
+          },
           
         }
       }
@@ -240,7 +253,17 @@ const theme = extendTheme({
             backgroundColor: 'inherit'
           }
         }}
-    }
+    },
+    // JoyAutocompleteListbox: {
+    //   styleOverrides: {
+    //     root: ({ ownerState }) => ({
+    //       '& .MuiAutocomplete-input::placeholder': {
+    //         color: 'red',
+    //         fontStyle: 'italic',
+    //       },
+    //     }),
+    //   },
+    // },
   },
 });
 

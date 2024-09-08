@@ -1,10 +1,11 @@
+import { TextField } from '@mui/joy';
 import Autocomplete from '@mui/joy/Autocomplete';
 import { useEffect, useState } from 'react';
 
 const contactList = [
-  { title: 'Ashish Singh', id: 1 },
-  { title: 'Sonali Singh', id: 2 },
-  { title: 'Rahul Murthi', id: 3 }
+  { title: 'ashishsingh(owner)', id: 1 },
+  { title: 'sonalisingh(owner)', id: 2 },
+  { title: 'rahulmurthi(owner)', id: 3 }
 ];
 
 const files = [
@@ -15,15 +16,28 @@ const files = [
 
 export default function AutocompleteInput({ placeholder, isContactList, isFilesAutoComplete}) {
   const [data, setData] = useState([]);
+  const [value, setValue] = useState([]);
+
 
   useEffect(() => {
     if (isContactList) {
       setData(contactList);
     }
-    if(isFilesAutoComplete) {
+    if (isFilesAutoComplete) {
       setData(files);
     }
-  }, [isContactList, data, isFilesAutoComplete]);
+  }, [isContactList, isFilesAutoComplete]);
+
+  useEffect(() => {
+    // Set initial value only when data is loaded and value is empty
+    if (data.length > 0 && value.length === 0) {
+      setValue([data[0]]);
+    }
+  }, [data]);
+
+  // const getDefaultValue = () => {
+  //   if(isContactList) return data[0]
+  // }
 
   return (
     <Autocomplete
@@ -32,7 +46,12 @@ export default function AutocompleteInput({ placeholder, isContactList, isFilesA
       placeholder={placeholder}
       options={data}
       getOptionLabel={(option) => option.title}
-      defaultValue={isFilesAutoComplete && data[0]}
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+      renderInput={(params) => ( <TextField {...params} placeholder={placeholder} /> )}
+      sx={{p : '0.88rem'}}
     />
   );
 }
