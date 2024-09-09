@@ -35,13 +35,14 @@ const sqlData = [
         label: "Order Date",
         icon: CalendarIcon,
         isChecked: false,
-        
+        data: ["2014", "2015", "2016", "2017"]        
       },
       {
         id: 3,
         label: "Order Sales",
         icon: QueueIcon,
         isChecked: false,
+        data: [200, 400, 600, 1000]
       },
       {
         id: 4,
@@ -263,7 +264,7 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
 
   const handleRemoveSelectedColumn = (axis) => {
     setSelectedItems((prev) => ({ ...prev, [axis]: null }));
-    handleCheckboxChangeByLabel(selectedItems[axis]);
+    handleCheckboxChangeByLabel(selectedItems[axis]?.label);
   };
 
   const handleCheckboxChangeByLabel = (labelToToggle) => {
@@ -305,7 +306,7 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
 
   const axisButtonLabel = (axis) => (
     <Styled.SMFlexRow>
-      <span>{selectedItems[axis]}</span>
+      <span>{selectedItems[axis]?.label}</span>
       <CloseIcon
         onClick={() => handleRemoveSelectedColumn(axis)}
         sx={{ cursor: "pointer" }}
@@ -360,13 +361,13 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
 
   // Helper function to render axis button or accordion
   const renderAxisControl = (axis) => {
-    if (selectedItems[axis] && containsDate(selectedItems[axis])) {
+    if (selectedItems[axis] && containsDate(selectedItems[axis]?.label)) {
       return (
         <AccordionGroup disableDivider>
           <Accordion>
             <Styled.SelectedAccordionSummaryBtn className="axisbuttonAccordion">
               <Styled.SelectedAxisText>
-                <span>{selectedItems[axis]}</span>
+                <span>{selectedItems[axis]?.label}</span>
                 <CloseIcon
                   onClick={() => handleRemoveSelectedColumn(axis)}
                   sx={{ cursor: "pointer" }}
@@ -570,7 +571,7 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
               {item.tableColumns.map((col) => (
                 <MenuItem
                   key={col.id}
-                  onClick={() => handleSelectItem(col.label, item.id, col.id)}
+                  onClick={() => handleSelectItem(col, item.id, col.id)}
                 >
                   <Checkbox checked={col.isChecked} /> <img src={col.icon} />{" "}
                   <Typography level="body-sm">{col.label}</Typography>

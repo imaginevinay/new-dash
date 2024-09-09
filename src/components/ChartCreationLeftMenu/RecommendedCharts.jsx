@@ -141,9 +141,9 @@ const RecommendedCharts = () => {
   }, [])
 
 
-  useEffect(() => {
-    setSelectedChartData(leftMenuData)
-  }, [leftMenuData, setSelectedChartData])
+  // useEffect(() => {
+  //   setSelectedChartData(leftMenuData)
+  // }, [leftMenuData, setSelectedChartData])
   
 
   useEffect(() => {
@@ -178,6 +178,25 @@ const RecommendedCharts = () => {
     setSelected(newSelected);
   };
 
+  const handleVisualiseClick = () => {
+    const dataCreator = {
+      data: [
+        {
+          x: leftMenuData?.axisData.xAxis.data,
+          y: leftMenuData?.axisData.yAxis.data,
+          type: "bar",
+          base: 0,
+        },
+      ],
+      layout: {
+        xaxis: { title: leftMenuData?.axisData.xAxis.label, type: 'category' },
+        yaxis: { title: leftMenuData?.axisData.yAxis.label },
+      },
+    };
+    console.log('datacreated', dataCreator)
+    setSelectedChartData(dataCreator)
+  }
+
 
   return (
     <Styled.RecommendedChartsWrapper>
@@ -210,7 +229,7 @@ const RecommendedCharts = () => {
         Preview Chart
       </Styled.PreviewChartButton>}
       {isChartTypeSelected && <VisualsAccordions setIsVisualizeActive={setIsVisualizeActive} setLeftMenuData={setLeftMenuData}/>}
-      <Styled.VisualiseButton isactive={isVisualizeActive ? 'true': 'false'}>Visualize</Styled.VisualiseButton>
+      <Styled.VisualiseButton isactive={isVisualizeActive ? 'true': 'false'} onClick={() => handleVisualiseClick()}>Visualize</Styled.VisualiseButton>
       <SelectChartsModal open={openSelectChartModal} handleClose={handleSelectChartModalClose}/>
     </Styled.RecommendedChartsWrapper>
   );
