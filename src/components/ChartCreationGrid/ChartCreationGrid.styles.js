@@ -1,7 +1,7 @@
-import { styled } from "@mui/joy";
+import { MenuButton, styled } from "@mui/joy";
 import BarChartPreviewImg from '../../assets/images/barchartPreview.svg'
 
-export const CanvasGridWrapper = styled("div")(({theme}) => ({
+export const CanvasGridWrapper = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
   width: "75%",
@@ -30,16 +30,26 @@ export const CanvasGridWrapper = styled("div")(({theme}) => ({
     marginLeft : '3.75rem',
     marginRight: '3rem',
     marginTop: '2.5rem',
-    fontSize: '1.125rem',
-    fontWeight: 600
+    marginBottom: '4.81rem',
   },
-  "& .subtitle": {
-    display : 'flex',
-    justifyContent: 'space-between',
-    marginLeft : '3.75rem',
-    marginRight: '3rem',
-    fontSize: '0.7875rem',
-    fontWeight: 400,
-    color: theme.palette.secondary[100]
+  "& .js-plotly-plot": {
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
+}));
+
+
+export const MenuBtn = styled(MenuButton)(({ theme }) => ({
+  fontSize: theme.vars.fontSize.md,
+  width: "11.625rem",
+  justifyContent: "space-between",
+  backgroundColor: theme.palette.primary[400],
+  // color: theme.palette.primary[100],
+  border: 0,
+  "& .MuiSvgIcon-root": {
+    // color: theme.palette.primary[100],
+  },
+  "&:hover": {
+    backgroundColor: theme.palette.primary[400],
   }
 }));

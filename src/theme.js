@@ -84,6 +84,12 @@ const theme = extendTheme({
       palette: {},
     },
   },
+  typography: {
+    subtitle: {
+      fontSize: '0.7875rem',
+      // color: 'var(--joy-palette-secondary-100)'
+    }
+  },
   components: {
     JoyInput: {
       styleOverrides: {

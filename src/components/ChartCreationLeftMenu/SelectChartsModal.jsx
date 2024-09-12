@@ -109,40 +109,40 @@ const chartData = [
     icon: "/src/assets/charts/categories/column.svg",
     chartTypes: [
       {
-        id: "VerticalBar",
+        id: "bar",
         name: "Vertical Bar",
         icon: "/src/assets/charts/chart-types/vBar.svg",
         previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
       },
       {
-        id: "VBarStacked",
+        id: "stack",
         name: "Vertical Bar Stacked",
         icon: "/src/assets/charts/chart-types/vBarStacked.svg",
         previewImage:
           "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
       },
       {
-        id: "VBarGrouped",
+        id: "group",
         name: "Vertical Bar Grouped",
         icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
         previewImage:
           "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
       },
       {
-        id: "HBar",
+        id: "hbar",
         name: "Horizontal Bar",
         icon: "/src/assets/charts/chart-types/hbar.svg",
         previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
       },
       {
-        id: "HBarStacked",
+        id: "hstack",
         name: "Horizontal Bar Stacked",
         icon: "/src/assets/charts/chart-types/hBarStacked.svg",
         previewImage:
           "/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
       },
       {
-        id: "HBarGrouped",
+        id: "hgroup",
         name: "Horizontal Bar Stacked",
         icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
         previewImage:
