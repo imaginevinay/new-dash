@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import SelectChartsModal from "./SelectChartsModal";
 import VisualsAccordions from "./VisualsAccordions";
 import { AppContext } from "../../context/AppContext";
+import { removeInitialLowercaseH, startsWithH } from "../../utils/common";
 
 const buttonLabels = [
   {
@@ -104,7 +105,7 @@ const colmnTypes = [
   },
   {
     id: "hgroup",
-    name: "Horizontal Bar Stacked",
+    name: "Horizontal Bar Grouped",
     icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
     previewImage:
       "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
@@ -119,7 +120,7 @@ const RecommendedCharts = () => {
   const [isVisualizeActive, setIsVisualizeActive] = useState(false);
   const [leftMenuData, setLeftMenuData] = useState(null);
 
-  const { setSelectedChartData, setSelectedChart } = useContext(AppContext);
+  const { setSelectedChartData, setSelectedChart, selectedChartType } = useContext(AppContext);
 
 
 // !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -179,21 +180,39 @@ const RecommendedCharts = () => {
   };
 
   const handleVisualiseClick = () => {
-    const dataCreator = {
-      data: [
-        {
-          x: leftMenuData?.axisData.xAxis.data,
-          y: leftMenuData?.axisData.yAxis.data,
-          type: "bar",
-          base: 0,
-          marker: {
-            color: '#255FD1'
-          }
+    let data1, data2 = {};
+    if(leftMenuData?.axisData?.xAxis?.data && leftMenuData?.axisData?.yAxis?.data) {
+      data1 = {
+        x: leftMenuData?.axisData.xAxis.data,
+        y: leftMenuData?.axisData.yAxis.data,
+        type: "bar",
+        name: leftMenuData?.axisData.xAxis.label,
+        orientation: startsWithH(selectedChartType) ? 'h': null,
+        marker: {
+          color: '#255FD1'
         },
-      ],
+        //base: 0,
+      }
+    }
+    if(leftMenuData?.axisData.legend?.data) {
+      data2 = {
+        x: leftMenuData?.axisData.xAxis.data,
+        y: leftMenuData?.axisData.legend.data,
+        type: "bar",
+        name: leftMenuData?.axisData.legend.label,
+        orientation: startsWithH(selectedChartType) ? 'h': null,
+        // base: 0,
+        // marker: {
+        //   color: '#255FD1'
+        // }
+      }
+    }
+    const dataCreator = {
+      data: [data1, data2],
       layout: {
         xaxis: { title: leftMenuData?.axisData.xAxis.label, type: 'category' },
         yaxis: { title: leftMenuData?.axisData.yAxis.label },
+        barmode: removeInitialLowercaseH(selectedChartType)
       },
     };
     console.log('datacreated', dataCreator)

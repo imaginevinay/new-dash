@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -23,7 +23,8 @@ import TitlesAccordion from "./TitlesAccordion";
 import DateRangeAccordion from "./DateRangeAccordion";
 import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
-import { allNotNull } from "../../utils/common";
+import { allNotNullOrUndefined, containsStackOrGroup } from "../../utils/common";
+import { AppContext } from "../../context/AppContext";
 
 const sqlData = [
   {
@@ -35,20 +36,21 @@ const sqlData = [
         label: "Order Date",
         icon: CalendarIcon,
         isChecked: false,
-        data: ["2014", "2015", "2016", "2017"]        
+        data: ["2014", "2015", "2016", "2017", "2018"],
       },
       {
         id: 3,
         label: "Order Sales",
         icon: QueueIcon,
         isChecked: false,
-        data: [200, 400, 600, 1000]
+        data: [150, 200, 300, 400, 500],
       },
       {
         id: 4,
         label: "Order Region",
         icon: QueueIcon,
         isChecked: false,
+        data : [200, 300, 400, 500, 600]
       },
     ],
   },
@@ -157,7 +159,7 @@ const formatVObj = [
         label: "Options",
         data: {
           positions: "Bottom Center",
-          style: "Circular Marker"
+          style: "Circular Marker",
         },
       },
       {
@@ -170,7 +172,7 @@ const formatVObj = [
           fontSize: 9,
           textStyle: [],
           color: "#000000",
-        }
+        },
       },
       // add column colors accordion
     ],
@@ -184,51 +186,73 @@ const formatVObj = [
         label: "Horizontal",
         data: {
           color: "#000000",
-          transparency : 25,
-          lineStyle: 'Dotted'
-        }
+          transparency: 25,
+          lineStyle: "Dotted",
+        },
       },
       {
         id: "grid-vertical",
         label: "Vertical",
         data: {
           color: "#000000",
-          transparency : 25,
-          lineStyle: 'Dotted'
-        }
+          transparency: 25,
+          lineStyle: "Dotted",
+        },
       },
     ],
   },
 ];
 
-const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
+const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
   const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(false);
   const [formatVisualsData, setFormatVisualsData] = useState(formatVObj);
-
   const [selectedItems, setSelectedItems] = useState({
     xAxis: null,
     yAxis: null,
-    legend: null,
+    legend: null
   });
+  const { selectedChartType } = useContext(AppContext);
+
+
+  useEffect(() => {
+    console.log("selected chart type", selectedChartType);
+    if (containsStackOrGroup(selectedChartType)) {
+      setSelectedItems((prevState) => ({
+        ...prevState,
+        legend: prevState.legend,
+      }));
+    } else {
+      setSelectedItems(prevState => ({
+        xAxis: prevState.xAxis,
+        yAxis: prevState.yAxis,
+      }));
+    }
+  }, [selectedChartType]);
+
+  useEffect(() => {
+    console.log("selectedItems", selectedItems);
+  }, [selectedItems]);
+
+
 
   const createAxisData = (val) => {
     const obj = {
       axisData: selectedItems,
-      visualsData: formatVisualsData
-    }
-    if(val) {
-      setLeftMenuData(obj)
+      visualsData: formatVisualsData,
+    };
+    if (val) {
+      setLeftMenuData(obj);
     } else {
-      setLeftMenuData(null)
+      setLeftMenuData(null);
     }
-  }
+  };
 
-  useEffect(()=> {
-    console.log('selected items', selectedItems)
-    if(allNotNull(selectedItems)){
+  useEffect(() => {
+    console.log("selected items", selectedItems);
+    if (allNotNullOrUndefined(selectedItems)) {
       setIsVisualizeActive(true);
       setIsFormatVisualsActive(true);
       createAxisData(true);
@@ -236,8 +260,8 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
       setIsVisualizeActive(false);
       setIsFormatVisualsActive(false);
     }
-  },[selectedItems, setIsVisualizeActive])
-  
+  }, [selectedItems, setIsVisualizeActive]);
+
   const [expandedSubAccordion, setExpandedSubAccordion] = useState(null);
   const handleAccordionChange = (subAccordion, isExpanded) => {
     setExpandedSubAccordion(isExpanded ? subAccordion : null);
@@ -317,7 +341,10 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
   const yearAccordion = () => (
     <AccordionGroup disableDivider sx={{ padding: "1.25rem" }}>
       <Accordion>
-        <Styled.SelectedAccordionSummaryBtn yearBtn={true} className="yearAccordion">
+        <Styled.SelectedAccordionSummaryBtn
+          yearBtn={true}
+          className="yearAccordion"
+        >
           <Styled.SelectedAxisText>Year</Styled.SelectedAxisText>
         </Styled.SelectedAccordionSummaryBtn>
         <AccordionDetails sx={{ backgroundColor: "white" }}>
@@ -399,73 +426,145 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
   };
 
   const handleFormatVisualsChange = useCallback((subAccordionId, newValues) => {
-    setFormatVisualsData(prevData => 
-      prevData.map(item => ({
+    setFormatVisualsData((prevData) =>
+      prevData.map((item) => ({
         ...item,
-        subAccordions: item.subAccordions.map(sub => 
-          sub.id === subAccordionId ? { ...sub, data: { ...sub.data, ...newValues } } : sub
-        )
+        subAccordions: item.subAccordions.map((sub) =>
+          sub.id === subAccordionId
+            ? { ...sub, data: { ...sub.data, ...newValues } }
+            : sub
+        ),
       }))
     );
   }, []);
 
   // useEffect(()=> {console.log('data changed >>>>', formatVisualsData)},[formatVisualsData])
 
-  const xValuesAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <ValuesAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)} />
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const xValuesAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <ValuesAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const xTitlesAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <TitlesAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)} />
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const xTitlesAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <TitlesAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
+  const yRangeAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <DateRangeAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const yRangeAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <DateRangeAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)} />
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const yValuesAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <ValuesAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const yValuesAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <ValuesAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)}/>
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const yTitlesAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <TitlesAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const yTitlesAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <TitlesAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)}/>
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const legOptionsAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <OptionsAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const legOptionsAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <OptionsAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)}/>
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const legTextAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <TitlesAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const legTextAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <TitlesAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)}/>
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
+  const gridHorizAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <HorizontalAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
-  const gridHorizAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <HorizontalAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)}/>
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
-
-  const gridVertAccordionDisplay = useCallback((data, subAccordionId) => (
-    <Styled.ValuesWrapper>
-      <HorizontalAccordion data={data} onValuesChange={(values) => handleFormatVisualsChange(subAccordionId, values)}/>
-    </Styled.ValuesWrapper>
-  ), [handleFormatVisualsChange]);
-
+  const gridVertAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <HorizontalAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
 
   return (
     <Styled.WrapperBox>
@@ -483,10 +582,13 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
               <span>Y - axis</span>
               {renderAxisControl("yAxis")}
             </Styled.SMFlexCol>
-            <Styled.SMFlexCol>
-              <span>Legend</span>
-              {renderAxisControl("legend")}
-            </Styled.SMFlexCol>
+            {(selectedChartType.includes("stack") ||
+              selectedChartType.includes("group")) && (
+              <Styled.SMFlexCol>
+                <span>Legend</span>
+                {renderAxisControl("legend")}
+              </Styled.SMFlexCol>
+            )}
           </Styled.AccordionDetailsWrapper>
         </Accordion>
         <Accordion disabled={!isFormatVisualsActive}>
@@ -527,16 +629,24 @@ const VisualsAccordions = ({setIsVisualizeActive, setLeftMenuData}) => {
                             </div>
                           </AccordionSummary>
                           <AccordionDetails>
-                            {sub.id === "x-values" && xValuesAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "x-titles" && xTitlesAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "y-range" && yRangeAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "y-values" && yValuesAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "y-titles" && yTitlesAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "leg-options" && legOptionsAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "leg-text" && legTextAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "grid-horizontal" && gridHorizAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "grid-vertical" && gridVertAccordionDisplay(sub.data, sub.id)}
-
+                            {sub.id === "x-values" &&
+                              xValuesAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "x-titles" &&
+                              xTitlesAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "y-range" &&
+                              yRangeAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "y-values" &&
+                              yValuesAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "y-titles" &&
+                              yTitlesAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "leg-options" &&
+                              legOptionsAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "leg-text" &&
+                              legTextAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "grid-horizontal" &&
+                              gridHorizAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "grid-vertical" &&
+                              gridVertAccordionDisplay(sub.data, sub.id)}
                           </AccordionDetails>
                         </Accordion>
                       ))}

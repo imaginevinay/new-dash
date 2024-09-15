@@ -13,13 +13,32 @@ import TanstackTable from "../../components/TanstackTable/TanstackTable";
 import { WORKSPACES_COLS, WORKSPACES_DATA } from "../../utils/dummyData";
 import ChartCreationLeftMenu from "../../components/ChartCreationLeftMenu/ChartCreationLeftMenu";
 import ChartCreationGrid from "../../components/ChartCreationGrid/ChartCreationGrid";
+import { useParams } from "react-router";
 
 const Workspace = () => {
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState("all");
   const [tableData, setTableData] = useState([]);
-  const [showChartCreation, setShowChartCreation] = useState(true);
+  const [showChartCreation, setShowChartCreation] = useState(false);
+
+  const { path } = useParams();
+
+  const formatWorkspaceName = (input) => {
+    // Split the input string by dash
+    const words = input.split('-');
+    
+    // Capitalize the first letter of each word
+    const capitalizedWords = words.map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    );
+    
+    // Join the words back together with a space
+    return capitalizedWords.join(' ');
+  }
+
+  const workspaceTitle = formatWorkspaceName(path); 
+
 
   const filterWorkspaceTable = (type) => {
     return WORKSPACES_DATA.filter((workspace) => {
@@ -50,7 +69,7 @@ const Workspace = () => {
       <Styled.Header>
         <Styled.WorkspaceTitle>
           <GroupIcon />
-          <span>Restaurant Inspections</span>
+          <span>{workspaceTitle}</span>
         </Styled.WorkspaceTitle>
         <Styled.SettingsBtn onClick={() => setSettingsDrawerOpen(true)}>
           <SettingsIcon />

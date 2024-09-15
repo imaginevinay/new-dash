@@ -22,6 +22,7 @@ export default function AddWorkspaceModal({ open, handleOnClose }) {
     description: "",
     administrators: [contactList[0]],
     logo: null,
+    path: null
   });
 
   const fileInputRef = useRef(null);
@@ -30,11 +31,18 @@ export default function AddWorkspaceModal({ open, handleOnClose }) {
     fileInputRef.current.click();
   };
 
+  const generateWorkspacePath = (input) => {
+    const lowercased = input.toLowerCase();
+    const dashedString = lowercased.replace(/\s+/g, '-');
+    return dashedString;
+  }
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+      path: name === 'name' ? `/workspace/${generateWorkspacePath(value)}` : prevData.path,
     }));
   };
 

@@ -336,7 +336,7 @@ export const SelectedAccordionSummaryBtn = styled(AccordionSummary)(({theme, yea
 
 export const AccordionDetailsWrapper = styled(AccordionDetails)({
   "& .MuiAccordionDetails-content": {
-    gap: '1rem',
+    // gap: '1rem',
     // marginTop: '1.5rem'
   }
 })

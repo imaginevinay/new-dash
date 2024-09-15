@@ -8,39 +8,61 @@ import { Avatar, Button, ListDivider, Typography } from "@mui/joy";
 import WorkspaceImg from "../../assets/images/workspace.png";
 import { useState } from "react";
 import AddWorkspaceModal from "./AddWorkspaceModal";
+import { useNavigate } from "react-router";
 
 const WORKSPACE_LIST = [
   {
     id: 1,
     label: "My Workspace",
     img: WorkspaceImg,
+    path: '/workspace/my-workspace'
   },
   {
     id: 2,
     label: "Search workspace",
+    path: '/workspace/search-workspace'
   },
   {
     id: 3,
     label: "Survey",
+    path: '/workspace/survey'
   },
   {
     id: 4,
     label: "Restaurant inspection",
+    path: '/workspace/restaurant-inspection'
   },
   {
     id: 5,
     label: "Time booking",
+    path: '/workspace/time-booking'
+    
   },
 ];
 
 export default function WorkspaceMenu() {
   const [workspaceList, setWorkspaceList] = useState(WORKSPACE_LIST);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleCloseModal = (value, type) => {
     console.log("value, type", value, type);
     setIsModalOpen(false);
+    
+    const newWorkspace = {
+      id: workspaceList[length-1]?.id + 1,
+      label: value?.name,
+      path: value?.path 
+    };
+
+    setWorkspaceList(prevWorkspaces => [...prevWorkspaces, newWorkspace]);
+    navigate(value.path);
   };
+
+  const handleClick = (item) => {
+    if (item.path) {
+      navigate(item.path);
+    }
+  }
 
   return (
     <Dropdown>
@@ -59,7 +81,7 @@ export default function WorkspaceMenu() {
         </Button>
         {workspaceList.map((item) => (
           <div key={item.id}>
-            <MenuItem>
+            <MenuItem onClick={() => handleClick(item)}>
               {item.img ? <Avatar src={item.img} /> : <></>}
               <Typography level="body-md">{item.label}</Typography>
             </MenuItem>

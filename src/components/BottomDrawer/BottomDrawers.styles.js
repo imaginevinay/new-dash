@@ -14,7 +14,7 @@ export const SheetMenu = styled(Sheet)(({ theme }) => ({
   padding: "0 16px",
   borderRadius: "1rem 1rem 0rem 0rem",
   border: "1px solid #B9BBBE",
-  background: theme.palette.secondary[50],
+  background:  theme.palette.primary[50],
   cursor: "pointer",
   boxShadow: theme.shadow.lg
 }));

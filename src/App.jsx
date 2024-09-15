@@ -13,7 +13,7 @@ function App() {
         <div style={{flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto'}}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/workspace" element={<Workspace />} />
+            <Route path="/workspace/:path" element={<Workspace />} />
           </Routes>
         </div>
       </div>

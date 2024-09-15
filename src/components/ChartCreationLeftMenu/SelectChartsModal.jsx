@@ -143,7 +143,7 @@ const chartData = [
       },
       {
         id: "hgroup",
-        name: "Horizontal Bar Stacked",
+        name: "Horizontal Bar Grouped",
         icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
         previewImage:
           "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
