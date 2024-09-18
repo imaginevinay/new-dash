@@ -222,9 +222,8 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     yAxis: null,
     legend: null
   });
-  const { selectedChartType, setSelectedChartData, selectedChartData } = useContext(AppContext);
+  const { selectedChartType, setSelectedChartData } = useContext(AppContext);
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
-
 
   useEffect(() => {
     // console.log("selected chart type", selectedChartType);
@@ -240,10 +239,6 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       }));
     }
   }, [selectedChartType]);
-
-  // useEffect(() => {
-  //   console.log("selectedItems", selectedItems);
-  // }, [selectedItems]);
 
 
   const createAxisData = (val) => {
@@ -350,60 +345,95 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   );
 
   const handleDateCheckboxSelection = (selection) => {
-    console.log('updated selection...', selection);
-    if(!selection?.yearVisible) {
-      const annotations = [
-        {
-          x: 0.25,
-          y: -0.15,
-          xref: 'paper',
-          yref: 'paper',
-          text: 'Quarter 1',
-          showarrow: false,
-          font: {
-            size: 14,
-            color: 'black'
-          }
-        },
-        {
-          x: 0.75,
-          y: -0.15,
-          xref: 'paper',
-          yref: 'paper',
-          text: 'Quarter 2',
-          showarrow: false,
-          font: {
-            size: 14,
-            color: 'black'
-          }
-        }
-      ]
-      setSelectedChartData(prevItem => ({
-        ...prevItem,
-        layout: {
-          ...prevItem.layout,
-          xaxis: {
-            ...prevItem.layout.xaxis,
-            standoff: 100
-          },
-          annotations: annotations
-        }
-      }))
-    } 
-    if(!selection?.yearVisible && !selection?.quarterVisible) {
-      setSelectedChartData(prevItem => {
-        const newData = JSON.parse(JSON.stringify(prevItem));
-        if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
-          newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.daily);
-          newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.daily)
-          newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.daily)
-          newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.daily)
-        }
+    const { yearVisible, quarterVisible } = selection;
 
-        newData?.layout
-        return newData;
-      })
-    }
+  if (yearVisible && quarterVisible) {
+    setSelectedChartData(prevItem => {
+      const newData = JSON.parse(JSON.stringify(prevItem));
+      if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
+        newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.monthly);
+        newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.monthly)
+        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.monthly)
+        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.monthly)
+      }
+      newData.layout = {
+        ...prevItem.layout,
+        annotations: null
+      }
+      return newData 
+    })
+  } else if (yearVisible && !quarterVisible) {
+    setSelectedChartData(prevItem => {
+      const newData = JSON.parse(JSON.stringify(prevItem));
+      if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
+        newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.monthly);
+        newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.monthly)
+        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.monthly)
+        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.monthly)
+      }
+      newData.layout = {
+        ...prevItem.layout,
+        annotations: null
+      }
+      return newData 
+    })
+  } else if (!yearVisible && quarterVisible) {
+    console.log("Only quarter is visible");
+    const annotations = [
+      {
+        x: 0.25,
+        y: -0.15,
+        xref: 'paper',
+        yref: 'paper',
+        text: 'Quarter 1',
+        showarrow: false,
+        font: {
+          size: 14,
+          color: 'black'
+        }
+      },
+      {
+        x: 0.75,
+        y: -0.15,
+        xref: 'paper',
+        yref: 'paper',
+        text: 'Quarter 2',
+        showarrow: false,
+        font: {
+          size: 14,
+          color: 'black'
+        }
+      }
+    ]
+    setSelectedChartData(prevItem => ({
+      ...prevItem,
+      layout: {
+        ...prevItem.layout,
+        xaxis: {
+          ...prevItem.layout.xaxis,
+          standoff: 100
+        },
+        annotations: annotations
+      }
+    }))
+  } else {
+    console.log("Neither year nor quarter is visible");
+    setSelectedChartData(prevItem => {
+      const newData = JSON.parse(JSON.stringify(prevItem));
+      if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
+        newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.daily);
+        newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.daily)
+        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.daily)
+        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.daily)
+      }
+
+      newData.layout = {
+        ...prevItem.layout,
+        annotations: null
+      }
+      return newData;
+    })
+  }
   }
 
   const handleToggleYearlyMenu = (axis) => {
@@ -419,10 +449,6 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       return newData 
     })
   };
-
-  useEffect(() => {
-    console.log('selectedChartData.........', selectedChartData);
-  }, [selectedChartData])
   
 
   const yearAccordion = (axis) => (
