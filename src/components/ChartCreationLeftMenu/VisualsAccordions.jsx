@@ -5,6 +5,7 @@ import {
   AccordionGroup,
   AccordionSummary,
   Checkbox,
+  FormControl,
   Input,
   Menu,
   MenuItem,
@@ -25,6 +26,7 @@ import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
 import { allNotNullOrUndefined, containsStackOrGroup } from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
+import CustomEyeCheckbox from "./CustomEyeCheckbox";
 
 const sqlData = [
   {
@@ -37,6 +39,8 @@ const sqlData = [
         icon: CalendarIcon,
         isChecked: false,
         data: ["2014", "2015", "2016", "2017", "2018"],
+        monthly: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        daily: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
       },
       {
         id: 3,
@@ -44,13 +48,17 @@ const sqlData = [
         icon: QueueIcon,
         isChecked: false,
         data: [150, 200, 300, 400, 500],
+        monthly: [237, 412, 189, 325, 476, 201, 358, 294, 453, 167, 380, 506],
+        daily: [183, 276, 342, 159, 405, 231, 298, 367, 195, 412, 287, 354, 201, 439, 176, 315, 389, 245, 302, 456, 218, 327, 384, 153, 421, 279, 361, 197, 408, 263, 335]
       },
       {
         id: 4,
         label: "Order Region",
         icon: QueueIcon,
         isChecked: false,
-        data : [200, 300, 400, 500, 600]
+        data: [200, 300, 400, 500, 600],
+        monthly : [315, 468, 203, 387, 529, 176, 423, 281, 492, 154, 346, 571],
+        daily: [201, 315, 197, 327, 263, 439, 279, 245, 354, 408, 384, 421, 195, 231, 153, 456, 367, 389, 361, 335, 405, 342, 218, 302, 176, 183, 412, 276, 159, 287, 298]
       },
     ],
   },
@@ -214,11 +222,12 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     yAxis: null,
     legend: null
   });
-  const { selectedChartType } = useContext(AppContext);
+  const { selectedChartType, setSelectedChartData, selectedChartData } = useContext(AppContext);
+  const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
 
   useEffect(() => {
-    console.log("selected chart type", selectedChartType);
+    // console.log("selected chart type", selectedChartType);
     if (containsStackOrGroup(selectedChartType)) {
       setSelectedItems((prevState) => ({
         ...prevState,
@@ -232,10 +241,9 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     }
   }, [selectedChartType]);
 
-  useEffect(() => {
-    console.log("selectedItems", selectedItems);
-  }, [selectedItems]);
-
+  // useEffect(() => {
+  //   console.log("selectedItems", selectedItems);
+  // }, [selectedItems]);
 
 
   const createAxisData = (val) => {
@@ -251,7 +259,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   };
 
   useEffect(() => {
-    console.log("selected items", selectedItems);
+    // console.log("selected items", selectedItems);
     if (allNotNullOrUndefined(selectedItems)) {
       setIsVisualizeActive(true);
       setIsFormatVisualsActive(true);
@@ -288,6 +296,9 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
 
   const handleRemoveSelectedColumn = (axis) => {
     setSelectedItems((prev) => ({ ...prev, [axis]: null }));
+    if(selectedItems[axis].label.toLowerCase().includes('date')){
+      setShowYearlyMenu(false)
+    }
     handleCheckboxChangeByLabel(selectedItems[axis]?.label);
   };
 
@@ -338,7 +349,83 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     </Styled.SMFlexRow>
   );
 
-  const yearAccordion = () => (
+  const handleDateCheckboxSelection = (selection) => {
+    console.log('updated selection...', selection);
+    if(!selection?.yearVisible) {
+      const annotations = [
+        {
+          x: 0.25,
+          y: -0.15,
+          xref: 'paper',
+          yref: 'paper',
+          text: 'Quarter 1',
+          showarrow: false,
+          font: {
+            size: 14,
+            color: 'black'
+          }
+        },
+        {
+          x: 0.75,
+          y: -0.15,
+          xref: 'paper',
+          yref: 'paper',
+          text: 'Quarter 2',
+          showarrow: false,
+          font: {
+            size: 14,
+            color: 'black'
+          }
+        }
+      ]
+      setSelectedChartData(prevItem => ({
+        ...prevItem,
+        layout: {
+          ...prevItem.layout,
+          xaxis: {
+            ...prevItem.layout.xaxis,
+            standoff: 100
+          },
+          annotations: annotations
+        }
+      }))
+    } 
+    if(!selection?.yearVisible && !selection?.quarterVisible) {
+      setSelectedChartData(prevItem => {
+        const newData = JSON.parse(JSON.stringify(prevItem));
+        if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
+          newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.daily);
+          newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.daily)
+          newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.daily)
+          newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.daily)
+        }
+
+        newData?.layout
+        return newData;
+      })
+    }
+  }
+
+  const handleToggleYearlyMenu = (axis) => {
+    selectedItems[axis] && setShowYearlyMenu(true);
+    setSelectedChartData(prevItem => {
+      const newData = JSON.parse(JSON.stringify(prevItem));
+      if(axis === 'xAxis' && selectedItems[axis]?.label.toLowerCase().includes('date')){
+        newData.data[0].x && (newData.data[0].x = selectedItems[axis]?.monthly);
+        newData.data[1].x && (newData.data[1].x = selectedItems[axis]?.monthly)
+        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.monthly)
+        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.monthly)
+      }
+      return newData 
+    })
+  };
+
+  useEffect(() => {
+    console.log('selectedChartData.........', selectedChartData);
+  }, [selectedChartData])
+  
+
+  const yearAccordion = (axis) => (
     <AccordionGroup disableDivider sx={{ padding: "1.25rem" }}>
       <Accordion>
         <Styled.SelectedAccordionSummaryBtn
@@ -348,39 +435,55 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
           <Styled.SelectedAxisText>Year</Styled.SelectedAxisText>
         </Styled.SelectedAccordionSummaryBtn>
         <AccordionDetails sx={{ backgroundColor: "white" }}>
-          <RadioGroup sx={{ mt: "0.75rem", p: "0 2.5rem" }}>
-            <Radio
-              value="2015"
-              label="2015"
-              className="helloradio"
-              sx={{
-                flexGrow: 1,
-                flexDirection: "row-reverse",
-                fontSize: "0.875rem",
-                "& .MuiRadio-radio": { width: "1rem", height: "1rem" },
-              }}
+          {!showYearlyMenu && (
+            <FormControl>
+              <RadioGroup
+                sx={{ mt: "0.75rem", p: "0 2.5rem" }}
+                onChange={() => handleToggleYearlyMenu(axis)}
+              >
+                <Radio
+                  value="2015"
+                  label="2015"
+                  className="helloradio"
+                  sx={{
+                    flexGrow: 1,
+                    flexDirection: "row-reverse",
+                    fontSize: "0.875rem",
+                    "& .MuiRadio-radio": { width: "1rem", height: "1rem" },
+                  }}
+                />
+                <Radio
+                  value="2016"
+                  label="2016"
+                  sx={{
+                    flexGrow: 1,
+                    flexDirection: "row-reverse",
+                    fontSize: "0.875rem",
+                    "& .MuiRadio-radio": { width: "1rem", height: "1rem" },
+                  }}
+                />
+                <Radio
+                  value="2017"
+                  label="2017"
+                  sx={{
+                    flexGrow: 1,
+                    flexDirection: "row-reverse",
+                    fontSize: "0.875rem",
+                    "& .MuiRadio-radio": { width: "1rem", height: "1rem" },
+                  }}
+                />
+              </RadioGroup>
+            </FormControl>
+          )}
+
+          {showYearlyMenu && (
+            <CustomEyeCheckbox
+              onSelectionChange={(selection) => handleDateCheckboxSelection(selection)}
+              initialYearVisible={true}
+              initialQuarterVisible={true}
+              initialSelectedMonths={["Jan"]}
             />
-            <Radio
-              value="2016"
-              label="2016"
-              sx={{
-                flexGrow: 1,
-                flexDirection: "row-reverse",
-                fontSize: "0.875rem",
-                "& .MuiRadio-radio": { width: "1rem", height: "1rem" },
-              }}
-            />
-            <Radio
-              value="2017"
-              label="2017"
-              sx={{
-                flexGrow: 1,
-                flexDirection: "row-reverse",
-                fontSize: "0.875rem",
-                "& .MuiRadio-radio": { width: "1rem", height: "1rem" },
-              }}
-            />
-          </RadioGroup>
+          )}
         </AccordionDetails>
       </Accordion>
     </AccordionGroup>
@@ -402,7 +505,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
               </Styled.SelectedAxisText>
             </Styled.SelectedAccordionSummaryBtn>
             <AccordionDetails sx={{ backgroundColor: "#F5F7FA" }}>
-              {yearAccordion()}
+              {yearAccordion(axis)}
             </AccordionDetails>
           </Accordion>
         </AccordionGroup>
@@ -623,7 +726,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                               {expandedSubAccordion === sub.id && (
                                 <Switch
                                   checked={true}
-                                  onChange={() => console.log("toggle change")}
+                                  // onChange={() => console.log("toggle change")}
                                 />
                               )}
                             </div>

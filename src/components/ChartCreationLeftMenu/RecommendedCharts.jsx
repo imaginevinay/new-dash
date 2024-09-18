@@ -201,17 +201,13 @@ const RecommendedCharts = () => {
         type: "bar",
         name: leftMenuData?.axisData.legend.label,
         orientation: startsWithH(selectedChartType) ? 'h': null,
-        // base: 0,
-        // marker: {
-        //   color: '#255FD1'
-        // }
       }
     }
     const dataCreator = {
       data: [data1, data2],
       layout: {
-        xaxis: { title: leftMenuData?.axisData.xAxis.label, type: 'category' },
-        yaxis: { title: leftMenuData?.axisData.yAxis.label },
+        xaxis: { title: {text: leftMenuData?.axisData.xAxis.label, standoff: 150}, type: 'category' },
+        yaxis: { title: {text: leftMenuData?.axisData.yAxis.label, standoff: 150} },
         barmode: removeInitialLowercaseH(selectedChartType)
       },
     };

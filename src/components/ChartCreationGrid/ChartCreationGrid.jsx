@@ -20,10 +20,12 @@ const ChartCreationGrid = () => {
       }`}
     >
       <div className="header">
-        <Stack direction="row" spacing={'2.5rem'}>
+        <Stack direction="row" spacing={"2.5rem"}>
           <Stack>
-          <Typography level="h4">Chart Name</Typography>
-          <Typography level="subtitle" textColor="secondary.100">{selectedChart?.label}</Typography>
+            <Typography level="h4">Chart Name</Typography>
+            <Typography level="subtitle" textColor="secondary.100">
+              {selectedChart?.label}
+            </Typography>
           </Stack>
           <ChartSelectorMenu />
         </Stack>
@@ -35,8 +37,22 @@ const ChartCreationGrid = () => {
       {selectedChartData && (
         <Plot
           data={selectedChartData?.data}
-          layout={{...selectedChartData?.layout, width: '77rem', height: '35rem'}}
-          config={{responsive: true,  modeBarButtonsToRemove: ['pan2d','select2d','lasso2d','resetScale2d','zoomOut2d'], displaylogo: false}}
+          layout={{
+            ...selectedChartData?.layout,
+            width: 75 * 16,
+            height: 33 * 16
+          }}
+          config={{
+            responsive: true,
+            modeBarButtonsToRemove: [
+              "pan2d",
+              "select2d",
+              "lasso2d",
+              "resetScale2d",
+              "zoomOut2d",
+            ],
+            displaylogo: false,
+          }}
         />
       )}
     </Styled.CanvasGridWrapper>

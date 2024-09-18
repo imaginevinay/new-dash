@@ -301,24 +301,25 @@ export const WrapperBox = styled('div')({
   fontSize: '0.875rem', 
 })
 
-export const AccordionSummaryBtn = styled(AccordionSummary)(({theme})=>({
+export const AccordionSummaryBtn = styled(AccordionSummary)(({ theme }) => ({
   // padding: '0.75rem',
   "&:hover": {
     backgroundColor: theme.palette.secondary[50],
-    "& p" : {
+    "& p": {
       color: theme.palette.primary[100],
     },
     "& span svg": {
-      color: theme.palette.primary[100]
+      color: theme.palette.primary[100],
     },
   },
-  "& .MuiAccordionSummary-button:hover" : {
-    backgroundColor: theme.palette.secondary[50],
+  "& .MuiAccordionSummary-button:not(.Mui-selected, [aria-selected='true']):hover":
+    {
+      backgroundColor: theme.palette.secondary[50],
+    },
+  "& .MuiAccordionSummary-button": {
+    padding: "0.75rem",
   },
-"& .MuiAccordionSummary-button" : {
-  padding: '0.75rem',
-}
-}))
+}));
 
 export const SelectedAccordionSummaryBtn = styled(AccordionSummary)(({theme, yearBtn})=>({
   backgroundColor: yearBtn ? theme.palette.primary[50] : theme.palette.primary[400],
