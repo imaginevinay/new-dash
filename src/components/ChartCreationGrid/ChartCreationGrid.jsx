@@ -39,8 +39,8 @@ const ChartCreationGrid = () => {
           data={selectedChartData?.data}
           layout={{
             ...selectedChartData?.layout,
-            width: 75 * 16,
-            height: 33 * 16
+            width: 70 * 16,
+            height: 40* 16
           }}
           config={{
             responsive: true,

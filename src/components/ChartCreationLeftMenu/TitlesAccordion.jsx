@@ -52,12 +52,14 @@ const TitlesAccordion = memo(({ onValuesChange, data }) => {
             }}
           >
             <Option value="Inter UI">Inter UI</Option>
+            <Option value="Arial">Arial</Option>
+            <Option value="Helvetica">Helvetica</Option>
           </Select>
           <Select
             value={localData.fontSize}
             onChange={(_, value) => handleChange("fontSize", value)}
           >
-            {[8, 9, 10, 11, 12].map((size) => (
+            {[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((size) => (
               <Option key={size} value={size}>
                 {size}
               </Option>
@@ -106,7 +108,7 @@ const TitlesAccordion = memo(({ onValuesChange, data }) => {
             {localData.color}
           </MenuButton>
           <Menu sx={{ padding: 0 }} placement="right">
-          <SketchPicker
+            <SketchPicker
               color={localData.color}
               onChangeComplete={(newColor) =>
                 handleChange("color", newColor.hex)

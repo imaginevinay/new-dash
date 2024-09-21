@@ -12,14 +12,20 @@ import { selectClasses } from "@mui/joy/Select";
 import { SketchPicker } from "react-color";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 
-const ValuesAccordion = memo(({ onValuesChange, data }) => {
-  const [localData, setLocalData] = useState(data);
 
+const ValuesAccordion = memo(({ onValuesChange, data }) => {
+
+  const [localData, setLocalData] = useState(data);
   const handleChange = useCallback((type, value) => {
     const newData = { ...localData, [type]: value };
     setLocalData(newData);
     onValuesChange(newData);
   }, [onValuesChange, localData]);
+  const slotProps = {
+    listbox: {
+      placement: 'right'
+    },
+  }
 
   return (
     <div className="flexCol-lg">
@@ -41,12 +47,14 @@ const ValuesAccordion = memo(({ onValuesChange, data }) => {
             }}
           >
             <Option value="Inter UI">Inter UI</Option>
+            <Option value="Arial">Arial</Option>
+            <Option value="Helvetica">Helvetica</Option>
           </Select>
           <Select
             value={localData.fontSize}
             onChange={(_, value) => handleChange("fontSize", value)}
           >
-            {[8, 9, 10, 11, 12].map((size) => (
+            {[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map((size) => (
               <Option key={size} value={size}>
                 {size}
               </Option>
@@ -111,6 +119,7 @@ const ValuesAccordion = memo(({ onValuesChange, data }) => {
           value={localData.displayUnit}
           onChange={(_, value) => handleChange("displayUnit", value)}
           indicator={<KeyboardArrowDown />}
+          slotProps={slotProps}
           sx={{
             [`& .${selectClasses.indicator}`]: {
               transition: "0.2s",
@@ -121,6 +130,11 @@ const ValuesAccordion = memo(({ onValuesChange, data }) => {
           }}
         >
           <Option value="Auto">Auto</Option>
+          <Option value="None">None</Option>
+          <Option value="Thousand">Thousand</Option>
+          <Option value="Millions">Millions</Option>
+          <Option value="Billions">Billions</Option>
+          <Option value="Trillions">Trillions</Option>          
         </Select>
       </div>
     </div>

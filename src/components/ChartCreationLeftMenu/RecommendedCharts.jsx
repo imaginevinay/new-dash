@@ -10,62 +10,62 @@ const buttonLabels = [
   {
     icon: "/src/assets/icons/horizontalBar.svg",
     label: "Horizontal Bar",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/line.svg",
     label: "Line",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/vStacked.svg",
     label: "V. Stacked Line",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/verticalBar.svg",
     label: "Vertical Bar",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/pie.svg",
     label: "Pie",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/verticalArea.svg",
     label: "Vertical Area",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/hArea.svg",
     label: "H. Area Stacked",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/bubble.svg",
     label: "Bubble",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/angular.svg",
     label: "Angular Gauge",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/verticalBoxed.svg",
     label: "Vertical Boxed",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/vStacked.svg",
     label: "V. Stacked Line",
-    types: []
+    types: [],
   },
   {
     icon: "/src/assets/icons/viewMore.svg",
     label: "View More",
-    types: []
+    types: [],
   },
 ];
 
@@ -80,15 +80,13 @@ const colmnTypes = [
     id: "stack",
     name: "Vertical Bar Stacked",
     icon: "/src/assets/charts/chart-types/vBarStacked.svg",
-    previewImage:
-      "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
+    previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
   },
   {
     id: "group",
     name: "Vertical Bar Grouped",
     icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
-    previewImage:
-      "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
+    previewImage: "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
   },
   {
     id: "hbar",
@@ -110,111 +108,167 @@ const colmnTypes = [
     previewImage:
       "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
   },
-]
+];
 
 const RecommendedCharts = () => {
   const [selected, setSelected] = useState(null);
   const [openSelectChartModal, setOpenSelectChartModal] = useState(false);
-  const [recoCharts, setRecoCharts] = useState(buttonLabels)
+  const [recoCharts, setRecoCharts] = useState(buttonLabels);
   const [isChartTypeSelected, setIsChartTypeSelected] = useState(false);
   const [isVisualizeActive, setIsVisualizeActive] = useState(false);
   const [leftMenuData, setLeftMenuData] = useState(null);
 
-  const { setSelectedChartData, setSelectedChart, selectedChartType } = useContext(AppContext);
+  const { setSelectedChartData, setSelectedChart, selectedChartType } =
+    useContext(AppContext);
 
-
-// !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   useEffect(() => {
     const selectedType = {
-      icon : "/src/assets/charts/chart-types/vBar.svg",
-      label :  "Vertical Bar",
-      types: colmnTypes
-    }
+      icon: "/src/assets/charts/chart-types/vBar.svg",
+      label: "Vertical Bar",
+      types: colmnTypes,
+    };
     const viewMore = {
       icon: "/src/assets/icons/viewMore.svg",
       label: "View More",
-      types: []
-    }
+      types: [],
+    };
     setSelectedChart(selectedType);
     setSelected(selectedType.label);
     setRecoCharts([selectedType, viewMore]);
     setIsChartTypeSelected(true);
-  }, [])
-
+  }, []);
 
   // useEffect(() => {
   //   setSelectedChartData(leftMenuData)
   // }, [leftMenuData, setSelectedChartData])
-  
 
   useEffect(() => {
-    if(selected === 'View More') {
-      setOpenSelectChartModal(true)
+    if (selected === "View More") {
+      setOpenSelectChartModal(true);
     }
-  }, [selected])
+  }, [selected]);
 
   const handleSelectChartModalClose = (val) => {
     setOpenSelectChartModal(false);
     setSelected(null);
-    if(val) {
+    if (val) {
       const selectedType = {
-        icon : val?.type?.icon,
-        label : val?.type?.name,
-        types : val?.category.chartTypes
-      }
-  
+        icon: val?.type?.icon,
+        label: val?.type?.name,
+        types: val?.category.chartTypes,
+      };
+
       const viewMore = {
         icon: "/src/assets/icons/viewMore.svg",
         label: "View More",
-      }
+      };
       setSelectedChart(selectedType);
       setSelected(selectedType.label);
       setRecoCharts([selectedType, viewMore]);
       setIsChartTypeSelected(true);
     }
-    
-  }
+  };
 
   const handleChange = (event, newSelected) => {
     setSelected(newSelected);
   };
 
   const handleVisualiseClick = () => {
-    let data1, data2 = {};
-    if(leftMenuData?.axisData?.xAxis?.data && leftMenuData?.axisData?.yAxis?.data) {
+    console.log('leftMenuData', leftMenuData)
+    let data1,
+      data2 = {};
+    if (
+      leftMenuData?.axisData?.xAxis?.data &&
+      leftMenuData?.axisData?.yAxis?.data
+    ) {
       data1 = {
         x: leftMenuData?.axisData.xAxis.data,
         y: leftMenuData?.axisData.yAxis.data,
         type: "bar",
         name: leftMenuData?.axisData.xAxis.label,
-        orientation: startsWithH(selectedChartType) ? 'h': null,
+        orientation: startsWithH(selectedChartType) ? "h" : null,
+        mode: 'markers',
         marker: {
-          color: '#255FD1'
+          color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
         },
-        //base: 0,
-      }
+      };
     }
-    if(leftMenuData?.axisData.legend?.data) {
+    if (leftMenuData?.axisData.legend?.data) {
       data2 = {
         x: leftMenuData?.axisData.xAxis.data,
         y: leftMenuData?.axisData.legend.data,
         type: "bar",
         name: leftMenuData?.axisData.legend.label,
-        orientation: startsWithH(selectedChartType) ? 'h': null,
-      }
+        orientation: startsWithH(selectedChartType) ? "h" : null,
+        mode: 'markers',
+        marker: {
+          color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color2,
+        },
+      };
     }
     const dataCreator = {
       data: [data1, data2],
       layout: {
-        xaxis: { title: {text: leftMenuData?.axisData.xAxis.label, standoff: 150}, type: 'category' },
-        yaxis: { title: {text: leftMenuData?.axisData.yAxis.label, standoff: 150} },
-        barmode: removeInitialLowercaseH(selectedChartType)
+        xaxis: {
+          title: {
+            text: leftMenuData?.axisData.xAxis.label,
+            standoff: 50,
+            font: {
+              family: "Arial",
+              size: 18,
+              color: "#000000",
+              weight: 500,
+              style: "normal",
+            },
+          },
+          type: "category",
+          tickfont: {
+            family: "Arial",
+            size: 12,
+            color: "#000000",
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: leftMenuData?.visualsData[3]?.subAccordions?.[0]?.data?.color,
+          griddash: leftMenuData?.visualsData[3]?.subAccordions?.[0]?.data?.lineStyle
+        },
+        yaxis: {
+          title: {
+            text: leftMenuData?.axisData.yAxis.label,
+            standoff: 200,
+            font: {
+              family: "Arial",
+              size: 18,
+              color: "#000000",
+              weight: 500,
+              style: "normal",
+            },
+          },
+          tickfont: {
+            family: "Arial",
+            size: 12,
+            color: "#000000",
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.color,
+          griddash: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.lineStyle
+        },
+        // legend: {
+        //   y: -0.5,
+        //   x: 0.5,
+        //   xanchor: "center",
+        //   yanchor: "bottom",
+        //   orientation: "h",
+        // },
+        barmode: removeInitialLowercaseH(selectedChartType),
+        
       },
     };
-    console.log('datacreated', dataCreator)
-    setSelectedChartData(dataCreator)
-  }
-
+    console.log("datacreated", dataCreator);
+    setSelectedChartData(dataCreator);
+  };
 
   return (
     <Styled.RecommendedChartsWrapper>
@@ -228,7 +282,7 @@ const RecommendedCharts = () => {
         <Grid
           container
           spacing={"2.38rem"}
-          sx={{justifyContent: isChartTypeSelected && 'space-around'}}
+          sx={{ justifyContent: isChartTypeSelected && "space-around" }}
         >
           {recoCharts.map((obj, index) => (
             <Grid key={index} xs={4}>
@@ -242,13 +296,32 @@ const RecommendedCharts = () => {
           ))}
         </Grid>
       </ToggleButtonGroup>
-        
-      {!isChartTypeSelected && <Styled.PreviewChartButton isactive={selected !== null && selected !== 'View More' ? 'true': 'false'}>
-        Preview Chart
-      </Styled.PreviewChartButton>}
-      {isChartTypeSelected && <VisualsAccordions setIsVisualizeActive={setIsVisualizeActive} setLeftMenuData={setLeftMenuData}/>}
-      <Styled.VisualiseButton isactive={isVisualizeActive ? 'true': 'false'} onClick={() => handleVisualiseClick()}>Visualize</Styled.VisualiseButton>
-      <SelectChartsModal open={openSelectChartModal} handleClose={handleSelectChartModalClose}/>
+
+      {!isChartTypeSelected && (
+        <Styled.PreviewChartButton
+          isactive={
+            selected !== null && selected !== "View More" ? "true" : "false"
+          }
+        >
+          Preview Chart
+        </Styled.PreviewChartButton>
+      )}
+      {isChartTypeSelected && (
+        <VisualsAccordions
+          setIsVisualizeActive={setIsVisualizeActive}
+          setLeftMenuData={setLeftMenuData}
+        />
+      )}
+      <Styled.VisualiseButton
+        isactive={isVisualizeActive ? "true" : "false"}
+        onClick={() => handleVisualiseClick()}
+      >
+        Visualize
+      </Styled.VisualiseButton>
+      <SelectChartsModal
+        open={openSelectChartModal}
+        handleClose={handleSelectChartModalClose}
+      />
     </Styled.RecommendedChartsWrapper>
   );
 };

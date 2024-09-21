@@ -30,7 +30,7 @@ export const CanvasGridWrapper = styled("div")(() => ({
     marginLeft : '3.75rem',
     marginRight: '3rem',
     marginTop: '2.5rem',
-    marginBottom: '4.81rem',
+    // marginBottom: '1rem',
   },
   "& .js-plotly-plot": {
     marginLeft: 'auto',

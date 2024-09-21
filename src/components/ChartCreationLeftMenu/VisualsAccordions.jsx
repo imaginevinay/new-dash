@@ -11,7 +11,6 @@ import {
   MenuItem,
   Radio,
   RadioGroup,
-  Switch,
   Typography,
 } from "@mui/joy";
 import * as Styled from "./ChartCreationLeftMenu.styles";
@@ -27,6 +26,7 @@ import HorizontalAccordion from "./HorizontalAccordion";
 import { allNotNullOrUndefined, containsStackOrGroup } from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
 import CustomEyeCheckbox from "./CustomEyeCheckbox";
+import ColumnColorsAccordion from "./ColumnColorsAccordion";
 
 const sqlData = [
   {
@@ -98,8 +98,8 @@ const formatVObj = [
         label: "Values",
         data: {
           isChecked: true,
-          font: "Inter UI",
-          fontSize: 9,
+          font: "Arial",
+          fontSize: 12,
           textStyle: [],
           color: "#000000",
           displayUnit: "Auto",
@@ -110,9 +110,9 @@ const formatVObj = [
         label: "Titles",
         data: {
           isChecked: true,
-          titleText: "Auto",
-          font: "Inter UI",
-          fontSize: 9,
+          titleText: "Order Date",
+          font: "Arial",
+          fontSize: 18,
           textStyle: [],
           color: "#000000",
         },
@@ -137,8 +137,8 @@ const formatVObj = [
         label: "Values",
         data: {
           isChecked: true,
-          font: "Inter UI",
-          fontSize: 9,
+          font: "Arial",
+          fontSize: 12,
           textStyle: [],
           color: "#000000",
           displayUnit: "Auto",
@@ -149,9 +149,9 @@ const formatVObj = [
         label: "Titles",
         data: {
           isChecked: true,
-          titleText: "Auto",
-          font: "Inter UI",
-          fontSize: 9,
+          titleText: "Order Sales",
+          font: "Arial",
+          fontSize: 18,
           textStyle: [],
           color: "#000000",
         },
@@ -183,6 +183,14 @@ const formatVObj = [
         },
       },
       // add column colors accordion
+      {
+        id: "col-colors",
+        label: "Column Colours",
+        data: {
+          color1: "#255FD1",
+          color2: "#FF7F0E",
+        },
+      },
     ],
   },
   {
@@ -195,7 +203,7 @@ const formatVObj = [
         data: {
           color: "#000000",
           transparency: 25,
-          lineStyle: "Dotted",
+          lineStyle: "solid",
         },
       },
       {
@@ -204,7 +212,7 @@ const formatVObj = [
         data: {
           color: "#000000",
           transparency: 25,
-          lineStyle: "Dotted",
+          lineStyle: "solid",
         },
       },
     ],
@@ -222,7 +230,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     yAxis: null,
     legend: null
   });
-  const { selectedChartType, setSelectedChartData } = useContext(AppContext);
+  const { selectedChartType, setSelectedChartData , selectedChartData} = useContext(AppContext);
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
   useEffect(() => {
@@ -567,7 +575,113 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     );
   }, []);
 
-  // useEffect(()=> {console.log('data changed >>>>', formatVisualsData)},[formatVisualsData])
+  useEffect(()=> {
+    console.log('formatVisualsData', formatVisualsData)
+    const xValuesObj = formatVisualsData[0].subAccordions[0].data;
+    const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
+    const yRangeObj = formatVisualsData[1].subAccordions[0].data;
+    const yValuesObj = formatVisualsData[1].subAccordions[1].data;
+    const yTitlesObj = formatVisualsData[1].subAccordions[2].data;
+    const legendOptionsObj = formatVisualsData[2].subAccordions[0].data;
+    const legendColorsObj = formatVisualsData[2].subAccordions[2].data;
+    const gridXcolorObj = formatVisualsData[3].subAccordions[0].data;
+    const gridYcolorObj = formatVisualsData[3].subAccordions[1].data;
+
+    selectedChartData && setSelectedChartData(prevItem => ({
+      data: [
+        {
+          ...prevItem.data[0],
+          marker: {
+            ...prevItem.data[0].marker,
+            color: legendColorsObj.color1
+          }
+        },
+        {
+          ...prevItem.data[1],
+          marker: {
+            ...prevItem.data[1].marker,
+            color: legendColorsObj.color2
+          }
+        },
+      ],
+      
+      layout: {
+        ...prevItem.layout,
+        xaxis: {
+          ...prevItem.layout.xaxis,
+          title: {
+            ...prevItem.layout.xaxis.title,
+            text: xTitlesObj.textStyle.includes('underlined') ? `<u>${xTitlesObj.titleText}</u>` : xTitlesObj.titleText,
+            font: {
+              family: xTitlesObj.font,
+              size: xTitlesObj.fontSize,
+              color: xTitlesObj.color,
+              weight: xTitlesObj.textStyle.includes('bold') ? 600 : 500,
+              style: xTitlesObj.textStyle.includes('italic') ? 'italic' : 'normal'
+            }
+          },
+          tickfont: {
+            family: xValuesObj.font,
+            size:  xValuesObj.fontSize,
+            color: xValuesObj.color,
+            weight: xValuesObj.textStyle.includes('bold') ? 600 : 500,
+            style: xValuesObj.textStyle.includes('italic') ? 'italic' : 'normal'
+          },
+          gridcolor: gridXcolorObj.color,
+          griddash: gridYcolorObj.lineStyle,     
+        },
+        yaxis: {
+          ...prevItem.layout.yaxis,
+          title: {
+            ...prevItem.layout.yaxis.title,
+            text: yTitlesObj.textStyle.includes('underlined') ? `<u>${yTitlesObj.titleText}</u>` : yTitlesObj.titleText,
+            font: {
+              family: yTitlesObj.font,
+              size: yTitlesObj.fontSize,
+              color: yTitlesObj.color,
+              weight: yTitlesObj.textStyle.includes('bold') ? 600 : 500,
+              style: yTitlesObj.textStyle.includes('italic') ? 'italic' : 'normal'
+            }
+          },
+          tickfont: {
+            family: yValuesObj.font,
+            size:  yValuesObj.fontSize,
+            color: yValuesObj.color,
+            weight: yValuesObj.textStyle.includes('bold') ? 600 : 500,
+            style: yValuesObj.textStyle.includes('italic') ? 'italic' : 'normal'
+          },
+          gridcolor: gridYcolorObj.color,
+          griddash: gridXcolorObj.lineStyle,
+        },
+        legend: {
+          ...getLegendPosition(legendOptionsObj.positions),  // Here you call your getLegendPosition function
+        }
+      }
+    }))
+  },[formatVisualsData])
+
+  const getLegendPosition = (position) => {
+    switch (position) {
+      case "Top Right":
+        return { x: 1, y: 1.1, xanchor: 'right', yanchor: 'top', orientation: "h", };
+      case "Top Center":
+        return { x: 0.5, y: 1.1, xanchor: 'center', yanchor: 'top', orientation: "h" };
+      case "Top Left":
+        return { x: 0, y: 1.1, xanchor: 'left', yanchor: 'top', orientation: "h" };
+      case "Bottom Right":
+        return { x: 1, y: -0.3, xanchor: 'right', yanchor: 'bottom', orientation: "h"  };
+      case "Bottom Center":
+        return { x: 0.5, y: -0.3, xanchor: 'center', yanchor: 'bottom', orientation: "h"  };
+      case "Bottom Left":
+        return { x: 0, y: -0.3, xanchor: 'left', yanchor: 'bottom', orientation: "h"  };
+      case "Top Left Stacked": 
+      return { x: -0.1, y: 1, xanchor: 'left', yanchor: 'bottom', orientation: "v"  };
+      case "Top Right Stacked":
+        return { x: 1.1, y: 1, xanchor: 'left', yanchor: 'bottom', orientation: "v"  };
+      default:
+        return { x: 0.5, y: -0.3, xanchor: 'center', yanchor: 'bottom', orientation: "h", };  // Default position
+    }
+  };
 
   const xValuesAccordionDisplay = useCallback(
     (data, subAccordionId) => (
@@ -667,6 +781,19 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     [handleFormatVisualsChange]
   );
 
+  const columnColorsAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <ColumnColorsAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }/>
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
+
   const gridHorizAccordionDisplay = useCallback(
     (data, subAccordionId) => (
       <Styled.ValuesWrapper>
@@ -749,12 +876,12 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                               }}
                             >
                               {sub.label}
-                              {expandedSubAccordion === sub.id && (
+                              {/* {expandedSubAccordion === sub.id && (
                                 <Switch
                                   checked={true}
                                   // onChange={() => console.log("toggle change")}
                                 />
-                              )}
+                              )} */}
                             </div>
                           </AccordionSummary>
                           <AccordionDetails>
@@ -772,6 +899,8 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                               legOptionsAccordionDisplay(sub.data, sub.id)}
                             {sub.id === "leg-text" &&
                               legTextAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "col-colors" &&
+                              columnColorsAccordionDisplay(sub.data, sub.id)}
                             {sub.id === "grid-horizontal" &&
                               gridHorizAccordionDisplay(sub.data, sub.id)}
                             {sub.id === "grid-vertical" &&

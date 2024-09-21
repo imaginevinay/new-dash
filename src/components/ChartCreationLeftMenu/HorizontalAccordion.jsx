@@ -102,9 +102,9 @@ const HorizontalAccordion = memo(({ onValuesChange, data }) => {
           sx={SelectProps}
           onChange={(_, value) => handleChange("lineStyle", value)}
         >
-          {["Solid", "Dotted", "Dash"].map((item, idx) => (
-            <Option key={idx} value={item}>
-              {item}
+          {[{val: 'solid', label: "Solid"}, {val: 'dot', label: "Dotted"}, {val: 'dash', label: "Dash"}].map((item, idx) => (
+            <Option key={idx} value={item.val}>
+              {item.label}
             </Option>
           ))}
         </Select>
