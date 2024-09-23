@@ -122,22 +122,22 @@ const RecommendedCharts = () => {
     useContext(AppContext);
 
   // !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  useEffect(() => {
-    const selectedType = {
-      icon: "/src/assets/charts/chart-types/vBar.svg",
-      label: "Vertical Bar",
-      types: colmnTypes,
-    };
-    const viewMore = {
-      icon: "/src/assets/icons/viewMore.svg",
-      label: "View More",
-      types: [],
-    };
-    setSelectedChart(selectedType);
-    setSelected(selectedType.label);
-    setRecoCharts([selectedType, viewMore]);
-    setIsChartTypeSelected(true);
-  }, []);
+  // useEffect(() => {
+  //   const selectedType = {
+  //     icon: "/src/assets/charts/chart-types/vBar.svg",
+  //     label: "Vertical Bar",
+  //     types: colmnTypes,
+  //   };
+  //   const viewMore = {
+  //     icon: "/src/assets/icons/viewMore.svg",
+  //     label: "View More",
+  //     types: [],
+  //   };
+  //   setSelectedChart(selectedType);
+  //   setSelected(selectedType.label);
+  //   setRecoCharts([selectedType, viewMore]);
+  //   setIsChartTypeSelected(true);
+  // }, []);
 
   // useEffect(() => {
   //   setSelectedChartData(leftMenuData)
