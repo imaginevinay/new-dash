@@ -312,12 +312,14 @@ const RecommendedCharts = () => {
           setLeftMenuData={setLeftMenuData}
         />
       )}
-      <Styled.VisualiseButton
-        isactive={isVisualizeActive ? "true" : "false"}
-        onClick={() => handleVisualiseClick()}
-      >
-        Visualize
-      </Styled.VisualiseButton>
+      {isChartTypeSelected && (
+        <Styled.VisualiseButton
+          isactive={isVisualizeActive ? "true" : "false"}
+          onClick={() => handleVisualiseClick()}
+        >
+          Visualize
+        </Styled.VisualiseButton>
+      )}
       <SelectChartsModal
         open={openSelectChartModal}
         handleClose={handleSelectChartModalClose}
