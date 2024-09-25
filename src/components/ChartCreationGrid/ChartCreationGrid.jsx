@@ -8,7 +8,7 @@ import ChartSelectorMenu from "./ChartSelectorMenu";
 
 const ChartCreationGrid = () => {
   const { selectedChart, selectedChartData } = useContext(AppContext);
-  console.log("selectedChartData inside gridview", selectedChartData, selectedChart);
+  // console.log("selectedChartData inside gridview", selectedChartData, selectedChart);
   return (
     <Styled.CanvasGridWrapper
       className={`${

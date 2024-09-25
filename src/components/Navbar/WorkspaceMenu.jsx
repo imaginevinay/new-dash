@@ -45,7 +45,7 @@ export default function WorkspaceMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const handleCloseModal = (value, type) => {
-    console.log("value, type", value, type);
+    // console.log("value, type", value, type);
     setIsModalOpen(false);
     
     const newWorkspace = {

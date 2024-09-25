@@ -47,7 +47,7 @@ export default function CreateNewMenu({setTableData, setShowChartCreation}) {
   }
 
   const handleChartModalOnClose = (value, type) => {
-    console.log('value, type', value, type)
+    // console.log('value, type', value, type)
     setIsChartModalOpen(false);
     setShowChartCreation(true);
   }

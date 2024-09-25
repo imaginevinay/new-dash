@@ -47,7 +47,7 @@ export default function AddWorkspaceModal({ open, handleOnClose }) {
   };
 
   const handleAdministratorsChange = (selectedAdmins) => {
-    console.log("hello", selectedAdmins);
+    // console.log("hello", selectedAdmins);
     setFormData((prevData) => ({
       ...prevData,
       administrators: selectedAdmins,

@@ -220,34 +220,45 @@ const formatVObj = [
 ];
 
 const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
+  const {
+    selectedChartType,
+    setSelectedChartData,
+    selectedChartData,
+    selectedChart,
+  } = useContext(AppContext);
+  
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
   const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(false);
   const [formatVisualsData, setFormatVisualsData] = useState(formatVObj);
-  const [selectedItems, setSelectedItems] = useState({
-    xAxis: null,
-    yAxis: null,
-    legend: null
-  });
-  const { selectedChartType, setSelectedChartData , selectedChartData} = useContext(AppContext);
+  const [selectedItems, setSelectedItems] = useState(selectedChartType?.axisData || {});
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
+  // Use useEffect to update selectedItems when selectedChartType changes
   useEffect(() => {
-    // console.log("selected chart type", selectedChartType);
-    if (containsStackOrGroup(selectedChartType)) {
-      setSelectedItems((prevState) => ({
-        ...prevState,
-        legend: prevState.legend,
-      }));
-    } else {
-      setSelectedItems(prevState => ({
-        xAxis: prevState.xAxis,
-        yAxis: prevState.yAxis,
-      }));
+    if (selectedChartType?.axisData) {
+      setSelectedItems(prevItems => {
+        const newItems = { ...prevItems };
+        
+        // Add new keys from the new chart type
+        Object.keys(selectedChartType.axisData).forEach(key => {
+          if (!(key in newItems)) {
+            newItems[key] = null;
+          }
+        });
+        
+        // Remove keys that aren't in the new chart type
+        Object.keys(newItems).forEach(key => {
+          if (!(key in selectedChartType.axisData)) {
+            delete newItems[key];
+          }
+        });
+        
+        return newItems;
+      });
     }
   }, [selectedChartType]);
-
 
   const createAxisData = (val) => {
     const obj = {
@@ -262,7 +273,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   };
 
   useEffect(() => {
-    // console.log("selected items", selectedItems);
+    // // console.log("selected items", selectedItems);
     if (allNotNullOrUndefined(selectedItems)) {
       setIsVisualizeActive(true);
       setIsFormatVisualsActive(true);
@@ -299,8 +310,8 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
 
   const handleRemoveSelectedColumn = (axis) => {
     setSelectedItems((prev) => ({ ...prev, [axis]: null }));
-    if(selectedItems[axis].label.toLowerCase().includes('date')){
-      setShowYearlyMenu(false)
+    if (selectedItems[axis].label.toLowerCase().includes("date")) {
+      setShowYearlyMenu(false);
     }
     handleCheckboxChangeByLabel(selectedItems[axis]?.label);
   };
@@ -355,109 +366,125 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   const handleDateCheckboxSelection = (selection) => {
     const { yearVisible, quarterVisible } = selection;
 
-  if (yearVisible && quarterVisible) {
-    setSelectedChartData(prevItem => {
-      const newData = JSON.parse(JSON.stringify(prevItem));
-      if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
-        newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.monthly);
-        newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.monthly)
-        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.monthly)
-        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.monthly)
-      }
-      newData.layout = {
-        ...prevItem.layout,
-        annotations: null
-      }
-      return newData 
-    })
-  } else if (yearVisible && !quarterVisible) {
-    setSelectedChartData(prevItem => {
-      const newData = JSON.parse(JSON.stringify(prevItem));
-      if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
-        newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.monthly);
-        newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.monthly)
-        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.monthly)
-        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.monthly)
-      }
-      newData.layout = {
-        ...prevItem.layout,
-        annotations: null
-      }
-      return newData 
-    })
-  } else if (!yearVisible && quarterVisible) {
-    console.log("Only quarter is visible");
-    const annotations = [
-      {
-        x: 0.25,
-        y: -0.15,
-        xref: 'paper',
-        yref: 'paper',
-        text: 'Quarter 1',
-        showarrow: false,
-        font: {
-          size: 14,
-          color: 'black'
+    if (yearVisible && quarterVisible) {
+      setSelectedChartData((prevItem) => {
+        const newData = JSON.parse(JSON.stringify(prevItem));
+        if (selectedItems["xAxis"]?.label.toLowerCase().includes("date")) {
+          newData.data[0].x &&
+            (newData.data[0].x = selectedItems["xAxis"]?.monthly);
+          newData.data[1].x &&
+            (newData.data[1].x = selectedItems["xAxis"]?.monthly);
+          newData.data[0].y &&
+            (newData.data[0].y = selectedItems["yAxis"]?.monthly);
+          newData.data[1].y &&
+            (newData.data[1].y = selectedItems["legend"]?.monthly);
         }
-      },
-      {
-        x: 0.75,
-        y: -0.15,
-        xref: 'paper',
-        yref: 'paper',
-        text: 'Quarter 2',
-        showarrow: false,
-        font: {
-          size: 14,
-          color: 'black'
+        newData.layout = {
+          ...prevItem.layout,
+          annotations: null,
+        };
+        return newData;
+      });
+    } else if (yearVisible && !quarterVisible) {
+      setSelectedChartData((prevItem) => {
+        const newData = JSON.parse(JSON.stringify(prevItem));
+        if (selectedItems["xAxis"]?.label.toLowerCase().includes("date")) {
+          newData.data[0].x &&
+            (newData.data[0].x = selectedItems["xAxis"]?.monthly);
+          newData.data[1].x &&
+            (newData.data[1].x = selectedItems["xAxis"]?.monthly);
+          newData.data[0].y &&
+            (newData.data[0].y = selectedItems["yAxis"]?.monthly);
+          newData.data[1].y &&
+            (newData.data[1].y = selectedItems["legend"]?.monthly);
         }
-      }
-    ]
-    setSelectedChartData(prevItem => ({
-      ...prevItem,
-      layout: {
-        ...prevItem.layout,
-        xaxis: {
-          ...prevItem.layout.xaxis,
-          standoff: 100
+        newData.layout = {
+          ...prevItem.layout,
+          annotations: null,
+        };
+        return newData;
+      });
+    } else if (!yearVisible && quarterVisible) {
+      // console.log("Only quarter is visible");
+      const annotations = [
+        {
+          x: 0.25,
+          y: -0.15,
+          xref: "paper",
+          yref: "paper",
+          text: "Quarter 1",
+          showarrow: false,
+          font: {
+            size: 14,
+            color: "black",
+          },
         },
-        annotations: annotations
-      }
-    }))
-  } else {
-    console.log("Neither year nor quarter is visible");
-    setSelectedChartData(prevItem => {
-      const newData = JSON.parse(JSON.stringify(prevItem));
-      if(selectedItems['xAxis']?.label.toLowerCase().includes('date')){
-        newData.data[0].x && (newData.data[0].x = selectedItems['xAxis']?.daily);
-        newData.data[1].x && (newData.data[1].x = selectedItems['xAxis']?.daily)
-        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.daily)
-        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.daily)
-      }
+        {
+          x: 0.75,
+          y: -0.15,
+          xref: "paper",
+          yref: "paper",
+          text: "Quarter 2",
+          showarrow: false,
+          font: {
+            size: 14,
+            color: "black",
+          },
+        },
+      ];
+      setSelectedChartData((prevItem) => ({
+        ...prevItem,
+        layout: {
+          ...prevItem.layout,
+          xaxis: {
+            ...prevItem.layout.xaxis,
+            standoff: 100,
+          },
+          annotations: annotations,
+        },
+      }));
+    } else {
+      // console.log("Neither year nor quarter is visible");
+      setSelectedChartData((prevItem) => {
+        const newData = JSON.parse(JSON.stringify(prevItem));
+        if (selectedItems["xAxis"]?.label.toLowerCase().includes("date")) {
+          newData.data[0].x &&
+            (newData.data[0].x = selectedItems["xAxis"]?.daily);
+          newData.data[1].x &&
+            (newData.data[1].x = selectedItems["xAxis"]?.daily);
+          newData.data[0].y &&
+            (newData.data[0].y = selectedItems["yAxis"]?.daily);
+          newData.data[1].y &&
+            (newData.data[1].y = selectedItems["legend"]?.daily);
+        }
 
-      newData.layout = {
-        ...prevItem.layout,
-        annotations: null
-      }
-      return newData;
-    })
-  }
-  }
+        newData.layout = {
+          ...prevItem.layout,
+          annotations: null,
+        };
+        return newData;
+      });
+    }
+  };
 
   const handleToggleYearlyMenu = (axis) => {
     selectedItems[axis] && setShowYearlyMenu(true);
-    setSelectedChartData(prevItem => {
+    setSelectedChartData((prevItem) => {
       const newData = JSON.parse(JSON.stringify(prevItem));
-      if(axis === 'xAxis' && selectedItems[axis]?.label.toLowerCase().includes('date')){
+      if (
+        axis === "xAxis" &&
+        selectedItems[axis]?.label.toLowerCase().includes("date")
+      ) {
         newData.data[0].x && (newData.data[0].x = selectedItems[axis]?.monthly);
-        newData.data[1].x && (newData.data[1].x = selectedItems[axis]?.monthly)
-        newData.data[0].y && (newData.data[0].y = selectedItems['yAxis']?.monthly)
-        newData.data[1].y && (newData.data[1].y = selectedItems['legend']?.monthly)
+        newData.data[1].x && (newData.data[1].x = selectedItems[axis]?.monthly);
+        newData.data[0].y &&
+          (newData.data[0].y = selectedItems["yAxis"]?.monthly);
+        newData.data[1].y &&
+          (newData.data[1].y = selectedItems["legend"]?.monthly);
       }
-      return newData 
-    })
+      return newData;
+    });
   };
-  
 
   const yearAccordion = (axis) => (
     <AccordionGroup disableDivider sx={{ padding: "1.25rem" }}>
@@ -512,7 +539,9 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
 
           {showYearlyMenu && (
             <CustomEyeCheckbox
-              onSelectionChange={(selection) => handleDateCheckboxSelection(selection)}
+              onSelectionChange={(selection) =>
+                handleDateCheckboxSelection(selection)
+              }
               initialYearVisible={true}
               initialQuarterVisible={true}
               initialSelectedMonths={["Jan"]}
@@ -575,8 +604,8 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     );
   }, []);
 
-  useEffect(()=> {
-    console.log('formatVisualsData', formatVisualsData)
+  useEffect(() => {
+    // console.log('formatVisualsData', formatVisualsData)
     const xValuesObj = formatVisualsData[0].subAccordions[0].data;
     const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
     const yRangeObj = formatVisualsData[1].subAccordions[0].data;
@@ -587,99 +616,166 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     const gridXcolorObj = formatVisualsData[3].subAccordions[0].data;
     const gridYcolorObj = formatVisualsData[3].subAccordions[1].data;
 
-    selectedChartData && setSelectedChartData(prevItem => ({
-      data: [
-        {
-          ...prevItem.data[0],
-          marker: {
-            ...prevItem.data[0].marker,
-            color: legendColorsObj.color1
-          }
-        },
-        {
-          ...prevItem.data[1],
-          marker: {
-            ...prevItem.data[1].marker,
-            color: legendColorsObj.color2
-          }
-        },
-      ],
-      
-      layout: {
-        ...prevItem.layout,
-        xaxis: {
-          ...prevItem.layout.xaxis,
-          title: {
-            ...prevItem.layout.xaxis.title,
-            text: xTitlesObj.textStyle.includes('underlined') ? `<u>${xTitlesObj.titleText}</u>` : xTitlesObj.titleText,
-            font: {
-              family: xTitlesObj.font,
-              size: xTitlesObj.fontSize,
-              color: xTitlesObj.color,
-              weight: xTitlesObj.textStyle.includes('bold') ? 600 : 500,
-              style: xTitlesObj.textStyle.includes('italic') ? 'italic' : 'normal'
-            }
+    selectedChartData &&
+      setSelectedChartData((prevItem) => ({
+        data: [
+          {
+            ...prevItem.data[0],
+            marker: {
+              ...prevItem.data[0].marker,
+              color: legendColorsObj.color1,
+            },
           },
-          tickfont: {
-            family: xValuesObj.font,
-            size:  xValuesObj.fontSize,
-            color: xValuesObj.color,
-            weight: xValuesObj.textStyle.includes('bold') ? 600 : 500,
-            style: xValuesObj.textStyle.includes('italic') ? 'italic' : 'normal'
+          {
+            ...prevItem.data[1],
+            marker: {
+              ...prevItem.data[1].marker,
+              color: legendColorsObj.color2,
+            },
           },
-          gridcolor: gridXcolorObj.color,
-          griddash: gridYcolorObj.lineStyle,     
+        ],
+
+        layout: {
+          ...prevItem.layout,
+          xaxis: {
+            ...prevItem.layout.xaxis,
+            title: {
+              ...prevItem.layout.xaxis.title,
+              text: xTitlesObj.textStyle.includes("underlined")
+                ? `<u>${xTitlesObj.titleText}</u>`
+                : xTitlesObj.titleText,
+              font: {
+                family: xTitlesObj.font,
+                size: xTitlesObj.fontSize,
+                color: xTitlesObj.color,
+                weight: xTitlesObj.textStyle.includes("bold") ? 600 : 500,
+                style: xTitlesObj.textStyle.includes("italic")
+                  ? "italic"
+                  : "normal",
+              },
+            },
+            tickfont: {
+              family: xValuesObj.font,
+              size: xValuesObj.fontSize,
+              color: xValuesObj.color,
+              weight: xValuesObj.textStyle.includes("bold") ? 600 : 500,
+              style: xValuesObj.textStyle.includes("italic")
+                ? "italic"
+                : "normal",
+            },
+            gridcolor: gridXcolorObj.color,
+            griddash: gridYcolorObj.lineStyle,
+          },
+          yaxis: {
+            ...prevItem.layout.yaxis,
+            title: {
+              ...prevItem.layout.yaxis.title,
+              text: yTitlesObj.textStyle.includes("underlined")
+                ? `<u>${yTitlesObj.titleText}</u>`
+                : yTitlesObj.titleText,
+              font: {
+                family: yTitlesObj.font,
+                size: yTitlesObj.fontSize,
+                color: yTitlesObj.color,
+                weight: yTitlesObj.textStyle.includes("bold") ? 600 : 500,
+                style: yTitlesObj.textStyle.includes("italic")
+                  ? "italic"
+                  : "normal",
+              },
+            },
+            tickfont: {
+              family: yValuesObj.font,
+              size: yValuesObj.fontSize,
+              color: yValuesObj.color,
+              weight: yValuesObj.textStyle.includes("bold") ? 600 : 500,
+              style: yValuesObj.textStyle.includes("italic")
+                ? "italic"
+                : "normal",
+            },
+            gridcolor: gridYcolorObj.color,
+            griddash: gridXcolorObj.lineStyle,
+          },
+          legend: {
+            ...getLegendPosition(legendOptionsObj.positions), // Here you call your getLegendPosition function
+          },
         },
-        yaxis: {
-          ...prevItem.layout.yaxis,
-          title: {
-            ...prevItem.layout.yaxis.title,
-            text: yTitlesObj.textStyle.includes('underlined') ? `<u>${yTitlesObj.titleText}</u>` : yTitlesObj.titleText,
-            font: {
-              family: yTitlesObj.font,
-              size: yTitlesObj.fontSize,
-              color: yTitlesObj.color,
-              weight: yTitlesObj.textStyle.includes('bold') ? 600 : 500,
-              style: yTitlesObj.textStyle.includes('italic') ? 'italic' : 'normal'
-            }
-          },
-          tickfont: {
-            family: yValuesObj.font,
-            size:  yValuesObj.fontSize,
-            color: yValuesObj.color,
-            weight: yValuesObj.textStyle.includes('bold') ? 600 : 500,
-            style: yValuesObj.textStyle.includes('italic') ? 'italic' : 'normal'
-          },
-          gridcolor: gridYcolorObj.color,
-          griddash: gridXcolorObj.lineStyle,
-        },
-        legend: {
-          ...getLegendPosition(legendOptionsObj.positions),  // Here you call your getLegendPosition function
-        }
-      }
-    }))
-  },[formatVisualsData])
+      }));
+  }, [formatVisualsData]);
 
   const getLegendPosition = (position) => {
     switch (position) {
       case "Top Right":
-        return { x: 1, y: 1.1, xanchor: 'right', yanchor: 'top', orientation: "h", };
+        return {
+          x: 1,
+          y: 1.1,
+          xanchor: "right",
+          yanchor: "top",
+          orientation: "h",
+        };
       case "Top Center":
-        return { x: 0.5, y: 1.1, xanchor: 'center', yanchor: 'top', orientation: "h" };
+        return {
+          x: 0.5,
+          y: 1.1,
+          xanchor: "center",
+          yanchor: "top",
+          orientation: "h",
+        };
       case "Top Left":
-        return { x: 0, y: 1.1, xanchor: 'left', yanchor: 'top', orientation: "h" };
+        return {
+          x: 0,
+          y: 1.1,
+          xanchor: "left",
+          yanchor: "top",
+          orientation: "h",
+        };
       case "Bottom Right":
-        return { x: 1, y: -0.3, xanchor: 'right', yanchor: 'bottom', orientation: "h"  };
+        return {
+          x: 1,
+          y: -0.3,
+          xanchor: "right",
+          yanchor: "bottom",
+          orientation: "h",
+        };
       case "Bottom Center":
-        return { x: 0.5, y: -0.3, xanchor: 'center', yanchor: 'bottom', orientation: "h"  };
+        return {
+          x: 0.5,
+          y: -0.3,
+          xanchor: "center",
+          yanchor: "bottom",
+          orientation: "h",
+        };
       case "Bottom Left":
-        return { x: 0, y: -0.3, xanchor: 'left', yanchor: 'bottom', orientation: "h"  };
-      case "Top Left Stacked": 
-      return { x: -0.1, y: 1, xanchor: 'left', yanchor: 'bottom', orientation: "v"  };
+        return {
+          x: 0,
+          y: -0.3,
+          xanchor: "left",
+          yanchor: "bottom",
+          orientation: "h",
+        };
+      case "Top Left Stacked":
+        return {
+          x: -0.1,
+          y: 1,
+          xanchor: "left",
+          yanchor: "bottom",
+          orientation: "v",
+        };
       case "Top Right Stacked":
-        return { x: 1.1, y: 1, xanchor: 'left', yanchor: 'bottom', orientation: "v"  };
+        return {
+          x: 1.1,
+          y: 1,
+          xanchor: "left",
+          yanchor: "bottom",
+          orientation: "v",
+        };
       default:
-        return { x: 0.5, y: -0.3, xanchor: 'center', yanchor: 'bottom', orientation: "h", };  // Default position
+        return {
+          x: 0.5,
+          y: -0.3,
+          xanchor: "center",
+          yanchor: "bottom",
+          orientation: "h",
+        }; // Default position
     }
   };
 
@@ -788,7 +884,8 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
           data={data}
           onValuesChange={(values) =>
             handleFormatVisualsChange(subAccordionId, values)
-          }/>
+          }
+        />
       </Styled.ValuesWrapper>
     ),
     [handleFormatVisualsChange]
@@ -830,21 +927,12 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
             <Typography>Build Visuals</Typography>
           </Styled.AccordionSummaryBtn>
           <Styled.AccordionDetailsWrapper className="hello">
-            <Styled.SMFlexCol>
-              <span>X - axis</span>
-              {renderAxisControl("xAxis")}
-            </Styled.SMFlexCol>
-            <Styled.SMFlexCol>
-              <span>Y - axis</span>
-              {renderAxisControl("yAxis")}
-            </Styled.SMFlexCol>
-            {(selectedChartType.includes("stack") ||
-              selectedChartType.includes("group")) && (
-              <Styled.SMFlexCol>
-                <span>Legend</span>
-                {renderAxisControl("legend")}
+            {selectedChartType?.buildVisuals.map((item) => (
+              <Styled.SMFlexCol key={item.axisControl}>
+                <span>{item.label}</span>
+                {renderAxisControl(item.axisControl)}
               </Styled.SMFlexCol>
-            )}
+            ))}
           </Styled.AccordionDetailsWrapper>
         </Accordion>
         <Accordion disabled={!isFormatVisualsActive}>
@@ -879,7 +967,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                               {/* {expandedSubAccordion === sub.id && (
                                 <Switch
                                   checked={true}
-                                  // onChange={() => console.log("toggle change")}
+                                  // onChange={() => // console.log("toggle change")}
                                 />
                               )} */}
                             </div>

@@ -7,56 +7,10 @@ export const AppContext = createContext();
 const AppProvider = ({ children }) => {
   // const isMdScreen = useMediaQuery((theme) => theme.breakpoints.down("md"));
   // const isMobileScreen = useMediaQuery((theme) => theme.breakpoints.down("xs"));
-  const [selectedChart, setSelectedChart] = useState({
-    icon: "/src/assets/charts/chart-types/vBar.svg",
-    label: "Vertical Bar",
-    types: [
-      {
-        id: "bar",
-        name: "Vertical Bar",
-        icon: "/src/assets/charts/chart-types/vBar.svg",
-        previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
-      },
-      {
-        id: "stack",
-        name: "Vertical Bar Stacked",
-        icon: "/src/assets/charts/chart-types/vBarStacked.svg",
-        previewImage:
-          "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
-      },
-      {
-        id: "group",
-        name: "Vertical Bar Grouped",
-        icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
-        previewImage:
-          "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
-      },
-      {
-        id: "hbar",
-        name: "Horizontal Bar",
-        icon: "/src/assets/charts/chart-types/hbar.svg",
-        previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
-      },
-      {
-        id: "hstack",
-        name: "Horizontal Bar Stacked",
-        icon: "/src/assets/charts/chart-types/hBarStacked.svg",
-        previewImage:
-          "/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
-      },
-      {
-        id: "hgroup",
-        name: "Horizontal Bar Grouped",
-        icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
-        previewImage:
-          "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
-      },
-    ],
-  });
-  const [selectedChartData, setSelectedChartData] = useState(null);
-  const [selectedChartType, setSelectedChartType] = useState(
-    selectedChart?.types[0]?.id || null
-  );
+  const [selectedChart, setSelectedChart] = useState(null); // it selects and adds a chart + its subtype here
+  const [selectedChartType, setSelectedChartType] = useState(null); // handles the selected chart subtype only the name is used here
+  const [selectedChartData, setSelectedChartData] = useState(null); // used for handling the full data+layout sent to plotly
+  // const [selectedChartSubType, setSelectedChartSubType] = useState(selectedChart?.types[0] || null);
 
   const contextValue = {
     selectedChart,
@@ -65,6 +19,8 @@ const AppProvider = ({ children }) => {
     setSelectedChartData,
     selectedChartType,
     setSelectedChartType,
+    // selectedChartSubType,
+    // setSelectedChartSubType
   };
 
   return (
@@ -77,3 +33,5 @@ AppProvider.propTypes = {
 };
 
 export default AppProvider;
+
+

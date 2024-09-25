@@ -118,8 +118,7 @@ const RecommendedCharts = () => {
   const [isVisualizeActive, setIsVisualizeActive] = useState(false);
   const [leftMenuData, setLeftMenuData] = useState(null);
 
-  const { setSelectedChartData, setSelectedChart, selectedChartType } =
-    useContext(AppContext);
+  const { setSelectedChartData, setSelectedChart, selectedChartType, setSelectedChartType, selectedChart} = useContext(AppContext);
 
   // !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // useEffect(() => {
@@ -164,6 +163,7 @@ const RecommendedCharts = () => {
         label: "View More",
       };
       setSelectedChart(selectedType);
+      setSelectedChartType(selectedType?.types[0]);
       setSelected(selectedType.label);
       setRecoCharts([selectedType, viewMore]);
       setIsChartTypeSelected(true);
@@ -176,32 +176,37 @@ const RecommendedCharts = () => {
 
   const handleVisualiseClick = () => {
     console.log('leftMenuData', leftMenuData)
-    let data1,
-      data2 = {};
-    if (
-      leftMenuData?.axisData?.xAxis?.data &&
-      leftMenuData?.axisData?.yAxis?.data
-    ) {
+    let data1,data2 = {};
+    let axisItems = Object.keys(leftMenuData?.axisData);
+    if (axisItems.length === 2) {
       data1 = {
         x: leftMenuData?.axisData.xAxis.data,
         y: leftMenuData?.axisData.yAxis.data,
-        type: "bar",
+        type: selectedChart?.id,
         name: leftMenuData?.axisData.xAxis.label,
-        orientation: startsWithH(selectedChartType) ? "h" : null,
-        mode: 'markers',
+        orientation: selectedChartType.orientation,
         marker: {
           color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
         },
       };
     }
-    if (leftMenuData?.axisData.legend?.data) {
+    if (axisItems.length === 3) {
+      data1 = {
+        x: leftMenuData?.axisData.xAxis.data,
+        y: leftMenuData?.axisData.yAxis.data,
+        type: selectedChart?.id,
+        name: leftMenuData?.axisData.xAxis.label,
+        orientation: selectedChartType.orientation,
+        marker: {
+          color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
+        },
+      };
       data2 = {
         x: leftMenuData?.axisData.xAxis.data,
-        y: leftMenuData?.axisData.legend.data,
-        type: "bar",
-        name: leftMenuData?.axisData.legend.label,
-        orientation: startsWithH(selectedChartType) ? "h" : null,
-        mode: 'markers',
+        y: leftMenuData?.axisData[axisItems[2]].data,
+        type: selectedChart?.id,
+        name: leftMenuData?.axisData[axisItems[2]].label,
+        orientation: selectedChartType.orientation,
         marker: {
           color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color2,
         },
@@ -255,15 +260,7 @@ const RecommendedCharts = () => {
           gridcolor: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.color,
           griddash: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.lineStyle
         },
-        // legend: {
-        //   y: -0.5,
-        //   x: 0.5,
-        //   xanchor: "center",
-        //   yanchor: "bottom",
-        //   orientation: "h",
-        // },
-        barmode: removeInitialLowercaseH(selectedChartType),
-        
+        barmode: removeInitialLowercaseH(selectedChartType?.id),        
       },
     };
     console.log("datacreated", dataCreator);

@@ -1,59 +1,47 @@
-// import Menu from '@mui/joy/Menu';
-// import MenuItem from '@mui/joy/MenuItem';
-// import ArrowDropDown from '@mui/icons-material/ArrowDropDown';
-// import Dropdown from '@mui/joy/Dropdown';
-// import * as Styled from './ChartCreationGrid.styles'
 import { Option, Select, selectClasses } from "@mui/joy";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { removeInitialLowercaseH, startsWithH } from "../../utils/common";
 
 export default function ChartSelectorMenu() {
-  const { selectedChart: { types }, setSelectedChartType, setSelectedChartData, selectedChartData } = useContext(AppContext);
-
-
-  useEffect(() => {
-    console.log('selectedChartData changed >>>', selectedChartData)
-  }, [selectedChartData])
+  const { selectedChart, selectedChartType, setSelectedChartType, setSelectedChartData, selectedChartData } = useContext(AppContext);
+  const types = selectedChart?.types || [];
 
   const handleChange = (newValue) => {
-    setSelectedChartType(newValue);
-    setSelectedChartData((prevData) => {
-      const newData = JSON.parse(JSON.stringify(prevData));
-      if (startsWithH(newValue)) {
-        newData.data.forEach((elem) => {
-          elem["orientation"] = "h";
-        });
-
-        newData.layout.barmode = removeInitialLowercaseH(newValue);
-      } else {
-        newData.data.forEach((elem) => {
-          elem["orientation"] = null;
-        });
-        newData.layout.barmode = newValue;
-      }
-      return newData;
-    });
+    const foundObject = types.find(chart => chart.id === newValue);
+    setSelectedChartType(foundObject);
+    console.log('hello', selectedChartData)
+    if(selectedChartData) {
+      setSelectedChartData((prevData) => {
+        const newData = JSON.parse(JSON.stringify(prevData));
+        if (foundObject.axisData) {
+          const axisKeys = Object.keys(foundObject.axisData);
+          if (axisKeys.length === 2) { // For charts with only x and y axes
+            newData.data = [newData.data[0]]; // Keep only the first dataset
+          }
+        }
+        if (startsWithH(newValue)) {
+          newData?.data.forEach((elem) => {
+            elem["orientation"] = "h";
+          });
+  
+          newData.layout.barmode = removeInitialLowercaseH(newValue);
+        } else {
+          newData?.data.forEach((elem) => {
+            elem["orientation"] = null;
+          });
+          newData.layout.barmode = newValue;
+        }
+        return newData;
+      });
+    }    
   };
-
-
-
-  // function startsWithH(str) {
-  //   return str.toLowerCase().startsWith("h");
-  // }
-
-  // function removeInitialLowercaseH(str) {
-  //   if (str.startsWith("h")) {
-  //     return str.slice(1);
-  //   }
-  //   return str;
-  // }
 
   return (
     <Select
       placeholder="Select a chart"
-      defaultValue={types[0]?.id}
+      value={selectedChartType?.id}
       indicator={<KeyboardArrowDown />}
       onChange={(event, newValue) => handleChange(newValue)}
       sx={{
