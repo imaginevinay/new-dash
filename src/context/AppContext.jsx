@@ -10,7 +10,7 @@ const AppProvider = ({ children }) => {
   const [selectedChart, setSelectedChart] = useState(null); // it selects and adds a chart + its subtype here
   const [selectedChartType, setSelectedChartType] = useState(null); // handles the selected chart subtype only the name is used here
   const [selectedChartData, setSelectedChartData] = useState(null); // used for handling the full data+layout sent to plotly
-  // const [selectedChartSubType, setSelectedChartSubType] = useState(selectedChart?.types[0] || null);
+  const [leftMenuData, setLeftMenuData] = useState(null);
 
   const contextValue = {
     selectedChart,
@@ -19,8 +19,8 @@ const AppProvider = ({ children }) => {
     setSelectedChartData,
     selectedChartType,
     setSelectedChartType,
-    // selectedChartSubType,
-    // setSelectedChartSubType
+    leftMenuData,
+    setLeftMenuData
   };
 
   return (

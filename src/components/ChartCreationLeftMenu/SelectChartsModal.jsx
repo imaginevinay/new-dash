@@ -6,7 +6,7 @@ import { CHART_DATA_CONFIG } from "../../utils/config";
 
 export default function SelectChartsModal({ open, handleClose }) {
   const [selectedCategory, setSelectedCategory] = useState(CHART_DATA_CONFIG[0]);
-  const [selectedChartType, setSelectedChartType] = useState(CHART_DATA_CONFIG[0].chartTypes[0]);
+  const [selectedChartType, setSelectedChartType] = useState(CHART_DATA_CONFIG[0].types[0]);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -18,7 +18,7 @@ export default function SelectChartsModal({ open, handleClose }) {
   };
 
   const handleSelectedCloseHandler = () => {
-    handleClose({category: selectedCategory, type: selectedChartType})
+    handleClose(selectedCategory)
     setSelectedChartType(null);
     setSelectedChartType(null);
   }
@@ -61,7 +61,7 @@ export default function SelectChartsModal({ open, handleClose }) {
           <Styled.ChartTypesSection>
             <Styled.SectionTitle level="h6">Chart Types</Styled.SectionTitle>
             <Styled.ChartTypeBox>
-              {selectedCategory?.chartTypes.map((chartType) => (
+              {selectedCategory?.types.map((chartType) => (
                 <Styled.ChartTypeItem
                   key={chartType.id}
                   onClick={() => handleChartTypeSelect(chartType)}

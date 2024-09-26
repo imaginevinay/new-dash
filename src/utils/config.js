@@ -3,9 +3,10 @@ export const CHART_DATA_CONFIG = [
       id: "bar",
       name: "Column / Bar",
       icon: "/src/assets/charts/categories/column.svg",
-      chartTypes: [
+      types: [
         {
           id: "bar",
+          parent: 'bar',
           name: "Vertical Bar",
           icon: "/src/assets/charts/chart-types/vBar.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
@@ -18,6 +19,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "stack",
+          parent: 'bar',
           name: "Vertical Bar Stacked",
           icon: "/src/assets/charts/chart-types/vBarStacked.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
@@ -31,6 +33,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "group",
+          parent: 'bar',
           name: "Vertical Bar Grouped",
           icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
@@ -44,6 +47,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "hbar",
+          parent: 'bar',
           name: "Horizontal Bar",
           icon: "/src/assets/charts/chart-types/hbar.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
@@ -56,6 +60,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "hstack",
+          parent: 'bar',
           name: "Horizontal Bar Stacked",
           icon: "/src/assets/charts/chart-types/hBarStacked.svg",
           previewImage:"/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
@@ -69,6 +74,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "hgroup",
+          parent: 'bar',
           name: "Horizontal Bar Grouped",
           icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
@@ -86,9 +92,10 @@ export const CHART_DATA_CONFIG = [
       id: "scatter",
       name: "Line",
       icon: "/src/assets/charts/categories/line.svg",
-      chartTypes: [
+      types: [
         {
           id: "scatter",
+          parent: 'line',
           name: "Line",
           icon: "/src/assets/charts/categories/line.svg",
           previewImage: "/src/assets/charts/previews/BarLineChart.svg",
@@ -100,6 +107,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "vStackedLine",
+          parent: 'line',
           name: "Vertical Stacked Line",
           icon: "/src/assets/charts/chart-types/stackedLine.svg",
           previewImage: "/src/assets/charts/previews/stackedLine.svg",
@@ -112,9 +120,11 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "steppedLine",
+          parent: 'line',
           name: "Stepped Line",
           icon: "/src/assets/charts/chart-types/steppedLine.svg",
           previewImage: "/src/assets/charts/previews/Stepped Line Chart.svg",
+          line: {shape: 'hvh'},
           axisData: {xAxis: null, yAxis: null, secondaryYAxis: null},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
@@ -124,6 +134,7 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "multipleLine",
+          parent: 'line',
           name: "Multiple Line",
           icon: "/src/assets/charts/chart-types/stackedLine.svg",
           previewImage: "/src/assets/charts/previews/Multiple Line Chart.svg",
@@ -140,7 +151,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "pie",
     //   name: "Pie",
     //   icon: "/src/assets/charts/categories/pie.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "pie",
     //       name: "Pie",
@@ -159,7 +170,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "sunburst",
     //   name: "Sunburst",
     //   icon: "/src/assets/charts/categories/sunburst.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "SunBurst",
     //       name: "Sun Burst",
@@ -172,7 +183,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "scatter",
     //   name: "Scatter",
     //   icon: "/src/assets/charts/categories/scatter.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "Scatter",
     //       name: "Scatter",
@@ -197,7 +208,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "area",
     //   name: "Area",
     //   icon: "/src/assets/charts/categories/area.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "VerticalArea",
     //       name: "Vertical Area",
@@ -228,7 +239,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "waterfall",
     //   name: "Waterfall",
     //   icon: "/src/assets/charts/categories/waterfall.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "VerticalWaterfall",
     //       name: "Vertical Waterfall",
@@ -259,7 +270,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "treemap",
     //   name: "Tree Map",
     //   icon: "/src/assets/charts/categories/line.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "TreeMap",
     //       name: "Tree Map",
@@ -278,7 +289,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "funnel",
     //   name: "Funnel",
     //   icon: "/src/assets/charts/categories/funnel.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "Funnel",
     //       name: "Funnel",
@@ -303,7 +314,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "boxplot",
     //   name: "Boxplot",
     //   icon: "/src/assets/charts/categories/boxplot.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "VerticalBoxed",
     //       name: "Vertical Boxed",
@@ -334,7 +345,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "bubble",
     //   name: "Bubble",
     //   icon: "/src/assets/charts/categories/bubble.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "BubbleChart",
     //       name: "Bubble Chart",
@@ -347,7 +358,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "histogram",
     //   name: "Histogram",
     //   icon: "/src/assets/charts/categories/histogram.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "VerticalHistogram",
     //       name: "Vertical Histogram",
@@ -384,7 +395,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "violin",
     //   name: "Violin",
     //   icon: "/src/assets/charts/categories/violin.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "VerticalBar",
     //       name: "Vertical Bar",
@@ -431,7 +442,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "heatmap",
     //   name: "Heat Map",
     //   icon: "/src/assets/charts/categories/heatmap.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "HeatMap",
     //       name: "Heat Map",
@@ -456,7 +467,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "gauge",
     //   name: "Gauge",
     //   icon: "/src/assets/charts/categories/gauge.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "AngularGauge",
     //       name: "Angular Gauge",
@@ -476,7 +487,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "3dplot",
     //   name: "3D Plots",
     //   icon: "/src/assets/charts/categories/line.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "3-DScatter",
     //       name: "3-D Scatter",
@@ -507,7 +518,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "combo",
     //   name: "Combo",
     //   icon: "/src/assets/charts/categories/combo.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "BarStacked&Line",
     //       name: "Bar Stacked & Line",
@@ -532,7 +543,7 @@ export const CHART_DATA_CONFIG = [
     //   id: "table",
     //   name: "Tables",
     //   icon:  "/src/assets/charts/categories/table.svg",
-    //   chartTypes: [
+    //   types: [
     //     {
     //       id: "VerticalBar",
     //       name: "Vertical Bar",

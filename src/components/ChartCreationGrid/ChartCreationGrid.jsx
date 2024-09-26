@@ -8,23 +8,16 @@ import ChartSelectorMenu from "./ChartSelectorMenu";
 
 const ChartCreationGrid = () => {
   const { selectedChart, selectedChartData } = useContext(AppContext);
-  // console.log("selectedChartData inside gridview", selectedChartData, selectedChart);
   return (
     <Styled.CanvasGridWrapper
-      className={`${
-        selectedChart?.label
-          ? selectedChartData
-            ? "hidePreview"
-            : "showBasicPreview"
-          : "showGridLines"
-      }`}
+      className={`${selectedChart?.id ? selectedChartData ? "hidePreview": "showBasicPreview": "showGridLines"}`}
     >
       <div className="header">
         <Stack direction="row" spacing={"2.5rem"}>
           <Stack>
             <Typography level="h4">Chart Name</Typography>
             <Typography level="subtitle" textColor="secondary.100">
-              {selectedChart?.label}
+              {selectedChart?.name}
             </Typography>
           </Stack>
           <ChartSelectorMenu />

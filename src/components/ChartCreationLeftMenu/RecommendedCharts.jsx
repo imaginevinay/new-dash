@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import SelectChartsModal from "./SelectChartsModal";
 import VisualsAccordions from "./VisualsAccordions";
 import { AppContext } from "../../context/AppContext";
-import { removeInitialLowercaseH, startsWithH } from "../../utils/common";
+import { removeInitialLowercaseH } from "../../utils/common";
 
 const buttonLabels = [
   {
@@ -69,46 +69,6 @@ const buttonLabels = [
   },
 ];
 
-const colmnTypes = [
-  {
-    id: "bar",
-    name: "Vertical Bar",
-    icon: "/src/assets/charts/chart-types/vBar.svg",
-    previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
-  },
-  {
-    id: "stack",
-    name: "Vertical Bar Stacked",
-    icon: "/src/assets/charts/chart-types/vBarStacked.svg",
-    previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
-  },
-  {
-    id: "group",
-    name: "Vertical Bar Grouped",
-    icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
-    previewImage: "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
-  },
-  {
-    id: "hbar",
-    name: "Horizontal Bar",
-    icon: "/src/assets/charts/chart-types/hbar.svg",
-    previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
-  },
-  {
-    id: "hstack",
-    name: "Horizontal Bar Stacked",
-    icon: "/src/assets/charts/chart-types/hBarStacked.svg",
-    previewImage:
-      "/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
-  },
-  {
-    id: "hgroup",
-    name: "Horizontal Bar Grouped",
-    icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
-    previewImage:
-      "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
-  },
-];
 
 const RecommendedCharts = () => {
   const [selected, setSelected] = useState(null);
@@ -152,11 +112,7 @@ const RecommendedCharts = () => {
     setOpenSelectChartModal(false);
     setSelected(null);
     if (val) {
-      const selectedType = {
-        icon: val?.type?.icon,
-        label: val?.type?.name,
-        types: val?.category.chartTypes,
-      };
+      const selectedType = val;
 
       const viewMore = {
         icon: "/src/assets/icons/viewMore.svg",
@@ -175,7 +131,7 @@ const RecommendedCharts = () => {
   };
 
   const handleVisualiseClick = () => {
-    console.log('leftMenuData', leftMenuData)
+    console.log('leftMenuData', leftMenuData, selectedChartType)
     let data1,data2 = {};
     let axisItems = Object.keys(leftMenuData?.axisData);
     if (axisItems.length === 2) {
@@ -201,6 +157,7 @@ const RecommendedCharts = () => {
           color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
         },
       };
+       
       data2 = {
         x: leftMenuData?.axisData.xAxis.data,
         y: leftMenuData?.axisData[axisItems[2]].data,
@@ -211,6 +168,10 @@ const RecommendedCharts = () => {
           color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color2,
         },
       };
+      if(selectedChartType?.line){
+        data1['line']= selectedChartType?.line;
+        data2['line']= selectedChartType?.line;
+      }
     }
     const dataCreator = {
       data: [data1, data2],

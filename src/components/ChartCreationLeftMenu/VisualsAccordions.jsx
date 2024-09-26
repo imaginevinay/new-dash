@@ -23,7 +23,7 @@ import TitlesAccordion from "./TitlesAccordion";
 import DateRangeAccordion from "./DateRangeAccordion";
 import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
-import { allNotNullOrUndefined, containsStackOrGroup } from "../../utils/common";
+import { allNotNullOrUndefined } from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
 import CustomEyeCheckbox from "./CustomEyeCheckbox";
 import ColumnColorsAccordion from "./ColumnColorsAccordion";
@@ -223,9 +223,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   const {
     selectedChartType,
     setSelectedChartData,
-    selectedChartData,
-    selectedChart,
-  } = useContext(AppContext);
+    selectedChartData  } = useContext(AppContext);
   
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
@@ -608,7 +606,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     // console.log('formatVisualsData', formatVisualsData)
     const xValuesObj = formatVisualsData[0].subAccordions[0].data;
     const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
-    const yRangeObj = formatVisualsData[1].subAccordions[0].data;
+    // const yRangeObj = formatVisualsData[1].subAccordions[0].data;
     const yValuesObj = formatVisualsData[1].subAccordions[1].data;
     const yTitlesObj = formatVisualsData[1].subAccordions[2].data;
     const legendOptionsObj = formatVisualsData[2].subAccordions[0].data;
