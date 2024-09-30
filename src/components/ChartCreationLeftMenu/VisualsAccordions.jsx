@@ -88,148 +88,149 @@ const sqlData = [
   },
 ];
 
-const formatVObj = [
-  {
-    id: 1,
-    label: "X - Axis",
-    subAccordions: [
-      {
-        id: "x-values",
-        label: "Values",
-        data: {
-          isChecked: true,
-          font: "Arial",
-          fontSize: 12,
-          textStyle: [],
-          color: "#000000",
-          displayUnit: "Auto",
-        },
-      },
-      {
-        id: "x-titles",
-        label: "Titles",
-        data: {
-          isChecked: true,
-          titleText: "Order Date",
-          font: "Arial",
-          fontSize: 18,
-          textStyle: [],
-          color: "#000000",
-        },
-      },
-    ],
-  },
-  {
-    id: 2,
-    label: "Y - Axis",
-    subAccordions: [
-      {
-        id: "y-range",
-        label: "Range",
-        data: {
-          minRange: "",
-          maxRange: "",
-          invertRange: true,
-        },
-      },
-      {
-        id: "y-values",
-        label: "Values",
-        data: {
-          isChecked: true,
-          font: "Arial",
-          fontSize: 12,
-          textStyle: [],
-          color: "#000000",
-          displayUnit: "Auto",
-        },
-      },
-      {
-        id: "y-titles",
-        label: "Titles",
-        data: {
-          isChecked: true,
-          titleText: "Order Sales",
-          font: "Arial",
-          fontSize: 18,
-          textStyle: [],
-          color: "#000000",
-        },
-      },
-    ],
-  },
-  {
-    id: 3,
-    label: "Legend",
-    subAccordions: [
-      {
-        id: "leg-options",
-        label: "Options",
-        data: {
-          positions: "Bottom Center",
-          style: "Circular Marker",
-        },
-      },
-      {
-        id: "leg-text",
-        label: "Text",
-        data: {
-          isChecked: true,
-          titleText: "Auto",
-          font: "Inter UI",
-          fontSize: 9,
-          textStyle: [],
-          color: "#000000",
-        },
-      },
-      // add column colors accordion
-      {
-        id: "col-colors",
-        label: "Column Colours",
-        data: {
-          color1: "#255FD1",
-          color2: "#FF7F0E",
-        },
-      },
-    ],
-  },
-  {
-    id: 4,
-    label: "Gridlines",
-    subAccordions: [
-      {
-        id: "grid-horizontal",
-        label: "Horizontal",
-        data: {
-          color: "#000000",
-          transparency: 25,
-          lineStyle: "solid",
-        },
-      },
-      {
-        id: "grid-vertical",
-        label: "Vertical",
-        data: {
-          color: "#000000",
-          transparency: 25,
-          lineStyle: "solid",
-        },
-      },
-    ],
-  },
-];
+// const formatVObj = [
+//   {
+//     id: 1,
+//     label: "X - Axis",
+//     subAccordions: [
+//       {
+//         id: "x-values",
+//         label: "Values",
+//         data: {
+//           isChecked: true,
+//           font: "Arial",
+//           fontSize: 12,
+//           textStyle: [],
+//           color: "#000000",
+//           displayUnit: "Auto",
+//         },
+//       },
+//       {
+//         id: "x-titles",
+//         label: "Titles",
+//         data: {
+//           isChecked: true,
+//           titleText: "Order Date",
+//           font: "Arial",
+//           fontSize: 18,
+//           textStyle: [],
+//           color: "#000000",
+//         },
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     label: "Y - Axis",
+//     subAccordions: [
+//       {
+//         id: "y-range",
+//         label: "Range",
+//         data: {
+//           minRange: "",
+//           maxRange: "",
+//           invertRange: true,
+//         },
+//       },
+//       {
+//         id: "y-values",
+//         label: "Values",
+//         data: {
+//           isChecked: true,
+//           font: "Arial",
+//           fontSize: 12,
+//           textStyle: [],
+//           color: "#000000",
+//           displayUnit: "Auto",
+//         },
+//       },
+//       {
+//         id: "y-titles",
+//         label: "Titles",
+//         data: {
+//           isChecked: true,
+//           titleText: "Order Sales",
+//           font: "Arial",
+//           fontSize: 18,
+//           textStyle: [],
+//           color: "#000000",
+//         },
+//       },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     label: "Legend",
+//     subAccordions: [
+//       {
+//         id: "leg-options",
+//         label: "Options",
+//         data: {
+//           positions: "Bottom Center",
+//           style: "Circular Marker",
+//         },
+//       },
+//       {
+//         id: "leg-text",
+//         label: "Text",
+//         data: {
+//           isChecked: true,
+//           titleText: "Auto",
+//           font: "Inter UI",
+//           fontSize: 9,
+//           textStyle: [],
+//           color: "#000000",
+//         },
+//       },
+//       // add column colors accordion
+//       {
+//         id: "col-colors",
+//         label: "Column Colours",
+//         data: {
+//           color1: "#255FD1",
+//           color2: "#FF7F0E",
+//         },
+//       },
+//     ],
+//   },
+//   {
+//     id: 4,
+//     label: "Gridlines",
+//     subAccordions: [
+//       {
+//         id: "grid-horizontal",
+//         label: "Horizontal",
+//         data: {
+//           color: "#000000",
+//           transparency: 25,
+//           lineStyle: "solid",
+//         },
+//       },
+//       {
+//         id: "grid-vertical",
+//         label: "Vertical",
+//         data: {
+//           color: "#000000",
+//           transparency: 25,
+//           lineStyle: "solid",
+//         },
+//       },
+//     ],
+//   },
+// ];
 
 const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   const {
     selectedChartType,
     setSelectedChartData,
-    selectedChartData  } = useContext(AppContext);
+    selectedChartData, selectedChart, setChartConfig, chartConfig
+    } = useContext(AppContext);
   
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
   const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(false);
-  const [formatVisualsData, setFormatVisualsData] = useState(formatVObj);
+  const [formatVisualsData, setFormatVisualsData] = useState(selectedChart?.formatVisuals);
   const [selectedItems, setSelectedItems] = useState(selectedChartType?.axisData || {});
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
@@ -282,10 +283,10 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     }
   }, [selectedItems, setIsVisualizeActive]);
 
-  const [expandedSubAccordion, setExpandedSubAccordion] = useState(null);
-  const handleAccordionChange = (subAccordion, isExpanded) => {
-    setExpandedSubAccordion(isExpanded ? subAccordion : null);
-  };
+  // const [expandedSubAccordion, setExpandedSubAccordion] = useState(null);
+  // const handleAccordionChange = (subAccordion, isExpanded) => {
+  //   setExpandedSubAccordion(isExpanded ? subAccordion : null);
+  // };
 
   // Handler for opening the menu
   const handleOpenMenu = (event, axis) => {
@@ -303,6 +304,15 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   const handleSelectItem = (item, tableID, columnId) => {
     handleCheckboxChange(tableID, columnId);
     setSelectedItems((prev) => ({ ...prev, [activeAxis]: item }));
+    const newChartConfig = [...chartConfig];
+    const chartToUpdate = newChartConfig.find(config => config.id === selectedChart.id);
+    chartToUpdate.types.forEach(type => {
+      if(typeof type.axisData[activeAxis] !== 'undefined'){
+        type.axisData[activeAxis] = {...item, isChecked: true};
+      }
+    });
+    console.log(newChartConfig, 'config'); 
+    setChartConfig(newChartConfig);
     handleCloseMenu();
   };
 
@@ -312,6 +322,11 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       setShowYearlyMenu(false);
     }
     handleCheckboxChangeByLabel(selectedItems[axis]?.label);
+    const newChartConfig = [...chartConfig];
+    const chartToUpdate = newChartConfig.find(config => config.id === selectedChart.id);
+    chartToUpdate.types.forEach(type => {type.axisData[axis] && (type.axisData[axis] = null)});
+    console.log(newChartConfig, 'config'); 
+    setChartConfig(newChartConfig);
   };
 
   const handleCheckboxChangeByLabel = (labelToToggle) => {
@@ -594,16 +609,28 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       prevData.map((item) => ({
         ...item,
         subAccordions: item.subAccordions.map((sub) =>
-          sub.id === subAccordionId
-            ? { ...sub, data: { ...sub.data, ...newValues } }
-            : sub
+          sub.id === subAccordionId ? { ...sub, data: { ...sub.data, ...newValues } } : sub
         ),
       }))
     );
   }, []);
 
+
+  const updateConfigFormatVisuals = (configs, formatVisualsData) => {
+    return configs.map(config => {
+      if (config.id === selectedChart?.id) {
+        return {
+          ...config,
+          formatVisuals: formatVisualsData
+        };
+      }
+      return config;
+    });
+  };
+
   useEffect(() => {
-    // console.log('formatVisualsData', formatVisualsData)
+    // console.log('formatVisualsData', formatVisualsData);
+    setChartConfig(prevConfigs => updateConfigFormatVisuals(prevConfigs, formatVisualsData));
     const xValuesObj = formatVisualsData[0].subAccordions[0].data;
     const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
     // const yRangeObj = formatVisualsData[1].subAccordions[0].data;
@@ -948,9 +975,9 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                         <Accordion
                           key={sub.id}
                           value={sub.label}
-                          onChange={(event, expanded) =>
-                            handleAccordionChange(sub.id, expanded)
-                          }
+                          // onChange={(event, expanded) =>
+                          //   handleAccordionChange(sub.id, expanded)
+                          // }
                         >
                           <AccordionSummary>
                             <div

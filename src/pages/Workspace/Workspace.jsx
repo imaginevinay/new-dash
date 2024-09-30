@@ -16,6 +16,7 @@ import ChartCreationGrid from "../../components/ChartCreationGrid/ChartCreationG
 import { useParams } from "react-router";
 
 const Workspace = () => {
+  // const [openWorkspace, setOpenWorkspace] = useState(true);
   const [bottomDrawerOpen, setBottomDrawerOpen] = useState(false);
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState("all");
@@ -127,7 +128,7 @@ const Workspace = () => {
     </div>
   ) : (
     <Styled.ChartCreationWrapper>
-      <ChartCreationLeftMenu />
+      <ChartCreationLeftMenu setShowChartCreation={setShowChartCreation}/>
       <ChartCreationGrid />
     </Styled.ChartCreationWrapper>
   );

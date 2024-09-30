@@ -3,6 +3,7 @@ export const CHART_DATA_CONFIG = [
       id: "bar",
       name: "Column / Bar",
       icon: "/src/assets/charts/categories/column.svg",
+      previewImage: '/src/assets/images/barchartPreview.svg',
       types: [
         {
           id: "bar",
@@ -87,11 +88,142 @@ export const CHART_DATA_CONFIG = [
           ]
         },
       ],
+      formatVisuals: [
+        {
+          id: 1,
+          label: "X - Axis",
+          subAccordions: [
+            {
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "x-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Date",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 2,
+          label: "Y - Axis",
+          subAccordions: [
+            {
+              id: "y-range",
+              label: "Range",
+              data: {
+                minRange: "",
+                maxRange: "",
+                invertRange: true,
+              },
+            },
+            {
+              id: "y-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "y-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Sales",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 3,
+          label: "Legend",
+          subAccordions: [
+            {
+              id: "leg-options",
+              label: "Options",
+              data: {
+                positions: "Bottom Center",
+                style: "Circular Marker",
+              },
+            },
+            {
+              id: "leg-text",
+              label: "Text",
+              data: {
+                isChecked: true,
+                titleText: "Auto",
+                font: "Inter UI",
+                fontSize: 9,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+            // add column colors accordion
+            {
+              id: "col-colors",
+              label: "Column Colours",
+              data: {
+                color1: "#255FD1",
+                color2: "#FF7F0E",
+              },
+            },
+          ],
+        },
+        {
+          id: 4,
+          label: "Gridlines",
+          subAccordions: [
+            {
+              id: "grid-horizontal",
+              label: "Horizontal",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+            {
+              id: "grid-vertical",
+              label: "Vertical",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+          ],
+        },
+      ]
     },
     {
-      id: "scatter",
+      id: "line",
       name: "Line",
       icon: "/src/assets/charts/categories/line.svg",
+      previewImage: '/src/assets/images/barchartPreview.svg',
       types: [
         {
           id: "scatter",
@@ -103,7 +235,7 @@ export const CHART_DATA_CONFIG = [
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-          ]
+          ],
         },
         {
           id: "vStackedLine",
@@ -146,26 +278,326 @@ export const CHART_DATA_CONFIG = [
           ]
         },
       ],
+      formatVisuals: [
+        {
+          id: 1,
+          label: "X - Axis",
+          subAccordions: [
+            {
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "x-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Date",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 2,
+          label: "Y - Axis",
+          subAccordions: [
+            {
+              id: "y-range",
+              label: "Range",
+              data: {
+                minRange: "",
+                maxRange: "",
+                invertRange: true,
+              },
+            },
+            {
+              id: "y-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "y-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Sales",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        // {
+        //   id: 3,
+        //   label: "Secondary Y - Axis",
+        //   subAccordions: [
+        //     {
+        //       id: "sec-y-range",
+        //       label: "Range",
+        //       data: {
+        //         minRange: "",
+        //         maxRange: "",
+        //         invertRange: true,
+        //       },
+        //     },
+        //     {
+        //       id: "sec-y-values",
+        //       label: "Values",
+        //       data: {
+        //         isChecked: true,
+        //         font: "Arial",
+        //         fontSize: 12,
+        //         textStyle: [],
+        //         color: "#000000",
+        //         displayUnit: "Auto",
+        //       },
+        //     },
+        //     {
+        //       id: "sec-y-titles",
+        //       label: "Titles",
+        //       data: {
+        //         isChecked: true,
+        //         titleText: "Order Sales",
+        //         font: "Arial",
+        //         fontSize: 18,
+        //         textStyle: [],
+        //         color: "#000000",
+        //       },
+        //     },
+        //   ],
+        // },
+        {
+          id: 3,
+          label: "Legend",
+          subAccordions: [
+            {
+              id: "leg-options",
+              label: "Options",
+              data: {
+                positions: "Bottom Center",
+                style: "Circular Marker",
+              },
+            },
+            {
+              id: "leg-text",
+              label: "Text",
+              data: {
+                isChecked: true,
+                titleText: "Auto",
+                font: "Inter UI",
+                fontSize: 9,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+            // add column colors accordion
+            {
+              id: "col-colors",
+              label: "Column Colours",
+              data: {
+                color1: "#255FD1",
+                color2: "#FF7F0E",
+              },
+            },
+          ],
+        },
+        {
+          id: 4,
+          label: "Gridlines",
+          subAccordions: [
+            {
+              id: "grid-horizontal",
+              label: "Horizontal",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+            {
+              id: "grid-vertical",
+              label: "Vertical",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+          ],
+        },
+      ]
     },
-    // {
-    //   id: "pie",
-    //   name: "Pie",
-    //   icon: "/src/assets/charts/categories/pie.svg",
-    //   types: [
-    //     {
-    //       id: "pie",
-    //       name: "Pie",
-    //       icon: "/src/assets/charts/chart-types/pie.svg",
-    //       previewImage: "/src/assets/charts/previews/PieChart.svg",
-    //     },
-    //     {
-    //       id: "donut",
-    //       name: "Donut",
-    //       icon: "/src/assets/charts/chart-types/doughnut.svg",
-    //       previewImage: "/src/assets/charts/previews/doughnut.svg",
-    //     },
-    //   ],
-    // },
+    {
+      id: "pie",
+      name: "Pie",
+      icon: "/src/assets/charts/categories/pie.svg",
+      previewImage: '/src/assets/images/piechartPreview.svg',
+      types: [
+        {
+          id: "pie",
+          name: "Pie",
+          icon: "/src/assets/charts/chart-types/pie.svg",
+          previewImage: "/src/assets/charts/previews/PieChart.svg",
+        },
+        {
+          id: "donut",
+          name: "Donut",
+          icon: "/src/assets/charts/chart-types/doughnut.svg",
+          previewImage: "/src/assets/charts/previews/doughnut.svg",
+        },
+      ],
+      formatVisuals: [
+        {
+          id: 1,
+          label: "X - Axis",
+          subAccordions: [
+            {
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "x-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Date",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 2,
+          label: "Y - Axis",
+          subAccordions: [
+            {
+              id: "y-range",
+              label: "Range",
+              data: {
+                minRange: "",
+                maxRange: "",
+                invertRange: true,
+              },
+            },
+            {
+              id: "y-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "y-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Sales",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 3,
+          label: "Legend",
+          subAccordions: [
+            {
+              id: "leg-options",
+              label: "Options",
+              data: {
+                positions: "Bottom Center",
+                style: "Circular Marker",
+              },
+            },
+            {
+              id: "leg-text",
+              label: "Text",
+              data: {
+                isChecked: true,
+                titleText: "Auto",
+                font: "Inter UI",
+                fontSize: 9,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+            // add column colors accordion
+            {
+              id: "col-colors",
+              label: "Column Colours",
+              data: {
+                color1: "#255FD1",
+                color2: "#FF7F0E",
+              },
+            },
+          ],
+        },
+        {
+          id: 4,
+          label: "Gridlines",
+          subAccordions: [
+            {
+              id: "grid-horizontal",
+              label: "Horizontal",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+            {
+              id: "grid-vertical",
+              label: "Vertical",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+          ],
+        },
+      ]
+    },
     // {
     //   id: "sunburst",
     //   name: "Sunburst",

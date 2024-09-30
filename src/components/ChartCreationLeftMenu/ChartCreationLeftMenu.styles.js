@@ -286,7 +286,11 @@ export const PreviewHeader = styled('div')({
 export const ApplyChart = styled(Button)(({theme})=>({
   background: theme.palette.primary[100],
   color: theme.palette.primary[50],
-  borderRadius: '1rem'
+  borderRadius: '1rem',
+  "&:hover": {
+    background: theme.palette.primary[100],
+    color: theme.palette.primary[50],
+  }
 }))
 
 export const Image = styled('img')({

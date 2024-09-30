@@ -1,7 +1,7 @@
 import { MenuButton, styled } from "@mui/joy";
-import BarChartPreviewImg from '../../assets/images/barchartPreview.svg'
+// import BarChartPreviewImg from '../../assets/images/barchartPreview.svg'
 
-export const CanvasGridWrapper = styled("div")(() => ({
+export const CanvasGridWrapper = styled("div")(({previewImage}) => ({
   display: "flex",
   flexDirection: "column",
   width: "75%",
@@ -13,7 +13,7 @@ export const CanvasGridWrapper = styled("div")(() => ({
     backgroundSize: "120px 60px",
   },
   "&.showBasicPreview": {
-    backgroundImage: `url(${BarChartPreviewImg})`,
+    backgroundImage: `url(${previewImage})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "auto",

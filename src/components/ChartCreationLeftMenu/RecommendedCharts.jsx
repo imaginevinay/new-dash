@@ -9,62 +9,62 @@ import { removeInitialLowercaseH } from "../../utils/common";
 const buttonLabels = [
   {
     icon: "/src/assets/icons/horizontalBar.svg",
-    label: "Horizontal Bar",
+    name: "Horizontal Bar",
     types: [],
   },
   {
     icon: "/src/assets/icons/line.svg",
-    label: "Line",
+    name: "Line",
     types: [],
   },
   {
     icon: "/src/assets/icons/vStacked.svg",
-    label: "V. Stacked Line",
+    name: "V. Stacked Line",
     types: [],
   },
   {
     icon: "/src/assets/icons/verticalBar.svg",
-    label: "Vertical Bar",
+    name: "Vertical Bar",
     types: [],
   },
   {
     icon: "/src/assets/icons/pie.svg",
-    label: "Pie",
+    name: "Pie",
     types: [],
   },
   {
     icon: "/src/assets/icons/verticalArea.svg",
-    label: "Vertical Area",
+    name: "Vertical Area",
     types: [],
   },
   {
     icon: "/src/assets/icons/hArea.svg",
-    label: "H. Area Stacked",
+    name: "H. Area Stacked",
     types: [],
   },
   {
     icon: "/src/assets/icons/bubble.svg",
-    label: "Bubble",
+    name: "Bubble",
     types: [],
   },
   {
     icon: "/src/assets/icons/angular.svg",
-    label: "Angular Gauge",
+    name: "Angular Gauge",
     types: [],
   },
   {
     icon: "/src/assets/icons/verticalBoxed.svg",
-    label: "Vertical Boxed",
+    name: "Vertical Boxed",
     types: [],
   },
   {
     icon: "/src/assets/icons/vStacked.svg",
-    label: "V. Stacked Line",
+    name: "V. Stacked Line",
     types: [],
   },
   {
     icon: "/src/assets/icons/viewMore.svg",
-    label: "View More",
+    name: "View More",
     types: [],
   },
 ];
@@ -116,7 +116,7 @@ const RecommendedCharts = () => {
 
       const viewMore = {
         icon: "/src/assets/icons/viewMore.svg",
-        label: "View More",
+        name: "View More",
       };
       setSelectedChart(selectedType);
       setSelectedChartType(selectedType?.types[0]);
@@ -224,9 +224,16 @@ const RecommendedCharts = () => {
         barmode: removeInitialLowercaseH(selectedChartType?.id),        
       },
     };
+
+    // if data1 and data2 -> type 3
+    // if only data1 -> type 
     console.log("datacreated", dataCreator);
     setSelectedChartData(dataCreator);
   };
+
+  const handlePreview = () => {
+    
+  }
 
   return (
     <Styled.RecommendedChartsWrapper>
@@ -245,10 +252,10 @@ const RecommendedCharts = () => {
           {recoCharts.map((obj, index) => (
             <Grid key={index} xs={4}>
               <Styled.ButtonWrapper>
-                <Styled.ChartButton value={obj.label}>
+                <Styled.ChartButton value={obj.name}>
                   <img src={obj.icon} />
                 </Styled.ChartButton>
-                <span>{obj.label}</span>
+                <span>{obj.name}</span>
               </Styled.ButtonWrapper>
             </Grid>
           ))}

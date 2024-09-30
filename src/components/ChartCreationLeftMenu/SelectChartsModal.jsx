@@ -1,12 +1,13 @@
 import Modal from "@mui/joy/Modal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as Styled from "./ChartCreationLeftMenu.styles";
 import CloseIcon from "../../assets/icons/close.svg";
-import { CHART_DATA_CONFIG } from "../../utils/config";
+import { AppContext } from "../../context/AppContext";
 
 export default function SelectChartsModal({ open, handleClose }) {
-  const [selectedCategory, setSelectedCategory] = useState(CHART_DATA_CONFIG[0]);
-  const [selectedChartType, setSelectedChartType] = useState(CHART_DATA_CONFIG[0].types[0]);
+  const { chartConfig } = useContext(AppContext);
+  const [selectedCategory, setSelectedCategory] = useState(chartConfig[0]);
+  const [selectedChartType, setSelectedChartType] = useState(chartConfig[0].types[0]);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
@@ -45,7 +46,7 @@ export default function SelectChartsModal({ open, handleClose }) {
           <Styled.CategoriesSection>
             <Styled.SectionTitle level="h6">Categories</Styled.SectionTitle>
             <Styled.CategoriesBox>
-              {CHART_DATA_CONFIG.map((category) => (
+              {chartConfig.map((category) => (
                 <Styled.CategoryItem
                   key={category.id}
                   onClick={() => handleCategorySelect(category)}

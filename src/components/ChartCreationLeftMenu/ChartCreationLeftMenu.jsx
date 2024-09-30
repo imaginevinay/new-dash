@@ -6,12 +6,12 @@ import Divider from '@mui/joy/Divider';
 import RecommendedCharts from "./RecommendedCharts";
 
 
-const ChartCreationLeftMenu = () => {
+const ChartCreationLeftMenu = ({setShowChartCreation}) => {
   return (
     <Styled.LeftMenuWrapper className="LeftMenuWrapper">
 
       <Styled.MenuTitle>
-        <img src={LeftArrow} />
+        <img src={LeftArrow} onClick={() => setShowChartCreation(false)} style={{cursor: 'pointer'}}/>
         <span>Chart creation</span>
       </Styled.MenuTitle>
 

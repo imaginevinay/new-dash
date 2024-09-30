@@ -1,6 +1,6 @@
 import { Option, Select, selectClasses } from "@mui/joy";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { startsWithH } from "../../utils/common";
 
@@ -18,47 +18,54 @@ export default function ChartSelectorMenu() {
     },
   }
 
-  useEffect(() => {
-    if (selectedChartData) {
-    setSelectedChartData((prevData) => {
-      const newData = JSON.parse(JSON.stringify(prevData));
-      const axisKeys = Object.keys(selectedChartType.axisData);
-      if (axisKeys.length === 2) {
-        newData.data = [newData.data[0]];
-        delete newData.data["line"];
-      }
+  // useEffect(() => {
 
-      newData?.data.forEach((elem) => {
-        if(selectedChartType.parent === 'bar') {
-          if (startsWithH(selectedChartType?.id)) {
-            elem["orientation"] = selectedChartType?.orientation;
-          } else {
-            delete elem["orientation"];
-          }
-        }
-        if(selectedChartType.parent === 'line') {
-          if(selectedChartType?.id === 'steppedLine') {
-            elem["line"] = selectedChartType?.line;
-          } else {
-            delete elem["line"];
-          }
-          if(selectedChartType?.id === 'vStackedLine') {
-            [elem.x, elem.y] = [elem.y, elem.x];
-          }          
-        }                    
-      });
-      return newData;
-    });
-  }
-  }, [selectedChartType])
+  // }, [selectedChartType])
 
   
   const handleChange = (newValue) => {
     const foundObject = types.find((chart) => chart.id === newValue);
     setSelectedChartType(foundObject);
-    // if (selectedChartData) {
-      
-    // }
+    if (selectedChartData) {
+      setSelectedChartData((prevData) => {
+        console.log('prev data', prevData)
+        const newData = JSON.parse(JSON.stringify(prevData));
+        const axisKeys = Object.keys(foundObject.axisData);
+        if (axisKeys.length === 2) {
+          newData.data = [newData.data[0]];
+          delete newData.data["line"];
+        }
+
+        const wasVStackedLine = newData.data.some(elem => elem.isVStackedLine);
+
+  
+        newData?.data.forEach((elem) => {
+          if(foundObject.parent === 'bar') {
+            if (startsWithH(foundObject?.id)) {
+              elem["orientation"] = foundObject?.orientation;
+            } else {
+              delete elem["orientation"];
+            }
+          }
+          if(foundObject.parent === 'line') {
+            if(foundObject?.id === 'steppedLine') {
+              elem["line"] = foundObject?.line;
+            } else {
+              delete elem["line"];
+            }
+            if(foundObject?.id === 'vStackedLine') {
+              [elem.x, elem.y] = [elem.y, elem.x];
+              elem.isVStackedLine = true;
+            } else if (wasVStackedLine) {
+              // Switch back from vStackedLine to any other chart
+              [elem.x, elem.y] = [elem.y, elem.x];
+              delete elem.isVStackedLine;
+            }      
+          }                    
+        });
+        return newData;
+      });
+    }
   };
 
   return (

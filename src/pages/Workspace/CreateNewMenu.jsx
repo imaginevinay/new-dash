@@ -18,7 +18,7 @@ import DataFlowModal from '../../components/modals/CreateNewMenuModals/DataFlowM
 import {randomNumberGenerator} from '../../utils/common'
 import { useState } from "react";
 
-export default function CreateNewMenu({setTableData, setShowChartCreation}) {
+export default function CreateNewMenu({setTableData, setShowChartCreation, setOpenWorkspace}) {
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false)
   const [isReportModalOpen, setIsReportModalOpen] = useState(false)
   const [isChartModalOpen, setIsChartModalOpen] = useState(false)
@@ -50,6 +50,7 @@ export default function CreateNewMenu({setTableData, setShowChartCreation}) {
     // console.log('value, type', value, type)
     setIsChartModalOpen(false);
     setShowChartCreation(true);
+    setOpenWorkspace(false);
   }
 
   const handleDataFlowModalOnClose = () => {

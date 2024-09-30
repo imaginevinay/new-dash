@@ -11,6 +11,7 @@ const ChartCreationGrid = () => {
   return (
     <Styled.CanvasGridWrapper
       className={`${selectedChart?.id ? selectedChartData ? "hidePreview": "showBasicPreview": "showGridLines"}`}
+      previewImage={selectedChart?.previewImage}
     >
       <div className="header">
         <Stack direction="row" spacing={"2.5rem"}>
@@ -20,7 +21,7 @@ const ChartCreationGrid = () => {
               {selectedChart?.name}
             </Typography>
           </Stack>
-          <ChartSelectorMenu />
+          {selectedChart?.name && <ChartSelectorMenu />}
         </Stack>
         <div className="rightBtns">
           <img src={SettingsIcon} alt="settings icon" />
