@@ -132,50 +132,49 @@ const RecommendedCharts = () => {
 
   const handleVisualiseClick = () => {
     console.log('leftMenuData', leftMenuData, selectedChartType)
-    let data1,data2 = {};
+    let data1,data2,layout = {};
     let axisItems = Object.keys(leftMenuData?.axisData);
-    if (axisItems.length === 2) {
-      data1 = {
-        x: leftMenuData?.axisData.xAxis.data,
-        y: leftMenuData?.axisData.yAxis.data,
-        type: selectedChart?.id,
-        name: leftMenuData?.axisData.xAxis.label,
-        orientation: selectedChartType.orientation,
-        marker: {
-          color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
-        },
-      };
-    }
-    if (axisItems.length === 3) {
-      data1 = {
-        x: leftMenuData?.axisData.xAxis.data,
-        y: leftMenuData?.axisData.yAxis.data,
-        type: selectedChart?.id,
-        name: leftMenuData?.axisData.xAxis.label,
-        orientation: selectedChartType.orientation,
-        marker: {
-          color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
-        },
-      };
-       
-      data2 = {
-        x: leftMenuData?.axisData.xAxis.data,
-        y: leftMenuData?.axisData[axisItems[2]].data,
-        type: selectedChart?.id,
-        name: leftMenuData?.axisData[axisItems[2]].label,
-        orientation: selectedChartType.orientation,
-        marker: {
-          color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color2,
-        },
-      };
-      if(selectedChartType?.line){
-        data1['line']= selectedChartType?.line;
-        data2['line']= selectedChartType?.line;
+    if(selectedChart?.id === 'bar' || selectedChart?.id === 'line') {
+      if (axisItems.length === 2) {
+        data1 = {
+          x: leftMenuData?.axisData.xAxis.data,
+          y: leftMenuData?.axisData.yAxis.data,
+          type: selectedChart?.id,
+          name: leftMenuData?.axisData.xAxis.label,
+          orientation: selectedChartType.orientation,
+          marker: {
+            color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
+          },
+        };
       }
-    }
-    const dataCreator = {
-      data: [data1, data2],
-      layout: {
+      if (axisItems.length === 3) {
+        data1 = {
+          x: leftMenuData?.axisData.xAxis.data,
+          y: leftMenuData?.axisData.yAxis.data,
+          type: selectedChart?.id,
+          name: leftMenuData?.axisData.xAxis.label,
+          orientation: selectedChartType.orientation,
+          marker: {
+            color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
+          },
+        };
+         
+        data2 = {
+          x: leftMenuData?.axisData.xAxis.data,
+          y: leftMenuData?.axisData[axisItems[2]].data,
+          type: selectedChart?.id,
+          name: leftMenuData?.axisData[axisItems[2]].label,
+          orientation: selectedChartType.orientation,
+          marker: {
+            color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color2,
+          },
+        };
+        if(selectedChartType?.line){
+          data1['line']= selectedChartType?.line;
+          data2['line']= selectedChartType?.line;
+        }
+      }
+      layout = {
         xaxis: {
           title: {
             text: leftMenuData?.axisData.xAxis.label,
@@ -222,18 +221,36 @@ const RecommendedCharts = () => {
           griddash: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.lineStyle
         },
         barmode: removeInitialLowercaseH(selectedChartType?.id),        
-      },
+      }
+    }
+    if(selectedChart?.id === 'pie') {
+      if (axisItems.length === 2) {
+        data1 = {
+          values: [19, 26, 55],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          type: 'pie'
+        }     
+      }
+      layout = {
+        height: 400,
+        width: 500
+      };
+    }
+
+    const dataCreator = {
+      data: [data1, ...(data2 && Object.keys(data2).length > 0 ? [data2] : [])],
+      layout: layout,
     };
 
     // if data1 and data2 -> type 3
     // if only data1 -> type 
     console.log("datacreated", dataCreator);
     setSelectedChartData(dataCreator);
-  };
-
-  const handlePreview = () => {
-    
   }
+
+  // const handlePreview = () => {
+    
+  // }
 
   return (
     <Styled.RecommendedChartsWrapper>

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import {
   Accordion,
   AccordionDetails,
@@ -39,8 +39,24 @@ const sqlData = [
         icon: CalendarIcon,
         isChecked: false,
         data: ["2014", "2015", "2016", "2017", "2018"],
-        monthly: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        daily: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+        monthly: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        daily: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+        ],
       },
       {
         id: 3,
@@ -49,7 +65,11 @@ const sqlData = [
         isChecked: false,
         data: [150, 200, 300, 400, 500],
         monthly: [237, 412, 189, 325, 476, 201, 358, 294, 453, 167, 380, 506],
-        daily: [183, 276, 342, 159, 405, 231, 298, 367, 195, 412, 287, 354, 201, 439, 176, 315, 389, 245, 302, 456, 218, 327, 384, 153, 421, 279, 361, 197, 408, 263, 335]
+        daily: [
+          183, 276, 342, 159, 405, 231, 298, 367, 195, 412, 287, 354, 201, 439,
+          176, 315, 389, 245, 302, 456, 218, 327, 384, 153, 421, 279, 361, 197,
+          408, 263, 335,
+        ],
       },
       {
         id: 4,
@@ -57,8 +77,12 @@ const sqlData = [
         icon: QueueIcon,
         isChecked: false,
         data: [200, 300, 400, 500, 600],
-        monthly : [315, 468, 203, 387, 529, 176, 423, 281, 492, 154, 346, 571],
-        daily: [201, 315, 197, 327, 263, 439, 279, 245, 354, 408, 384, 421, 195, 231, 153, 456, 367, 389, 361, 335, 405, 342, 218, 302, 176, 183, 412, 276, 159, 287, 298]
+        monthly: [315, 468, 203, 387, 529, 176, 423, 281, 492, 154, 346, 571],
+        daily: [
+          201, 315, 197, 327, 263, 439, 279, 245, 354, 408, 384, 421, 195, 231,
+          153, 456, 367, 389, 361, 335, 405, 342, 218, 302, 176, 183, 412, 276,
+          159, 287, 298,
+        ],
       },
     ],
   },
@@ -223,41 +247,31 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   const {
     selectedChartType,
     setSelectedChartData,
-    selectedChartData, selectedChart, setChartConfig, chartConfig
-    } = useContext(AppContext);
-  
+    selectedChartData,
+    selectedChart,
+    setChartConfig,
+    chartConfig,
+  } = useContext(AppContext);
+
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
   const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(false);
-  const [formatVisualsData, setFormatVisualsData] = useState(selectedChart?.formatVisuals);
-  const [selectedItems, setSelectedItems] = useState(selectedChartType?.axisData || {});
+  // const [selectedItems, setSelectedItems] = useState(selectedChartType?.axisData || {});
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
-  // Use useEffect to update selectedItems when selectedChartType changes
-  useEffect(() => {
-    if (selectedChartType?.axisData) {
-      setSelectedItems(prevItems => {
-        const newItems = { ...prevItems };
-        
-        // Add new keys from the new chart type
-        Object.keys(selectedChartType.axisData).forEach(key => {
-          if (!(key in newItems)) {
-            newItems[key] = null;
-          }
-        });
-        
-        // Remove keys that aren't in the new chart type
-        Object.keys(newItems).forEach(key => {
-          if (!(key in selectedChartType.axisData)) {
-            delete newItems[key];
-          }
-        });
-        
-        return newItems;
-      });
-    }
-  }, [selectedChartType]);
+  const formatVisualsData = useMemo(() => {
+    const selectedChartData = chartConfig.find(
+      (item) => item.id === selectedChart?.id
+    );
+    return selectedChartData?.formatVisuals || [];
+  }, [chartConfig, selectedChart.id]);
+
+  const selectedItems = useMemo(() => {
+    const selectedChartData = chartConfig.find((item) => item.id === selectedChart?.id);
+    const selectedChartItem = selectedChartData?.types.find((item) => item.id === selectedChartType?.id);
+    return selectedChartItem?.axisData || {};
+  }, [chartConfig, selectedChart?.id, selectedChartType?.id]);
 
   const createAxisData = (val) => {
     const obj = {
@@ -272,7 +286,6 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   };
 
   useEffect(() => {
-    // // console.log("selected items", selectedItems);
     if (allNotNullOrUndefined(selectedItems)) {
       setIsVisualizeActive(true);
       setIsFormatVisualsActive(true);
@@ -281,12 +294,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       setIsVisualizeActive(false);
       setIsFormatVisualsActive(false);
     }
-  }, [selectedItems, setIsVisualizeActive]);
-
-  // const [expandedSubAccordion, setExpandedSubAccordion] = useState(null);
-  // const handleAccordionChange = (subAccordion, isExpanded) => {
-  //   setExpandedSubAccordion(isExpanded ? subAccordion : null);
-  // };
+  }, [chartConfig]);
 
   // Handler for opening the menu
   const handleOpenMenu = (event, axis) => {
@@ -303,29 +311,43 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   // Handler for selecting an item from the menu
   const handleSelectItem = (item, tableID, columnId) => {
     handleCheckboxChange(tableID, columnId);
-    setSelectedItems((prev) => ({ ...prev, [activeAxis]: item }));
+    // setSelectedItems((prev) => ({ ...prev, [activeAxis]: item }));
     const newChartConfig = [...chartConfig];
-    const chartToUpdate = newChartConfig.find(config => config.id === selectedChart.id);
-    chartToUpdate.types.forEach(type => {
-      if(typeof type.axisData[activeAxis] !== 'undefined'){
-        type.axisData[activeAxis] = {...item, isChecked: true};
+    const chartToUpdate = newChartConfig.find(
+      (config) => config.id === selectedChart.id
+    );
+    chartToUpdate.types.forEach((type) => {
+      if(Array.isArray(type.axisData[activeAxis])) {
+        type.axisData[activeAxis][ type.axisData[activeAxis].length-1] = { ...item, isChecked: true };
+      }
+      else if (typeof type.axisData[activeAxis] !== "undefined") {
+        type.axisData[activeAxis] = { ...item, isChecked: true };
       }
     });
-    console.log(newChartConfig, 'config'); 
+    console.log(newChartConfig, "config");
     setChartConfig(newChartConfig);
     handleCloseMenu();
   };
 
-  const handleRemoveSelectedColumn = (axis) => {
-    setSelectedItems((prev) => ({ ...prev, [axis]: null }));
-    if (selectedItems[axis].label.toLowerCase().includes("date")) {
+  const handleRemoveSelectedColumn = (e, axis, indexToDelete = null) => {
+    e.stopPropagation();
+    const itemToDelete = indexToDelete === null ? selectedItems[axis] : selectedItems[axis][indexToDelete];
+    if (itemToDelete.label.toLowerCase().includes("date")) {
       setShowYearlyMenu(false);
     }
-    handleCheckboxChangeByLabel(selectedItems[axis]?.label);
+    handleCheckboxChangeByLabel(itemToDelete?.label);
     const newChartConfig = [...chartConfig];
-    const chartToUpdate = newChartConfig.find(config => config.id === selectedChart.id);
-    chartToUpdate.types.forEach(type => {type.axisData[axis] && (type.axisData[axis] = null)});
-    console.log(newChartConfig, 'config'); 
+    const chartToUpdate = newChartConfig.find(
+      (config) => config.id === selectedChart.id
+    );
+    
+    chartToUpdate.types.forEach((type) => {
+      if (indexToDelete !== null && Array.isArray(type.axisData[axis])) {
+        type.axisData[axis] && (type.axisData[axis].splice(indexToDelete, 1));
+      } else {
+        type.axisData[axis] && (type.axisData[axis] = {});
+      }
+    });
     setChartConfig(newChartConfig);
   };
 
@@ -366,11 +388,11 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     return str.toLowerCase().includes("date");
   }
 
-  const axisButtonLabel = (axis) => (
+  const axisButtonLabel = (axis, index = null) => (
     <Styled.SMFlexRow>
-      <span>{selectedItems[axis]?.label}</span>
+      <span>{(index !== null ? selectedItems[axis][index] : selectedItems[axis])?.label}</span>
       <CloseIcon
-        onClick={() => handleRemoveSelectedColumn(axis)}
+        onClick={(e) => handleRemoveSelectedColumn(e, axis, index)}
         sx={{ cursor: "pointer" }}
       />
     </Styled.SMFlexRow>
@@ -565,9 +587,27 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     </AccordionGroup>
   );
 
+  const handleAddNewData = (axisItem) => {
+    const newChartConfig = [...chartConfig];
+    const chartToUpdate = newChartConfig.find(
+      (config) => config.id === selectedChart.id
+    );
+
+    chartToUpdate.types.forEach((type) => {
+      if (Array.isArray(type.axisData[axisItem])) {
+        type.axisData[axisItem].push({});
+      }
+    });
+    setChartConfig(newChartConfig);
+  }
+
   // Helper function to render axis button or accordion
   const renderAxisControl = (axis) => {
-    if (selectedItems[axis] && containsDate(selectedItems[axis]?.label)) {
+    const isArray = Array.isArray(selectedItems[axis])
+    const isAxisEmpty = Object.keys(selectedItems[axis]).length === 0;
+    console.log(selectedChartType);
+
+    if (selectedItems[axis]?.label && containsDate(selectedItems[axis]?.label)) {
       return (
         <AccordionGroup disableDivider>
           <Accordion>
@@ -588,7 +628,11 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       );
     } else {
       return (
-        <Styled.AxisButton
+        <>
+        {isArray && <button onClick={() => handleAddNewData(axis)}>Add new data</button>}
+        {isArray ? selectedChartType.axisData[axis].map((type, index) => (
+          <Styled.AxisButton
+          key={index}
           onClick={(e) => handleOpenMenu(e, axis)}
           className="axisbutton"
           sx={{
@@ -596,52 +640,83 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
             color: selectedItems[axis] ? "#212121" : "",
           }}
         >
-          {selectedItems[axis]
-            ? axisButtonLabel(axis)
-            : " Select your data for Axis"}
+          {Object.entries(type).length === 0
+            ? " Select your data for Axis"
+            : axisButtonLabel(axis, index)}
         </Styled.AxisButton>
+        )) : (
+          <Styled.AxisButton
+            onClick={(e) => handleOpenMenu(e, axis)}
+            className="axisbutton"
+            sx={{
+              justifyContent: selectedItems[axis] ? "flex-start" : "center",
+              color: selectedItems[axis] ? "#212121" : "",
+            }}
+          >
+            {isAxisEmpty
+              ? " Select your data for Axis"
+              : axisButtonLabel(axis)}
+          </Styled.AxisButton>
+
+        )}
+        </>
       );
     }
   };
 
   const handleFormatVisualsChange = useCallback((subAccordionId, newValues) => {
-    setFormatVisualsData((prevData) =>
-      prevData.map((item) => ({
-        ...item,
-        subAccordions: item.subAccordions.map((sub) =>
-          sub.id === subAccordionId ? { ...sub, data: { ...sub.data, ...newValues } } : sub
-        ),
-      }))
+    const newFormatVisualsData = selectedChart?.formatVisuals?.map((item) => ({
+      ...item,
+      subAccordions: item.subAccordions.map((sub) =>
+        sub.id === subAccordionId
+          ? { ...sub, data: { ...sub.data, ...newValues } }
+          : sub
+      ),
+    }));
+
+    setChartConfig((prevArray) =>
+      prevArray.map((item) => {
+        if (item.id === selectedChart.id) {
+          return {
+            ...item,
+            formatVisuals: newFormatVisualsData,
+          };
+        } else {
+          return item;
+        }
+      })
     );
   }, []);
 
+  useEffect(() => {
+    console.log("chartConfig updated", chartConfig);
+  }, [chartConfig]);
 
-  const updateConfigFormatVisuals = (configs, formatVisualsData) => {
-    return configs.map(config => {
-      if (config.id === selectedChart?.id) {
-        return {
-          ...config,
-          formatVisuals: formatVisualsData
-        };
-      }
-      return config;
-    });
-  };
+  // const updateConfigFormatVisuals = (configs, formatVisualsData) => {
+  //   return configs.map((config) => {
+  //     if (config.id === selectedChart?.id) {
+  //       return {
+  //         ...config,
+  //         formatVisuals: formatVisualsData,
+  //       };
+  //     }
+  //     return config;
+  //   });
+  // };
 
   useEffect(() => {
     // console.log('formatVisualsData', formatVisualsData);
-    setChartConfig(prevConfigs => updateConfigFormatVisuals(prevConfigs, formatVisualsData));
-    const xValuesObj = formatVisualsData[0].subAccordions[0].data;
-    const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
-    // const yRangeObj = formatVisualsData[1].subAccordions[0].data;
-    const yValuesObj = formatVisualsData[1].subAccordions[1].data;
-    const yTitlesObj = formatVisualsData[1].subAccordions[2].data;
-    const legendOptionsObj = formatVisualsData[2].subAccordions[0].data;
-    const legendColorsObj = formatVisualsData[2].subAccordions[2].data;
-    const gridXcolorObj = formatVisualsData[3].subAccordions[0].data;
-    const gridYcolorObj = formatVisualsData[3].subAccordions[1].data;
-
-    selectedChartData &&
+    if (selectedChartData) {
+      // setChartConfig(prevConfigs => updateConfigFormatVisuals(prevConfigs, formatVisualsData));
+      const xValuesObj = formatVisualsData[0].subAccordions[0].data;
+      const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
+      // const yRangeObj = formatVisualsData[1].subAccordions[0].data;
+      const yValuesObj = formatVisualsData[1].subAccordions[1].data;
+      const yTitlesObj = formatVisualsData[1].subAccordions[2].data;
+      const legendOptionsObj = formatVisualsData[2].subAccordions[0].data;
+      const legendColorsObj = formatVisualsData[2].subAccordions[2].data;
+      const gridXcolorObj = formatVisualsData[3].subAccordions[0].data;
+      const gridYcolorObj = formatVisualsData[3].subAccordions[1].data;
       setSelectedChartData((prevItem) => ({
         data: [
           {
@@ -725,6 +800,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
           },
         },
       }));
+    }
   }, [formatVisualsData]);
 
   const getLegendPosition = (position) => {
@@ -944,6 +1020,35 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     [handleFormatVisualsChange]
   );
 
+  const isLabelPresent = (columnLabel) => {
+    const selectedChartParent = chartConfig.find(
+      (item) => item.id === selectedChart?.id
+    );
+    return selectedChartParent.types.some((type) => {
+      if (type.axisData && typeof type.axisData === "object") {
+        return Object.values(type.axisData).some(
+          (axis) =>
+            axis && typeof axis === "object" && axis.label === columnLabel
+        );
+      }
+      return false;
+    });
+  };
+  const isMenuItemDisabled = (column) => {
+    const axisToCheck = activeAxis === 'xAxis' ? 'yAxis' : 'xAxis';
+    // if (activeAxis === axis) {
+      // check if col is selected in y axis selected items
+      // console.log(selectedItems, column)
+      if (Array.isArray(selectedChart[axisToCheck])) {
+          return selectedItems[axisToCheck].find(item => item.id === column.id);
+      } 
+        return selectedItems[axisToCheck].id === column.id;
+      
+    // }
+
+    // return false;
+  }
+
   return (
     <Styled.WrapperBox>
       <AccordionGroup disableDivider>
@@ -972,13 +1077,7 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                   <Styled.VisualsAccordionDetails>
                     <AccordionGroup disableDivider>
                       {item.subAccordions.map((sub) => (
-                        <Accordion
-                          key={sub.id}
-                          value={sub.label}
-                          // onChange={(event, expanded) =>
-                          //   handleAccordionChange(sub.id, expanded)
-                          // }
-                        >
+                        <Accordion key={sub.id} value={sub.label}>
                           <AccordionSummary>
                             <div
                               style={{
@@ -989,12 +1088,6 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
                               }}
                             >
                               {sub.label}
-                              {/* {expandedSubAccordion === sub.id && (
-                                <Switch
-                                  checked={true}
-                                  // onChange={() => // console.log("toggle change")}
-                                />
-                              )} */}
                             </div>
                           </AccordionSummary>
                           <AccordionDetails>
@@ -1051,10 +1144,12 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
             <AccordionDetails>
               {item.tableColumns.map((col) => (
                 <MenuItem
+                  disabled={isMenuItemDisabled(col)}
                   key={col.id}
                   onClick={() => handleSelectItem(col, item.id, col.id)}
                 >
-                  <Checkbox checked={col.isChecked} /> <img src={col.icon} />{" "}
+                  <Checkbox checked={col.isChecked} />{" "}
+                  <img src={col.icon} />{" "}
                   <Typography level="body-sm">{col.label}</Typography>
                 </MenuItem>
               ))}

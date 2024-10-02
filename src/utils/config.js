@@ -11,7 +11,7 @@ export const CHART_DATA_CONFIG = [
           name: "Vertical Bar",
           icon: "/src/assets/charts/chart-types/vBar.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
-          axisData: {xAxis: null, yAxis: null},
+          axisData: {xAxis: {}, yAxis: {}},
           orientation: null,
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
@@ -25,11 +25,11 @@ export const CHART_DATA_CONFIG = [
           icon: "/src/assets/charts/chart-types/vBarStacked.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
           orientation: null,
-          axisData: {xAxis: null, yAxis: null, legend: null},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Legend', axisControl: 'legend'},
+            // {label : 'Legend', axisControl: 'legend'},
           ]
         },
         {
@@ -39,11 +39,11 @@ export const CHART_DATA_CONFIG = [
           icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
           orientation: null,
-          axisData: {xAxis: null, yAxis: null, legend: null},
+          axisData: {xAxis: {}, yAxis: []},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Legend', axisControl: 'legend'},
+            // {label : 'Legend', axisControl: 'legend'},
           ]
         },
         {
@@ -53,7 +53,7 @@ export const CHART_DATA_CONFIG = [
           icon: "/src/assets/charts/chart-types/hbar.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
           orientation: 'h',
-          axisData: {xAxis: null, yAxis: null},
+          axisData: {xAxis: {}, yAxis: {}},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
@@ -66,11 +66,11 @@ export const CHART_DATA_CONFIG = [
           icon: "/src/assets/charts/chart-types/hBarStacked.svg",
           previewImage:"/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
           orientation: 'h',
-          axisData: {xAxis: null, yAxis: null, legend: null},
+          axisData: {xAxis: {}, yAxis: []},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Legend', axisControl: 'legend'},
+            // {label : 'Legend', axisControl: 'legend'},
           ]
         },
         {
@@ -80,11 +80,11 @@ export const CHART_DATA_CONFIG = [
           icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
           orientation: 'h',
-          axisData: {xAxis: null, yAxis: null, legend: null},
+          axisData: {xAxis: {}, yAxis: []},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Legend', axisControl: 'legend'},
+            // {label : 'Legend', axisControl: 'legend'},
           ]
         },
       ],
@@ -459,86 +459,27 @@ export const CHART_DATA_CONFIG = [
           name: "Pie",
           icon: "/src/assets/charts/chart-types/pie.svg",
           previewImage: "/src/assets/charts/previews/PieChart.svg",
+          axisData: {legend: null, value: null},
+          buildVisuals: [
+            {label : 'Legend', axisControl: 'legend'},
+            {label : 'Value', axisControl: 'value'},
+          ]
         },
         {
           id: "donut",
           name: "Donut",
           icon: "/src/assets/charts/chart-types/doughnut.svg",
           previewImage: "/src/assets/charts/previews/doughnut.svg",
+          axisData: {legend: null, value: null},
+          buildVisuals: [
+            {label : 'Legend', axisControl: 'legend'},
+            {label : 'Value', axisControl: 'value'},
+          ]
         },
       ],
       formatVisuals: [
         {
           id: 1,
-          label: "X - Axis",
-          subAccordions: [
-            {
-              id: "x-values",
-              label: "Values",
-              data: {
-                isChecked: true,
-                font: "Arial",
-                fontSize: 12,
-                textStyle: [],
-                color: "#000000",
-                displayUnit: "Auto",
-              },
-            },
-            {
-              id: "x-titles",
-              label: "Titles",
-              data: {
-                isChecked: true,
-                titleText: "Order Date",
-                font: "Arial",
-                fontSize: 18,
-                textStyle: [],
-                color: "#000000",
-              },
-            },
-          ],
-        },
-        {
-          id: 2,
-          label: "Y - Axis",
-          subAccordions: [
-            {
-              id: "y-range",
-              label: "Range",
-              data: {
-                minRange: "",
-                maxRange: "",
-                invertRange: true,
-              },
-            },
-            {
-              id: "y-values",
-              label: "Values",
-              data: {
-                isChecked: true,
-                font: "Arial",
-                fontSize: 12,
-                textStyle: [],
-                color: "#000000",
-                displayUnit: "Auto",
-              },
-            },
-            {
-              id: "y-titles",
-              label: "Titles",
-              data: {
-                isChecked: true,
-                titleText: "Order Sales",
-                font: "Arial",
-                fontSize: 18,
-                textStyle: [],
-                color: "#000000",
-              },
-            },
-          ],
-        },
-        {
-          id: 3,
           label: "Legend",
           subAccordions: [
             {
@@ -573,21 +514,43 @@ export const CHART_DATA_CONFIG = [
           ],
         },
         {
-          id: 4,
-          label: "Gridlines",
+          id: 2,
+          label: "Labels",
           subAccordions: [
+           
             {
-              id: "grid-horizontal",
-              label: "Horizontal",
+              id: "x-titles",
+              label: "Options",
               data: {
+                isChecked: true,
+                titleText: "Order Date",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
                 color: "#000000",
-                transparency: 25,
-                lineStyle: "solid",
               },
             },
             {
-              id: "grid-vertical",
-              label: "Vertical",
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+          ],
+        },
+        {
+          id: 3,
+          label: "Slices",
+          subAccordions: [
+            {
+              id: "grid-horizontal",
+              label: "Colors",
               data: {
                 color: "#000000",
                 transparency: 25,

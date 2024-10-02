@@ -6,8 +6,8 @@ import { AppContext } from "../../context/AppContext";
 
 export default function SelectChartsModal({ open, handleClose }) {
   const { chartConfig } = useContext(AppContext);
-  const [selectedCategory, setSelectedCategory] = useState(chartConfig[0]);
-  const [selectedChartType, setSelectedChartType] = useState(chartConfig[0].types[0]);
+  const [selectedCategory, setSelectedCategory] = useState(chartConfig[0] || {});
+  const [selectedChartType, setSelectedChartType] = useState(chartConfig[0]?.types[0] || []);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
