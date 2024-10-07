@@ -28,3 +28,23 @@ export const removeInitialLowercaseH = (str)=>{
 export const containsStackOrGroup = (str) => {
   return /stack|group/.test(str);
 }
+
+export const areItemsFilled = (selectedItems) => {
+  const axisItemsArray = Object.keys(selectedItems);
+  const key1 = axisItemsArray[0];
+  const key2 = axisItemsArray[1];
+  // Check if key1 has any properties
+  const isKey1Filled = Object.keys(selectedItems[key1]).length > 0;
+  
+  // Check yAxis based on its type
+  let isKey2Filled = false;
+  if (Array.isArray(selectedItems[key2])) {
+      // If key2 is an array, check if first object has properties
+      isKey2Filled = selectedItems[key2].length > 0 && Object.keys(selectedItems[key2][0]).length > 0;
+  } else {
+      // If key2 is an object, check if it has properties
+      isKey2Filled = Object.keys(selectedItems[key2]).length > 0;
+  }
+  
+  return isKey1Filled && isKey2Filled;
+}

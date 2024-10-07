@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import SelectChartsModal from "./SelectChartsModal";
 import VisualsAccordions from "./VisualsAccordions";
 import { AppContext } from "../../context/AppContext";
-import { removeInitialLowercaseH } from "../../utils/common";
+// import { removeInitialLowercaseH } from "../../utils/common";
 
 const buttonLabels = [
   {
@@ -76,31 +76,9 @@ const RecommendedCharts = () => {
   const [recoCharts, setRecoCharts] = useState(buttonLabels);
   const [isChartTypeSelected, setIsChartTypeSelected] = useState(false);
   const [isVisualizeActive, setIsVisualizeActive] = useState(false);
-  const [leftMenuData, setLeftMenuData] = useState(null);
+  // const [leftMenuDatas, setLeftMenuData] = useState(null);
 
-  const { setSelectedChartData, setSelectedChart, selectedChartType, setSelectedChartType, selectedChart} = useContext(AppContext);
-
-  // !!!!!!!!!!!!!!! remove this use effect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  // useEffect(() => {
-  //   const selectedType = {
-  //     icon: "/src/assets/charts/chart-types/vBar.svg",
-  //     label: "Vertical Bar",
-  //     types: colmnTypes,
-  //   };
-  //   const viewMore = {
-  //     icon: "/src/assets/icons/viewMore.svg",
-  //     label: "View More",
-  //     types: [],
-  //   };
-  //   setSelectedChart(selectedType);
-  //   setSelected(selectedType.label);
-  //   setRecoCharts([selectedType, viewMore]);
-  //   setIsChartTypeSelected(true);
-  // }, []);
-
-  // useEffect(() => {
-  //   setSelectedChartData(leftMenuData)
-  // }, [leftMenuData, setSelectedChartData])
+  const { setSelectedChartData, setSelectedChart, selectedChartType, setSelectedChartType, selectedChart, chartConfig, setChartConfig} = useContext(AppContext);
 
   useEffect(() => {
     if (selected === "View More") {
@@ -131,126 +109,180 @@ const RecommendedCharts = () => {
   };
 
   const handleVisualiseClick = () => {
-    console.log('leftMenuData', leftMenuData, selectedChartType)
-    let data1,data2,layout = {};
-    let axisItems = Object.keys(leftMenuData?.axisData);
-    if(selectedChart?.id === 'bar' || selectedChart?.id === 'line') {
-      if (axisItems.length === 2) {
-        data1 = {
-          x: leftMenuData?.axisData.xAxis.data,
-          y: leftMenuData?.axisData.yAxis.data,
-          type: selectedChart?.id,
-          name: leftMenuData?.axisData.xAxis.label,
-          orientation: selectedChartType.orientation,
-          marker: {
-            color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
-          },
-        };
-      }
-      if (axisItems.length === 3) {
-        data1 = {
-          x: leftMenuData?.axisData.xAxis.data,
-          y: leftMenuData?.axisData.yAxis.data,
-          type: selectedChart?.id,
-          name: leftMenuData?.axisData.xAxis.label,
-          orientation: selectedChartType.orientation,
-          marker: {
-            color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color1,
-          },
-        };
-         
-        data2 = {
-          x: leftMenuData?.axisData.xAxis.data,
-          y: leftMenuData?.axisData[axisItems[2]].data,
-          type: selectedChart?.id,
-          name: leftMenuData?.axisData[axisItems[2]].label,
-          orientation: selectedChartType.orientation,
-          marker: {
-            color: leftMenuData?.visualsData[2]?.subAccordions?.[2]?.data?.color2,
-          },
-        };
-        if(selectedChartType?.line){
-          data1['line']= selectedChartType?.line;
-          data2['line']= selectedChartType?.line;
+    const parentChartObj = chartConfig.find((item) => item.id === selectedChart?.id);
+    const childChartObj = parentChartObj?.types.find((item) => item.id === selectedChartType?.id);
+    const parentChartName = parentChartObj?.id;
+    const axisData = childChartObj.axisData;
+    const axisItems = Object.keys(axisData);
+    const primaryData = axisData[axisItems[0]];
+    const secondaryData = axisData[axisItems[1]];
+    const isArraySecData = Array.isArray(secondaryData);
+    let layout = {};
+    let traces = [];
+    // creating data for line and bar
+    if(parentChartName === 'bar' || parentChartName === 'line') {
+      if (!isArraySecData) {
+        let data = {
+          x: primaryData.data,
+          y: secondaryData.data,
+          name: primaryData.label,
+          type: childChartObj.type,
         }
+        if(parentChartName === 'bar') {
+          data['orientation'] = childChartObj.orientation
+        }
+        traces.push(data);
+      }
+      if (isArraySecData) {
+        secondaryData.forEach((yAxisItem) => {
+          let data = {
+            x: primaryData.data,
+            y: yAxisItem.data,
+            name: primaryData.label,
+            type: childChartObj.type,
+          }
+
+          if(parentChartName === 'bar') {
+            data['orientation'] = childChartObj.orientation
+          }
+          if(childChartObj?.id === 'vStackedLine') {
+            [data.x, data.y] = [data.y, data.x];
+            data.isVStackedLine = true
+          }
+          if(parentChartName === 'line' && childChartObj?.id === 'steppedLine') {
+            data['line'] = childChartObj.line
+          }
+
+          traces.push(data);
+        });
       }
       layout = {
         xaxis: {
           title: {
-            text: leftMenuData?.axisData.xAxis.label,
+            text: primaryData.label,
             standoff: 50,
             font: {
-              family: "Arial",
-              size: 18,
-              color: "#000000",
+              family: parentChartObj.formatVisuals[0].subAccordions[1].data.font,
+              size: parentChartObj.formatVisuals[0].subAccordions[1].data.fontSize,
+              color: parentChartObj.formatVisuals[0].subAccordions[1].data.color,
               weight: 500,
               style: "normal",
             },
           },
           type: "category",
           tickfont: {
-            family: "Arial",
-            size: 12,
-            color: "#000000",
+            family: parentChartObj.formatVisuals[0].subAccordions[0].data.font,
+            size: parentChartObj.formatVisuals[0].subAccordions[0].data.fontSize,
+            color: parentChartObj.formatVisuals[0].subAccordions[0].data.color,
             weight: 500,
             style: "normal",
           },
-          gridcolor: leftMenuData?.visualsData[3]?.subAccordions?.[0]?.data?.color,
-          griddash: leftMenuData?.visualsData[3]?.subAccordions?.[0]?.data?.lineStyle
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.lineStyle
         },
         yaxis: {
           title: {
-            text: leftMenuData?.axisData.yAxis.label,
+            text: isArraySecData ? secondaryData[0].label : secondaryData.label,
             standoff: 200,
             font: {
-              family: "Arial",
-              size: 18,
-              color: "#000000",
+              family: parentChartObj.formatVisuals[1].subAccordions[2].data.font,
+              size: parentChartObj.formatVisuals[1].subAccordions[2].data.fontSize,
+              color: parentChartObj.formatVisuals[1].subAccordions[2].data.color,
               weight: 500,
               style: "normal",
             },
           },
           tickfont: {
-            family: "Arial",
-            size: 12,
-            color: "#000000",
+            family: parentChartObj.formatVisuals[1].subAccordions[1].data.font,
+            size: parentChartObj.formatVisuals[1].subAccordions[1].data.fontSize,
+            color: parentChartObj.formatVisuals[1].subAccordions[1].data.color,
             weight: 500,
             style: "normal",
           },
-          gridcolor: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.color,
-          griddash: leftMenuData?.visualsData[3]?.subAccordions?.[1]?.data?.lineStyle
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.lineStyle
         },
-        barmode: removeInitialLowercaseH(selectedChartType?.id),        
+        barmode: childChartObj?.barmode
       }
     }
-    if(selectedChart?.id === 'pie') {
-      if (axisItems.length === 2) {
-        data1 = {
+
+    if(parentChartName === 'pie') {
+      if (!isArraySecData) {
+        let data = {
           values: [19, 26, 55],
           labels: ['Residential', 'Non-Residential', 'Utility'],
-          type: 'pie'
-        }     
+          name: primaryData.label,
+          type: childChartObj.type,
+        }
+        traces.push(data);
+        layout = {
+          height: 400,
+          width: 500,
+        };
       }
-      layout = {
-        height: 400,
-        width: 500
-      };
+      if (isArraySecData) {
+        let data1 = {
+          values: [19, 26, 55],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          name: primaryData.label,
+          type: childChartObj.type,
+          domain: {column: 0},
+          hoverinfo: 'label+percent+name',
+          hole: .4,
+        }
+        let data2 = {
+          values: [18, 25, 57],
+          labels: ['Residential', 'Non-Residential', 'Utility'],
+          name: secondaryData.label,
+          type: childChartObj.type,
+          domain: {column: 1},
+          hoverinfo: 'label+percent+name',
+          hole: .4,
+        }
+
+        traces.push(data1, data2);
+        layout = {
+          height: 400,
+          width: 500,
+          grid: {rows: 1, columns: 2}
+        };
+      }
     }
 
     const dataCreator = {
-      data: [data1, ...(data2 && Object.keys(data2).length > 0 ? [data2] : [])],
+      data: traces,
       layout: layout,
     };
-
-    // if data1 and data2 -> type 3
-    // if only data1 -> type 
     console.log("datacreated", dataCreator);
     setSelectedChartData(dataCreator);
+    setChartConfig(prevConfig => {
+      return prevConfig.map(item => {
+        // If this is not the parent chart we're looking for, return unchanged
+        if (item.id !== selectedChart?.id) return item;
+    
+        // If we found the parent chart, map through its types
+        return {
+          ...item,
+          types: item.types.map(typeItem => {
+            // If this is not the child chart we're looking for, return unchanged
+            if (typeItem.id !== selectedChartType?.id) return typeItem;
+    
+            // If we found the child chart, add the new key-value
+            return {
+              ...typeItem,
+              plotData: dataCreator
+            };
+          })
+        };
+      });
+    });
   }
 
-  // const handlePreview = () => {
-    
-  // }
+  useEffect(() => {
+    console.log('setting new chart config', chartConfig)
+  }, [chartConfig])
+  
+
 
   return (
     <Styled.RecommendedChartsWrapper>
@@ -291,7 +323,7 @@ const RecommendedCharts = () => {
       {isChartTypeSelected && (
         <VisualsAccordions
           setIsVisualizeActive={setIsVisualizeActive}
-          setLeftMenuData={setLeftMenuData}
+          // setLeftMenuData={setLeftMenuData}
         />
       )}
       {isChartTypeSelected && (

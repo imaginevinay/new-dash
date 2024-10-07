@@ -23,7 +23,7 @@ import TitlesAccordion from "./TitlesAccordion";
 import DateRangeAccordion from "./DateRangeAccordion";
 import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
-import { allNotNullOrUndefined } from "../../utils/common";
+import { areItemsFilled } from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
 import CustomEyeCheckbox from "./CustomEyeCheckbox";
 import ColumnColorsAccordion from "./ColumnColorsAccordion";
@@ -243,7 +243,7 @@ const sqlData = [
 //   },
 // ];
 
-const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
+const VisualsAccordions = ({ setIsVisualizeActive }) => {
   const {
     selectedChartType,
     setSelectedChartData,
@@ -273,23 +273,23 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     return selectedChartItem?.axisData || {};
   }, [chartConfig, selectedChart?.id, selectedChartType?.id]);
 
-  const createAxisData = (val) => {
-    const obj = {
-      axisData: selectedItems,
-      visualsData: formatVisualsData,
-    };
-    if (val) {
-      setLeftMenuData(obj);
-    } else {
-      setLeftMenuData(null);
-    }
-  };
+  // const createAxisData = (val) => {
+  //   const obj = {
+  //     axisData: selectedItems,
+  //     visualsData: formatVisualsData,
+  //   };
+  //   if (val) {
+  //     setLeftMenuData(obj);
+  //   } else {
+  //     setLeftMenuData(null);
+  //   }
+  // };
 
   useEffect(() => {
-    if (allNotNullOrUndefined(selectedItems)) {
+    if (areItemsFilled(selectedItems)) {
       setIsVisualizeActive(true);
       setIsFormatVisualsActive(true);
-      createAxisData(true);
+      // createAxisData(true);
     } else {
       setIsVisualizeActive(false);
       setIsFormatVisualsActive(false);
@@ -308,6 +308,9 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     setActiveAxis(null);
   };
 
+  const isEmpty = (obj) => Object.keys(obj).length === 0;
+
+
   // Handler for selecting an item from the menu
   const handleSelectItem = (item, tableID, columnId) => {
     handleCheckboxChange(tableID, columnId);
@@ -317,10 +320,14 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
       (config) => config.id === selectedChart.id
     );
     chartToUpdate.types.forEach((type) => {
-      if(Array.isArray(type.axisData[activeAxis])) {
-        type.axisData[activeAxis][ type.axisData[activeAxis].length-1] = { ...item, isChecked: true };
-      }
-      else if (typeof type.axisData[activeAxis] !== "undefined") {
+      if (Array.isArray(type.axisData[activeAxis])) {
+        const emptyIndex = type.axisData[activeAxis].findIndex(isEmpty);
+        if (emptyIndex !== -1) {
+          type.axisData[activeAxis][emptyIndex] = { ...item, isChecked: true };
+        } else {
+          type.axisData[activeAxis].push({ ...item, isChecked: true });
+        }
+      } else if (typeof type.axisData[activeAxis] !== "undefined") {
         type.axisData[activeAxis] = { ...item, isChecked: true };
       }
     });
@@ -604,8 +611,8 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
   // Helper function to render axis button or accordion
   const renderAxisControl = (axis) => {
     const isArray = Array.isArray(selectedItems[axis])
-    const isAxisEmpty = Object.keys(selectedItems[axis]).length === 0;
-    console.log(selectedChartType);
+    const isAxisEmpty = selectedItems[axis] && Object.keys(selectedItems[axis]).length === 0;
+    // console.log('chartConfig', chartConfig, 'selectedChartType',selectedChartType);
 
     if (selectedItems[axis]?.label && containsDate(selectedItems[axis]?.label)) {
       return (
@@ -688,9 +695,9 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     );
   }, []);
 
-  useEffect(() => {
-    console.log("chartConfig updated", chartConfig);
-  }, [chartConfig]);
+  // useEffect(() => {
+  //   console.log("chartConfig updated", chartConfig);
+  // }, [chartConfig]);
 
   // const updateConfigFormatVisuals = (configs, formatVisualsData) => {
   //   return configs.map((config) => {
@@ -1020,34 +1027,28 @@ const VisualsAccordions = ({ setIsVisualizeActive, setLeftMenuData }) => {
     [handleFormatVisualsChange]
   );
 
-  const isLabelPresent = (columnLabel) => {
-    const selectedChartParent = chartConfig.find(
-      (item) => item.id === selectedChart?.id
-    );
-    return selectedChartParent.types.some((type) => {
-      if (type.axisData && typeof type.axisData === "object") {
-        return Object.values(type.axisData).some(
-          (axis) =>
-            axis && typeof axis === "object" && axis.label === columnLabel
-        );
-      }
-      return false;
-    });
-  };
+  // const isLabelPresent = (columnLabel) => {
+  //   const selectedChartParent = chartConfig.find(
+  //     (item) => item.id === selectedChart?.id
+  //   );
+  //   return selectedChartParent.types.some((type) => {
+  //     if (type.axisData && typeof type.axisData === "object") {
+  //       return Object.values(type.axisData).some(
+  //         (axis) =>
+  //           axis && typeof axis === "object" && axis.label === columnLabel
+  //       );
+  //     }
+  //     return false;
+  //   });
+  // };
   const isMenuItemDisabled = (column) => {
-    const axisToCheck = activeAxis === 'xAxis' ? 'yAxis' : 'xAxis';
-    // if (activeAxis === axis) {
-      // check if col is selected in y axis selected items
-      // console.log(selectedItems, column)
-      if (Array.isArray(selectedChart[axisToCheck])) {
-          return selectedItems[axisToCheck].find(item => item.id === column.id);
-      } 
-        return selectedItems[axisToCheck].id === column.id;
-      
-    // }
-
-    // return false;
-  }
+    const axisItemsArray = Object.keys(selectedItems);
+    const axisToCheck = activeAxis === axisItemsArray[0] ? axisItemsArray[1] : axisItemsArray[0];
+    if (Array.isArray(selectedChart[axisToCheck])) {
+      return selectedItems[axisToCheck].find((item) => item.id === column.id);
+    }
+    return selectedItems[axisToCheck].id === column.id;
+  };
 
   return (
     <Styled.WrapperBox>

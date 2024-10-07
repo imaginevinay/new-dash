@@ -7,7 +7,9 @@ export const CHART_DATA_CONFIG = [
       types: [
         {
           id: "bar",
+          barmode: 'bar',
           parent: 'bar',
+          type: 'bar',
           name: "Vertical Bar",
           icon: "/src/assets/charts/chart-types/vBar.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
@@ -20,7 +22,9 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "stack",
+          barmode: 'stack',
           parent: 'bar',
+          type: 'bar',
           name: "Vertical Bar Stacked",
           icon: "/src/assets/charts/chart-types/vBarStacked.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
@@ -34,12 +38,14 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "group",
+          barmode: 'group',
           parent: 'bar',
+          type: 'bar',
           name: "Vertical Bar Grouped",
           icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
           orientation: null,
-          axisData: {xAxis: {}, yAxis: []},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
@@ -48,7 +54,9 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "hbar",
+          barmode: 'bar',
           parent: 'bar',
+          type: 'bar',
           name: "Horizontal Bar",
           icon: "/src/assets/charts/chart-types/hbar.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
@@ -61,12 +69,14 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "hstack",
+          barmode: 'stack',
           parent: 'bar',
+          type: 'bar',
           name: "Horizontal Bar Stacked",
           icon: "/src/assets/charts/chart-types/hBarStacked.svg",
           previewImage:"/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
           orientation: 'h',
-          axisData: {xAxis: {}, yAxis: []},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
@@ -75,12 +85,14 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "hgroup",
+          barmode: 'group',
           parent: 'bar',
+          type: 'bar',
           name: "Horizontal Bar Grouped",
           icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
           orientation: 'h',
-          axisData: {xAxis: {}, yAxis: []},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
@@ -227,11 +239,13 @@ export const CHART_DATA_CONFIG = [
       types: [
         {
           id: "scatter",
+          mode: 'lines',
           parent: 'line',
+          type: 'scatter',
           name: "Line",
           icon: "/src/assets/charts/categories/line.svg",
           previewImage: "/src/assets/charts/previews/BarLineChart.svg",
-          axisData: {xAxis: null, yAxis: null},
+          axisData: {xAxis: {}, yAxis: {}},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
@@ -239,42 +253,45 @@ export const CHART_DATA_CONFIG = [
         },
         {
           id: "vStackedLine",
+          mode: 'lines',
           parent: 'line',
+          type: 'scatter',
           name: "Vertical Stacked Line",
           icon: "/src/assets/charts/chart-types/stackedLine.svg",
           previewImage: "/src/assets/charts/previews/stackedLine.svg",
-          axisData: {xAxis: null, yAxis: null, secondaryYAxis: null},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Secondary Y - axis', axisControl: 'secondaryYAxis'},
           ]
         },
         {
           id: "steppedLine",
+          mode: 'lines',
           parent: 'line',
+          type: 'scatter',
           name: "Stepped Line",
           icon: "/src/assets/charts/chart-types/steppedLine.svg",
           previewImage: "/src/assets/charts/previews/Stepped Line Chart.svg",
           line: {shape: 'hvh'},
-          axisData: {xAxis: null, yAxis: null, secondaryYAxis: null},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Secondary Y - axis', axisControl: 'secondaryYAxis'},
           ]
         },
         {
           id: "multipleLine",
+          mode: 'lines',
           parent: 'line',
+          type: 'scatter',
           name: "Multiple Line",
           icon: "/src/assets/charts/chart-types/stackedLine.svg",
           previewImage: "/src/assets/charts/previews/Multiple Line Chart.svg",
-          axisData: {xAxis: null, yAxis: null, secondaryYAxis: null},
+          axisData: {xAxis: {}, yAxis: [{}]},
           buildVisuals: [
             {label : 'X - axis', axisControl: 'xAxis'},
             {label : 'Y - axis', axisControl: 'yAxis'},
-            {label : 'Secondary Y - axis', axisControl: 'secondaryYAxis'},
           ]
         },
       ],
@@ -348,45 +365,6 @@ export const CHART_DATA_CONFIG = [
             },
           ],
         },
-        // {
-        //   id: 3,
-        //   label: "Secondary Y - Axis",
-        //   subAccordions: [
-        //     {
-        //       id: "sec-y-range",
-        //       label: "Range",
-        //       data: {
-        //         minRange: "",
-        //         maxRange: "",
-        //         invertRange: true,
-        //       },
-        //     },
-        //     {
-        //       id: "sec-y-values",
-        //       label: "Values",
-        //       data: {
-        //         isChecked: true,
-        //         font: "Arial",
-        //         fontSize: 12,
-        //         textStyle: [],
-        //         color: "#000000",
-        //         displayUnit: "Auto",
-        //       },
-        //     },
-        //     {
-        //       id: "sec-y-titles",
-        //       label: "Titles",
-        //       data: {
-        //         isChecked: true,
-        //         titleText: "Order Sales",
-        //         font: "Arial",
-        //         fontSize: 18,
-        //         textStyle: [],
-        //         color: "#000000",
-        //       },
-        //     },
-        //   ],
-        // },
         {
           id: 3,
           label: "Legend",
@@ -457,9 +435,11 @@ export const CHART_DATA_CONFIG = [
         {
           id: "pie",
           name: "Pie",
+          parent: 'pie',
+          type: 'pie',
           icon: "/src/assets/charts/chart-types/pie.svg",
           previewImage: "/src/assets/charts/previews/PieChart.svg",
-          axisData: {legend: null, value: null},
+          axisData: {legend: {}, value: {}},
           buildVisuals: [
             {label : 'Legend', axisControl: 'legend'},
             {label : 'Value', axisControl: 'value'},
@@ -468,9 +448,11 @@ export const CHART_DATA_CONFIG = [
         {
           id: "donut",
           name: "Donut",
+          parent: 'pie',
+          type: 'pie',
           icon: "/src/assets/charts/chart-types/doughnut.svg",
           previewImage: "/src/assets/charts/previews/doughnut.svg",
-          axisData: {legend: null, value: null},
+          axisData: {legend: {}, value: [{}]},
           buildVisuals: [
             {label : 'Legend', axisControl: 'legend'},
             {label : 'Value', axisControl: 'value'},
