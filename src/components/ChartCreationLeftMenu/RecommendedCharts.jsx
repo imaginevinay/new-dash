@@ -119,6 +119,7 @@ const RecommendedCharts = () => {
     const isArraySecData = Array.isArray(secondaryData);
     let layout = {};
     let traces = [];
+
     // creating data for line and bar
     if(parentChartName === 'bar' || parentChartName === 'line') {
       if (!isArraySecData) {
@@ -127,8 +128,10 @@ const RecommendedCharts = () => {
           y: secondaryData.data,
           name: primaryData.label,
           type: childChartObj.type,
+          origX: primaryData.data,
+          origY: secondaryData.data,
         }
-        if(parentChartName === 'bar') {
+        if(parentChartName === 'bar' && childChartObj.orientation) {
           data['orientation'] = childChartObj.orientation
         }
         traces.push(data);
@@ -140,6 +143,8 @@ const RecommendedCharts = () => {
             y: yAxisItem.data,
             name: primaryData.label,
             type: childChartObj.type,
+            origX: primaryData.data,
+            origY: yAxisItem.data,
           }
 
           if(parentChartName === 'bar') {
@@ -209,42 +214,20 @@ const RecommendedCharts = () => {
     if(parentChartName === 'pie') {
       if (!isArraySecData) {
         let data = {
-          values: [19, 26, 55],
-          labels: ['Residential', 'Non-Residential', 'Utility'],
+          values: [19, 26, 30, 25],
+          labels: ['Central', 'South', 'East', 'West'],
           name: primaryData.label,
           type: childChartObj.type,
+          marker: {
+            colors: ['#516B75', '#EDD088', '#D4A373', '#55B1A5']
+          },
+          hole: childChartObj.hole
         }
+
         traces.push(data);
         layout = {
           height: 400,
           width: 500,
-        };
-      }
-      if (isArraySecData) {
-        let data1 = {
-          values: [19, 26, 55],
-          labels: ['Residential', 'Non-Residential', 'Utility'],
-          name: primaryData.label,
-          type: childChartObj.type,
-          domain: {column: 0},
-          hoverinfo: 'label+percent+name',
-          hole: .4,
-        }
-        let data2 = {
-          values: [18, 25, 57],
-          labels: ['Residential', 'Non-Residential', 'Utility'],
-          name: secondaryData.label,
-          type: childChartObj.type,
-          domain: {column: 1},
-          hoverinfo: 'label+percent+name',
-          hole: .4,
-        }
-
-        traces.push(data1, data2);
-        layout = {
-          height: 400,
-          width: 500,
-          grid: {rows: 1, columns: 2}
         };
       }
     }
@@ -254,24 +237,92 @@ const RecommendedCharts = () => {
       layout: layout,
     };
     console.log("datacreated", dataCreator);
-    setSelectedChartData(dataCreator);
+    setSelectedChartData(JSON.parse(JSON.stringify(dataCreator)));
     setChartConfig(prevConfig => {
       return prevConfig.map(item => {
-        // If this is not the parent chart we're looking for, return unchanged
         if (item.id !== selectedChart?.id) return item;
-    
-        // If we found the parent chart, map through its types
         return {
           ...item,
-          types: item.types.map(typeItem => {
-            // If this is not the child chart we're looking for, return unchanged
-            if (typeItem.id !== selectedChartType?.id) return typeItem;
-    
-            // If we found the child chart, add the new key-value
-            return {
-              ...typeItem,
-              plotData: dataCreator
-            };
+          types: item.types.map(typeItem => {            
+            if (typeItem.inputType === selectedChartType?.inputType) {
+              if (typeItem.parent === 'bar') {
+                const modifiedData = dataCreator.data.map(dataItem => ({...dataItem,orientation: typeItem.orientation}));   
+                return {
+                  ...typeItem,
+                  plotData: {
+                    ...dataCreator,
+                    data: modifiedData,
+                    layout: {
+                      ...dataCreator.layout,
+                      barmode:typeItem.barmode 
+                    }
+                  },
+                };
+              }
+              if (typeItem.parent === 'line') {
+                if(typeItem.id === 'vStackedLine') {
+                  const modifiedData = dataCreator.data.map(dataItem => {
+                    const { origX, origY, ...rest } = dataItem;
+                    return {
+                      ...rest,
+                      x: origY,
+                      y: origX,
+                      isVStackedLine: true
+                    };
+                  });
+
+                  return {
+                    ...typeItem,
+                    plotData: {
+                      ...dataCreator,
+                      data: modifiedData
+                    },
+                  };
+                } 
+                else {
+                  // For other line types, restore original values if they exist
+                  const restoredData = dataCreator.data.map(dataItem => {
+                    const { origX, origY, ...rest } = dataItem;
+                    const modDataItem = {
+                      ...rest,
+                      x: origX,
+                      y: origY,
+                      isVStackedLine: false,
+                    }
+                    if(typeItem.id === 'steppedLine') {
+                      modDataItem.line = typeItem.line
+                    }
+                    return modDataItem;
+                  });
+              
+                  return {
+                    ...typeItem,
+                    plotData: {
+                      ...dataCreator,
+                      data: restoredData
+                    },
+                  }; 
+                }
+              }
+              if(typeItem.parent === 'pie') {
+                const modifiedData = dataCreator.data.map(dataItem => ({...dataItem,hole: typeItem.hole}));
+                return {
+                  ...typeItem,
+                  plotData: {
+                    ...dataCreator,
+                    data: modifiedData,
+                  },
+                };
+              } 
+              
+              else {
+                return {
+                  ...typeItem,
+                  plotData: dataCreator,
+                };
+              }              
+            }
+            return typeItem;
           })
         };
       });
@@ -292,6 +343,7 @@ const RecommendedCharts = () => {
         value={selected}
         onChange={handleChange}
         sx={{ marginTop: "2.81rem" }}
+        color="secondary"
       >
         <Grid
           container

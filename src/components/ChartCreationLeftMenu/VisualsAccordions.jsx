@@ -21,12 +21,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import ValuesAccordion from "./ValuesAccordion";
 import TitlesAccordion from "./TitlesAccordion";
 import DateRangeAccordion from "./DateRangeAccordion";
+import MinMaxRange from "./MinMaxRange";
 import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
 import { areItemsFilled } from "../../utils/common";
 import { AppContext } from "../../context/AppContext";
 import CustomEyeCheckbox from "./CustomEyeCheckbox";
 import ColumnColorsAccordion from "./ColumnColorsAccordion";
+import LabelOptions from "./LabelOptions";
+import SlicesColors from "./SlicesColors";
 
 const sqlData = [
   {
@@ -256,7 +259,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
-  const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(false);
+  const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(true);
   // const [selectedItems, setSelectedItems] = useState(selectedChartType?.axisData || {});
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
@@ -695,118 +698,172 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     );
   }, []);
 
-  // useEffect(() => {
-  //   console.log("chartConfig updated", chartConfig);
-  // }, [chartConfig]);
+  const filterDataPoints = (dataPoints, minValue, maxValue) => {
+    const data = dataPoints?.filter(item => item >= minValue && item <= maxValue);
+    return data
+  };
+  
+  const updateMarkerColor = (existingMarker, color) => {
+    return {
+      ...existingMarker,
+      color
+    };
+  };
+  
+  const createFontConfig = (config) => ({
+    family: config.font,
+    size: config.fontSize,
+    color: config.color,
+    weight: config.textStyle.includes("bold") ? 600 : 500,
+    style: config.textStyle.includes("italic") ? "italic" : "normal"
+  });
+  
+  const createAxisTitle = (titleConfig) => ({
+    text: titleConfig.textStyle.includes("underlined")
+      ? `<u>${titleConfig.titleText}</u>`
+      : titleConfig.titleText,
+    font: createFontConfig(titleConfig)
+  });
+  
+  const createAxisConfig = (valuesConfig, titleConfig, gridColor, gridDash) => ({
+    title: createAxisTitle(titleConfig),
+    tickfont: createFontConfig(valuesConfig),
+    gridcolor: gridColor,
+    griddash: gridDash
+  });
 
-  // const updateConfigFormatVisuals = (configs, formatVisualsData) => {
-  //   return configs.map((config) => {
-  //     if (config.id === selectedChart?.id) {
-  //       return {
-  //         ...config,
-  //         formatVisuals: formatVisualsData,
-  //       };
-  //     }
-  //     return config;
-  //   });
-  // };
+  const getPieTextInfo = (isPercentage) => {
+    if(isPercentage) return 'percent'
+    return 'value'
+  }
+  
+  const updateChartDataAndLayout = (prevItem, formatConfig) => {
+    const {
+      xValuesObj,
+      xTitlesObj,
+      yRangeObj,
+      yValuesObj,
+      yTitlesObj,
+      legendOptionsObj,
+      legendTextObj,
+      legendColorsObj,
+      gridXcolorObj,
+      gridYcolorObj,
+      labelOptionsObj,
+      labelValuesObj,
+      sliceColorsObj
+    } = extractConfigData(formatConfig);
+    let data, layout;
+    console.log('sliceColorsObj', sliceColorsObj)
+    if(selectedChartType.id === 'bar' || selectedChartType.id === 'line') {
+      data = prevItem.data.map((dataset, index) => ({
+        ...dataset,
+        x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
+        marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
+      }))
 
-  useEffect(() => {
-    // console.log('formatVisualsData', formatVisualsData);
-    if (selectedChartData) {
-      // setChartConfig(prevConfigs => updateConfigFormatVisuals(prevConfigs, formatVisualsData));
-      const xValuesObj = formatVisualsData[0].subAccordions[0].data;
-      const xTitlesObj = formatVisualsData[0].subAccordions[1].data;
-      // const yRangeObj = formatVisualsData[1].subAccordions[0].data;
-      const yValuesObj = formatVisualsData[1].subAccordions[1].data;
-      const yTitlesObj = formatVisualsData[1].subAccordions[2].data;
-      const legendOptionsObj = formatVisualsData[2].subAccordions[0].data;
-      const legendColorsObj = formatVisualsData[2].subAccordions[2].data;
-      const gridXcolorObj = formatVisualsData[3].subAccordions[0].data;
-      const gridYcolorObj = formatVisualsData[3].subAccordions[1].data;
-      setSelectedChartData((prevItem) => ({
-        data: [
-          {
-            ...prevItem.data[0],
-            marker: {
-              ...prevItem.data[0].marker,
-              color: legendColorsObj.color1,
-            },
-          },
-          {
-            ...prevItem.data[1],
-            marker: {
-              ...prevItem.data[1].marker,
-              color: legendColorsObj.color2,
-            },
-          },
-        ],
+      layout = {
+        ...prevItem.layout,
+        xaxis: createAxisConfig(
+          xValuesObj,
+          xTitlesObj,
+          gridXcolorObj.color,
+          gridYcolorObj.lineStyle
+        ),
+        yaxis: createAxisConfig(
+          yValuesObj,
+          yTitlesObj,
+          gridYcolorObj.color,
+          gridXcolorObj.lineStyle
+        ),
+        legend: {
+          ...getLegendPosition(legendOptionsObj.positions)
+        }
+      }
+    }
+    if(selectedChartType.parent === 'pie') {
+      data = prevItem.data.map((dataset) => ({
+        ...dataset,
+        textposition: labelOptionsObj.label,
+        textinfo: getPieTextInfo(labelOptionsObj.percentage),
+        textfont: {
+          family: labelValuesObj.font,
+          size: labelValuesObj.fontSize,
+          color: labelValuesObj.color,
+          weight: labelValuesObj.textStyle.includes("bold") && 700,
+          style: labelValuesObj.textStyle.includes("italic") && "italic",
+          decoration: labelValuesObj.textStyle.includes("underlined") && "underline",
+        },
+        sort: true,
+        direction: labelOptionsObj.sorting,
+        marker: {
+          colors: [sliceColorsObj.color1, sliceColorsObj.color2, sliceColorsObj.color3, sliceColorsObj.color4]
+        }
+      }));
 
-        layout: {
-          ...prevItem.layout,
-          xaxis: {
-            ...prevItem.layout.xaxis,
-            title: {
-              ...prevItem.layout.xaxis.title,
-              text: xTitlesObj.textStyle.includes("underlined")
-                ? `<u>${xTitlesObj.titleText}</u>`
-                : xTitlesObj.titleText,
-              font: {
-                family: xTitlesObj.font,
-                size: xTitlesObj.fontSize,
-                color: xTitlesObj.color,
-                weight: xTitlesObj.textStyle.includes("bold") ? 600 : 500,
-                style: xTitlesObj.textStyle.includes("italic")
-                  ? "italic"
-                  : "normal",
-              },
-            },
-            tickfont: {
-              family: xValuesObj.font,
-              size: xValuesObj.fontSize,
-              color: xValuesObj.color,
-              weight: xValuesObj.textStyle.includes("bold") ? 600 : 500,
-              style: xValuesObj.textStyle.includes("italic")
-                ? "italic"
-                : "normal",
-            },
-            gridcolor: gridXcolorObj.color,
-            griddash: gridYcolorObj.lineStyle,
-          },
-          yaxis: {
-            ...prevItem.layout.yaxis,
-            title: {
-              ...prevItem.layout.yaxis.title,
-              text: yTitlesObj.textStyle.includes("underlined")
-                ? `<u>${yTitlesObj.titleText}</u>`
-                : yTitlesObj.titleText,
-              font: {
-                family: yTitlesObj.font,
-                size: yTitlesObj.fontSize,
-                color: yTitlesObj.color,
-                weight: yTitlesObj.textStyle.includes("bold") ? 600 : 500,
-                style: yTitlesObj.textStyle.includes("italic")
-                  ? "italic"
-                  : "normal",
-              },
-            },
-            tickfont: {
-              family: yValuesObj.font,
-              size: yValuesObj.fontSize,
-              color: yValuesObj.color,
-              weight: yValuesObj.textStyle.includes("bold") ? 600 : 500,
-              style: yValuesObj.textStyle.includes("italic")
-                ? "italic"
-                : "normal",
-            },
-            gridcolor: gridYcolorObj.color,
-            griddash: gridXcolorObj.lineStyle,
-          },
-          legend: {
-            ...getLegendPosition(legendOptionsObj.positions), // Here you call your getLegendPosition function
+      layout = {
+        ...prevItem.layout,
+        width: labelOptionsObj.radius,
+        height: labelOptionsObj.radius, 
+        legend: {
+          ...getLegendPosition(legendOptionsObj.positions),
+          symbolshape: legendOptionsObj.style,
+          font: {
+            family: legendTextObj.font,
+            size: legendTextObj.fontSize,
+            color: legendTextObj.color,
+            weight: legendTextObj.textStyle.includes("bold") && 700,
+            style: legendTextObj.textStyle.includes("italic") && 'italic',
+            decoration: legendTextObj.textStyle.includes("underlined") && 'underline',
           },
         },
-      }));
+      };
+    }
+
+    console.log('updating chart new data', {
+      data: data,  
+      layout: layout
+    })
+    return {
+      data: data,  
+      layout: layout
+    };
+  };
+
+  const findObjectById = (array, targetId) => {
+    const mainLevel = array.find(item => item.id === targetId);
+    if (mainLevel) return mainLevel;
+    
+    return array
+      .flatMap(item => item.subAccordions || [])
+      .find(subItem => subItem.id === targetId);
+  };
+  
+  // Helper function to extract configuration data
+  const extractConfigData = (formatVisualsData) => ({
+    xValuesObj: findObjectById(formatVisualsData, 'x-values')?.data,
+    xTitlesObj: findObjectById(formatVisualsData, 'x-titles')?.data,
+    yRangeObj: findObjectById(formatVisualsData, 'y-range')?.data,
+    yValuesObj: findObjectById(formatVisualsData, 'y-values')?.data,
+    yTitlesObj: findObjectById(formatVisualsData, 'y-titles')?.data,
+    legendOptionsObj: findObjectById(formatVisualsData, 'leg-options')?.data,
+    legendTitlesObj: findObjectById(formatVisualsData, 'leg-titles')?.data,
+    legendTextObj: findObjectById(formatVisualsData, 'leg-text')?.data,
+    legendColorsObj: findObjectById(formatVisualsData, 'leg-colors')?.data,
+    gridXcolorObj: findObjectById(formatVisualsData, 'grid-h')?.data,
+    gridYcolorObj: findObjectById(formatVisualsData, 'grid-v')?.data,
+    labelOptionsObj: findObjectById(formatVisualsData, 'label-options')?.data,
+    labelValuesObj: findObjectById(formatVisualsData, 'label-values')?.data,
+    sliceColorsObj: findObjectById(formatVisualsData, 'slices-colors')?.data    
+  });
+  
+  // Updated useEffect
+  useEffect(() => {
+    if (selectedChartData) {
+      console.log('format visuals data changed', formatVisualsData)
+      setSelectedChartData(prevItem => 
+        updateChartDataAndLayout(prevItem, formatVisualsData)
+      );
     }
   }, [formatVisualsData]);
 
@@ -918,7 +975,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
   const yRangeAccordionDisplay = useCallback(
     (data, subAccordionId) => (
       <Styled.ValuesWrapper>
-        <DateRangeAccordion
+        <MinMaxRange
           data={data}
           onValuesChange={(values) =>
             handleFormatVisualsChange(subAccordionId, values)
@@ -970,6 +1027,20 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     ),
     [handleFormatVisualsChange]
   );
+
+  // const legTitlesAccordionDisplay = useCallback(
+  //   (data, subAccordionId) => (
+  //     <Styled.ValuesWrapper>
+  //       <TitlesAccordion
+  //         data={data}
+  //         onValuesChange={(values) =>
+  //           handleFormatVisualsChange(subAccordionId, values)
+  //         }
+  //       />
+  //     </Styled.ValuesWrapper>
+  //   ),
+  //   [handleFormatVisualsChange]
+  // );
 
   const legTextAccordionDisplay = useCallback(
     (data, subAccordionId) => (
@@ -1027,6 +1098,49 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     [handleFormatVisualsChange]
   );
 
+
+  const labelTitlesAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <LabelOptions
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
+
+  const labelValuesAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <ValuesAccordion
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
+
+  const slicesColorsAccordionDisplay = useCallback(
+    (data, subAccordionId) => (
+      <Styled.ValuesWrapper>
+        <SlicesColors
+          data={data}
+          onValuesChange={(values) =>
+            handleFormatVisualsChange(subAccordionId, values)
+          }
+        />
+      </Styled.ValuesWrapper>
+    ),
+    [handleFormatVisualsChange]
+  );
+
   // const isLabelPresent = (columnLabel) => {
   //   const selectedChartParent = chartConfig.find(
   //     (item) => item.id === selectedChart?.id
@@ -1066,7 +1180,8 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
             ))}
           </Styled.AccordionDetailsWrapper>
         </Accordion>
-        <Accordion disabled={!isFormatVisualsActive}>
+        {/* disabled={!isFormatVisualsActive} */}
+        <Accordion>
           <Styled.AccordionSummaryBtn className="formatVisuals">
             <Typography>Format Visuals</Typography>
           </Styled.AccordionSummaryBtn>
@@ -1104,14 +1219,24 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
                               yTitlesAccordionDisplay(sub.data, sub.id)}
                             {sub.id === "leg-options" &&
                               legOptionsAccordionDisplay(sub.data, sub.id)}
+                            {/* {sub.id === "leg-titles" &&
+                              legTitlesAccordionDisplay(sub.data, sub.id)} */}
                             {sub.id === "leg-text" &&
                               legTextAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "col-colors" &&
+                            {sub.id === "leg-colors" &&
                               columnColorsAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "grid-horizontal" &&
+                            {sub.id === "grid-h" &&
                               gridHorizAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "grid-vertical" &&
+                            {sub.id === "grid-v" &&
                               gridVertAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "grid-v" &&
+                              gridVertAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "label-options" &&
+                              labelTitlesAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "label-values" &&
+                              labelValuesAccordionDisplay(sub.data, sub.id)}
+                            {sub.id === "slices-colors" &&
+                              slicesColorsAccordionDisplay(sub.data, sub.id)}
                           </AccordionDetails>
                         </Accordion>
                       ))}
@@ -1149,8 +1274,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
                   key={col.id}
                   onClick={() => handleSelectItem(col, item.id, col.id)}
                 >
-                  <Checkbox checked={col.isChecked} />{" "}
-                  <img src={col.icon} />{" "}
+                  <Checkbox checked={col.isChecked} /> <img src={col.icon} />{" "}
                   <Typography level="body-sm">{col.label}</Typography>
                 </MenuItem>
               ))}

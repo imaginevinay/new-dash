@@ -62,8 +62,10 @@ const OptionsAccordion = memo(({ onValuesChange, data }) => {
           sx={SelectProps}
           onChange={(_, value) => handleChange("style", value)}
         >
-          <Option value="Circular Marker">Circular Marker</Option>
-          <Option value="Line">Line</Option>
+          <Option value="circle">Circle</Option>
+          <Option value="square">Square</Option>
+          <Option value="diamond">Diamond</Option>
+          <Option value="cross">Cross</Option>
         </Select>
       </div>
     </div>

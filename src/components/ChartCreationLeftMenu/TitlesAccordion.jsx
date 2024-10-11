@@ -27,13 +27,13 @@ const TitlesAccordion = memo(({ onValuesChange, data }) => {
 
   return (
     <div className="flexCol-lg">
-      <div className="flexCol-md">
+      {localData.titleText && <div className="flexCol-md">
         <span className="title">Title Text</span>
         <Input
           value={localData.titleText}
           onChange={(event) => handleChange("titleText", event.target.value)}
         />
-      </div>
+      </div>}
       <div className="flexCol-md">
         <span className="title">Font</span>
         <div className="flexRow">

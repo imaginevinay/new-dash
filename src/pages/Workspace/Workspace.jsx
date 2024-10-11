@@ -21,7 +21,7 @@ const Workspace = () => {
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState("all");
   const [tableData, setTableData] = useState([]);
-  const [showChartCreation, setShowChartCreation] = useState(false);
+  const [showChartCreation, setShowChartCreation] = useState(true);
 
   const { path } = useParams();
 

@@ -11,6 +11,7 @@ export const CHART_DATA_CONFIG = [
           parent: 'bar',
           type: 'bar',
           name: "Vertical Bar",
+          inputType: 'single',
           icon: "/src/assets/charts/chart-types/vBar.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart.svg",
           axisData: {xAxis: {}, yAxis: {}},
@@ -25,6 +26,7 @@ export const CHART_DATA_CONFIG = [
           barmode: 'stack',
           parent: 'bar',
           type: 'bar',
+          inputType: 'multi',
           name: "Vertical Bar Stacked",
           icon: "/src/assets/charts/chart-types/vBarStacked.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
@@ -41,6 +43,7 @@ export const CHART_DATA_CONFIG = [
           barmode: 'group',
           parent: 'bar',
           type: 'bar',
+          inputType: 'multi',
           name: "Vertical Bar Grouped",
           icon: "/src/assets/charts/chart-types/vBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Vertical Bar Chart Grouped.svg",
@@ -57,6 +60,7 @@ export const CHART_DATA_CONFIG = [
           barmode: 'bar',
           parent: 'bar',
           type: 'bar',
+          inputType: 'single',
           name: "Horizontal Bar",
           icon: "/src/assets/charts/chart-types/hbar.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
@@ -72,6 +76,7 @@ export const CHART_DATA_CONFIG = [
           barmode: 'stack',
           parent: 'bar',
           type: 'bar',
+          inputType: 'multi',
           name: "Horizontal Bar Stacked",
           icon: "/src/assets/charts/chart-types/hBarStacked.svg",
           previewImage:"/src/assets/charts/previews/Horizontal Bar Chart Stacked.svg",
@@ -88,6 +93,7 @@ export const CHART_DATA_CONFIG = [
           barmode: 'group',
           parent: 'bar',
           type: 'bar',
+          inputType: 'multi',
           name: "Horizontal Bar Grouped",
           icon: "/src/assets/charts/chart-types/hBarGrouped.svg",
           previewImage: "/src/assets/charts/previews/Horizontal Bar Chart Grouped.svg",
@@ -139,9 +145,9 @@ export const CHART_DATA_CONFIG = [
               id: "y-range",
               label: "Range",
               data: {
-                minRange: "",
-                maxRange: "",
-                invertRange: true,
+                minRange: "2014",
+                maxRange: "2018",
+                invertRange: false,
               },
             },
             {
@@ -196,7 +202,7 @@ export const CHART_DATA_CONFIG = [
             },
             // add column colors accordion
             {
-              id: "col-colors",
+              id: "leg-colors",
               label: "Column Colours",
               data: {
                 color1: "#255FD1",
@@ -210,7 +216,7 @@ export const CHART_DATA_CONFIG = [
           label: "Gridlines",
           subAccordions: [
             {
-              id: "grid-horizontal",
+              id: "grid-h",
               label: "Horizontal",
               data: {
                 color: "#000000",
@@ -219,7 +225,7 @@ export const CHART_DATA_CONFIG = [
               },
             },
             {
-              id: "grid-vertical",
+              id: "grid-v",
               label: "Vertical",
               data: {
                 color: "#000000",
@@ -242,6 +248,7 @@ export const CHART_DATA_CONFIG = [
           mode: 'lines',
           parent: 'line',
           type: 'scatter',
+          inputType: 'single',
           name: "Line",
           icon: "/src/assets/charts/categories/line.svg",
           previewImage: "/src/assets/charts/previews/BarLineChart.svg",
@@ -256,6 +263,7 @@ export const CHART_DATA_CONFIG = [
           mode: 'lines',
           parent: 'line',
           type: 'scatter',
+          inputType: 'multi',
           name: "Vertical Stacked Line",
           icon: "/src/assets/charts/chart-types/stackedLine.svg",
           previewImage: "/src/assets/charts/previews/stackedLine.svg",
@@ -270,6 +278,7 @@ export const CHART_DATA_CONFIG = [
           mode: 'lines',
           parent: 'line',
           type: 'scatter',
+          inputType: 'multi',
           name: "Stepped Line",
           icon: "/src/assets/charts/chart-types/steppedLine.svg",
           previewImage: "/src/assets/charts/previews/Stepped Line Chart.svg",
@@ -285,6 +294,7 @@ export const CHART_DATA_CONFIG = [
           mode: 'lines',
           parent: 'line',
           type: 'scatter',
+          inputType: 'multi',
           name: "Multiple Line",
           icon: "/src/assets/charts/chart-types/stackedLine.svg",
           previewImage: "/src/assets/charts/previews/Multiple Line Chart.svg",
@@ -391,7 +401,7 @@ export const CHART_DATA_CONFIG = [
             },
             // add column colors accordion
             {
-              id: "col-colors",
+              id: "leg-colors",
               label: "Column Colours",
               data: {
                 color1: "#255FD1",
@@ -405,7 +415,7 @@ export const CHART_DATA_CONFIG = [
           label: "Gridlines",
           subAccordions: [
             {
-              id: "grid-horizontal",
+              id: "grid-h",
               label: "Horizontal",
               data: {
                 color: "#000000",
@@ -414,7 +424,7 @@ export const CHART_DATA_CONFIG = [
               },
             },
             {
-              id: "grid-vertical",
+              id: "grid-v",
               label: "Vertical",
               data: {
                 color: "#000000",
@@ -437,6 +447,8 @@ export const CHART_DATA_CONFIG = [
           name: "Pie",
           parent: 'pie',
           type: 'pie',
+          inputType: 'single',
+          hole: 0,
           icon: "/src/assets/charts/chart-types/pie.svg",
           previewImage: "/src/assets/charts/previews/PieChart.svg",
           axisData: {legend: {}, value: {}},
@@ -449,10 +461,12 @@ export const CHART_DATA_CONFIG = [
           id: "donut",
           name: "Donut",
           parent: 'pie',
+          inputType: 'single',
           type: 'pie',
+          hole: 0.4,
           icon: "/src/assets/charts/chart-types/doughnut.svg",
           previewImage: "/src/assets/charts/previews/doughnut.svg",
-          axisData: {legend: {}, value: [{}]},
+          axisData: {legend: {}, value: {}},
           buildVisuals: [
             {label : 'Legend', axisControl: 'legend'},
             {label : 'Value', axisControl: 'value'},
@@ -469,7 +483,7 @@ export const CHART_DATA_CONFIG = [
               label: "Options",
               data: {
                 positions: "Bottom Center",
-                style: "Circular Marker",
+                style: "circle",
               },
             },
             {
@@ -477,20 +491,10 @@ export const CHART_DATA_CONFIG = [
               label: "Text",
               data: {
                 isChecked: true,
-                titleText: "Auto",
                 font: "Inter UI",
                 fontSize: 9,
                 textStyle: [],
                 color: "#000000",
-              },
-            },
-            // add column colors accordion
-            {
-              id: "col-colors",
-              label: "Column Colours",
-              data: {
-                color1: "#255FD1",
-                color2: "#FF7F0E",
               },
             },
           ],
@@ -501,26 +505,26 @@ export const CHART_DATA_CONFIG = [
           subAccordions: [
            
             {
-              id: "x-titles",
+              id: "label-options",
               label: "Options",
               data: {
                 isChecked: true,
-                titleText: "Order Date",
-                font: "Arial",
-                fontSize: 18,
-                textStyle: [],
-                color: "#000000",
+                label: 'inside',
+                percentage: true,
+                sorting: 'clockwise',
+                radius: 500
               },
             },
             {
-              id: "x-values",
+              id: "label-values",
               label: "Values",
               data: {
                 isChecked: true,
                 font: "Arial",
-                fontSize: 12,
+                fontSize: 14,
                 textStyle: [],
                 color: "#000000",
+                bgColor: "#000000",
                 displayUnit: "Auto",
               },
             },
@@ -531,12 +535,13 @@ export const CHART_DATA_CONFIG = [
           label: "Slices",
           subAccordions: [
             {
-              id: "grid-horizontal",
+              id: "slices-colors",
               label: "Colors",
               data: {
-                color: "#000000",
-                transparency: 25,
-                lineStyle: "solid",
+                color1: "#516B75",
+                color2: "#EDD088",
+                color3: "#D4A373",
+                color4: "#55B1A5"
               },
             },
           ],

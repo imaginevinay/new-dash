@@ -31,7 +31,7 @@ const theme = extendTheme({
           900: undefined,
           // solidBg: 'var(--joy-palette-secondary-400)',
           // solidActiveBg: 'var(--joy-palette-secondary-500)',
-          // outlinedBorder: 'var(--joy-palette-secondary-500)',
+          outlinedBorder: 'var(--joy-palette-primary-100)',
           // outlinedColor: 'var(--joy-palette-secondary-700)',
           // outlinedActiveBg: 'var(--joy-palette-secondary-100)',
           softColor: 'var(--joy-palette-primary-100)',
@@ -138,6 +138,10 @@ const theme = extendTheme({
           },
           "&>[data-first-child]": {
             borderRight: 0
+          },
+          "& .MuiButton-root[aria-pressed='true']": {
+            backgroundColor: "var(--joy-palette-secondary-200)",
+            color: "var(--joy-palette-primary-100)"
           }
         }
       }
