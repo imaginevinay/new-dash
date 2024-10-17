@@ -698,7 +698,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       data = prevItem.data.map((dataset, index) => ({
         ...dataset,
         // x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
-        // marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
+        marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
       }))
 
       layout = {
