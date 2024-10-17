@@ -98,7 +98,7 @@ const RecommendedCharts = () => {
       };
       setSelectedChart(selectedType);
       setSelectedChartType(selectedType?.types[0]);
-      setSelected(selectedType.label);
+      setSelected(selectedType.name);
       setRecoCharts([selectedType, viewMore]);
       setIsChartTypeSelected(true);
     }
@@ -232,6 +232,39 @@ const RecommendedCharts = () => {
       }
     }
 
+    if(parentChartName === 'area') {
+      if (!isArraySecData) {
+        let data = {
+          x: primaryData.data,
+          y: secondaryData.data,
+          origX: primaryData.data,
+          origY: secondaryData.data,
+          type: childChartObj.type,
+          fill: 'tozeroy',
+        }
+
+        // if(childChartObj?.id === 'vArea') {
+        //   [data.x, data.y] = [data.y, data.x];
+        //   data.isVArea = true
+        // }
+
+        traces.push(data);
+      }
+      if (isArraySecData) {
+        secondaryData.forEach((yAxisItem, idx) => {
+          let data = {
+            x: primaryData.data,
+            y: yAxisItem.data,
+            origX: primaryData.data,
+            origY: secondaryData.data,
+            type: childChartObj.type,
+            fill: idx == 0 ? 'tozeroy' : 'tonexty',
+          }
+          traces.push(data);
+        })
+      }
+    }
+
     const dataCreator = {
       data: traces,
       layout: layout,
@@ -353,7 +386,7 @@ const RecommendedCharts = () => {
           {recoCharts.map((obj, index) => (
             <Grid key={index} xs={4}>
               <Styled.ButtonWrapper>
-                <Styled.ChartButton value={obj.name}>
+                <Styled.ChartButton value={obj.name} className="chartBtnToggles">
                   <img src={obj.icon} />
                 </Styled.ChartButton>
                 <span>{obj.name}</span>
@@ -364,11 +397,7 @@ const RecommendedCharts = () => {
       </ToggleButtonGroup>
 
       {!isChartTypeSelected && (
-        <Styled.PreviewChartButton
-          isactive={
-            selected !== null && selected !== "View More" ? "true" : "false"
-          }
-        >
+        <Styled.PreviewChartButton className={selected !== null && selected !== "View More" ? "isActive" : ""}>
           Preview Chart
         </Styled.PreviewChartButton>
       )}

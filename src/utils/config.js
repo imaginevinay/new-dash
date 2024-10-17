@@ -548,6 +548,193 @@ export const CHART_DATA_CONFIG = [
         },
       ]
     },
+    {
+      id: "area",
+      name: "Area",
+      icon: "/src/assets/charts/categories/area.svg",
+      previewImage: '/src/assets/images/area-preview.svg',
+      types: [
+        {
+          id: "hArea",
+          name: "Horizontal Area",
+          icon: "/src/assets/charts/chart-types/hArea.svg",
+          previewImage: "/src/assets/charts/previews/hArea.svg",
+          type: 'scatter',
+          parent: 'area',
+          inputType: 'single',
+          axisData: {xAxis: {}, yAxis: {}},
+          buildVisuals: [
+            {label : 'X - axis', axisControl: 'xAxis'},
+            {label : 'Y - axis', axisControl: 'yAxis'},
+          ]
+        },
+        {
+          id: "HorizontalAreaStacked",
+          name: "Horizontal Area Stacked",
+          icon: "/src/assets/charts/chart-types/hAreaStacked.svg",
+          previewImage: "/src/assets/charts/previews/hAreaStacked.svg",
+          type: 'scatter',
+          parent: 'area',
+          inputType: 'multi',
+          axisData: {xAxis: {}, yAxis: [{}]},
+          buildVisuals: [
+            {label : 'X - axis', axisControl: 'xAxis'},
+            {label : 'Y - axis', axisControl: 'yAxis'},
+          ]
+        },
+        // {
+        //   id: "vArea",
+        //   name: "Vertical Area",
+        //   icon: "/src/assets/charts/chart-types/vArea.svg",
+        //   previewImage: "/src/assets/charts/previews/vArea.svg",
+        //   type: 'scatter',
+        //   parent: 'area',
+        //   inputType: 'single',
+        //   axisData: {xAxis: {}, yAxis: {}},
+        //   orientation: null,
+        //   buildVisuals: [
+        //     {label : 'X - axis', axisControl: 'xAxis'},
+        //     {label : 'Y - axis', axisControl: 'yAxis'},
+        //   ]
+        // },
+        // {
+        //   id: "VAreaStacked",
+        //   name: "Vertical Area Stacked",
+        //   icon: "/src/assets/charts/chart-types/vAreaStacked.svg",
+        //   previewImage: "/src/assets/charts/previews/vAreaStacked.svg",
+        // },
+      ],
+      formatVisuals: [
+        {
+          id: 1,
+          label: "X - Axis",
+          subAccordions: [
+            {
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "x-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Date",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 2,
+          label: "Y - Axis",
+          subAccordions: [
+            {
+              id: "y-range",
+              label: "Range",
+              data: {
+                minRange: "2014",
+                maxRange: "2018",
+                invertRange: false,
+              },
+            },
+            {
+              id: "y-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "y-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "Order Sales",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 3,
+          label: "Legend",
+          subAccordions: [
+            {
+              id: "leg-options",
+              label: "Options",
+              data: {
+                positions: "Bottom Center",
+                style: "Circular Marker",
+              },
+            },
+            {
+              id: "leg-text",
+              label: "Text",
+              data: {
+                isChecked: true,
+                titleText: "Auto",
+                font: "Inter UI",
+                fontSize: 9,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+            // add column colors accordion
+            {
+              id: "leg-colors",
+              label: "Column Colours",
+              data: {
+                color1: "#255FD1",
+                color2: "#FF7F0E",
+              },
+            },
+          ],
+        },
+        {
+          id: 4,
+          label: "Gridlines",
+          subAccordions: [
+            {
+              id: "grid-h",
+              label: "Horizontal",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+            {
+              id: "grid-v",
+              label: "Vertical",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+          ],
+        },
+      ]
+    },
     // {
     //   id: "sunburst",
     //   name: "Sunburst",
@@ -586,37 +773,7 @@ export const CHART_DATA_CONFIG = [
     //     },
     //   ],
     // },
-    // {
-    //   id: "area",
-    //   name: "Area",
-    //   icon: "/src/assets/charts/categories/area.svg",
-    //   types: [
-    //     {
-    //       id: "VerticalArea",
-    //       name: "Vertical Area",
-    //       icon: "/src/assets/charts/chart-types/vArea.svg",
-    //       previewImage: "/src/assets/charts/previews/vArea.svg",
-    //     },
-    //     {
-    //       id: "VAreaStacked",
-    //       name: "Vertical Area Stacked",
-    //       icon: "/src/assets/charts/chart-types/vAreaStacked.svg",
-    //       previewImage: "/src/assets/charts/previews/vAreaStacked.svg",
-    //     },
-    //     {
-    //       id: "HorizontalArea",
-    //       name: "Horizontal Area",
-    //       icon: "/src/assets/charts/chart-types/hArea.svg",
-    //       previewImage: "/src/assets/charts/previews/hArea.svg",
-    //     },
-    //     {
-    //       id: "HorizontalAreaStacked",
-    //       name: "Horizontal Area Stacked",
-    //       icon: "/src/assets/charts/chart-types/hAreaStacked.svg",
-    //       previewImage: "/src/assets/charts/previews/hAreaStacked.svg",
-    //     },
-    //   ],
-    // },
+
     // {
     //   id: "waterfall",
     //   name: "Waterfall",

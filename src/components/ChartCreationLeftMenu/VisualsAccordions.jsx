@@ -20,7 +20,7 @@ import QueueIcon from "../../assets/icons/queue.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import ValuesAccordion from "./ValuesAccordion";
 import TitlesAccordion from "./TitlesAccordion";
-import DateRangeAccordion from "./DateRangeAccordion";
+// import DateRangeAccordion from "./DateRangeAccordion";
 import MinMaxRange from "./MinMaxRange";
 import OptionsAccordion from "./OptionsAccordion";
 import HorizontalAccordion from "./HorizontalAccordion";
@@ -115,137 +115,6 @@ const sqlData = [
   },
 ];
 
-// const formatVObj = [
-//   {
-//     id: 1,
-//     label: "X - Axis",
-//     subAccordions: [
-//       {
-//         id: "x-values",
-//         label: "Values",
-//         data: {
-//           isChecked: true,
-//           font: "Arial",
-//           fontSize: 12,
-//           textStyle: [],
-//           color: "#000000",
-//           displayUnit: "Auto",
-//         },
-//       },
-//       {
-//         id: "x-titles",
-//         label: "Titles",
-//         data: {
-//           isChecked: true,
-//           titleText: "Order Date",
-//           font: "Arial",
-//           fontSize: 18,
-//           textStyle: [],
-//           color: "#000000",
-//         },
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     label: "Y - Axis",
-//     subAccordions: [
-//       {
-//         id: "y-range",
-//         label: "Range",
-//         data: {
-//           minRange: "",
-//           maxRange: "",
-//           invertRange: true,
-//         },
-//       },
-//       {
-//         id: "y-values",
-//         label: "Values",
-//         data: {
-//           isChecked: true,
-//           font: "Arial",
-//           fontSize: 12,
-//           textStyle: [],
-//           color: "#000000",
-//           displayUnit: "Auto",
-//         },
-//       },
-//       {
-//         id: "y-titles",
-//         label: "Titles",
-//         data: {
-//           isChecked: true,
-//           titleText: "Order Sales",
-//           font: "Arial",
-//           fontSize: 18,
-//           textStyle: [],
-//           color: "#000000",
-//         },
-//       },
-//     ],
-//   },
-//   {
-//     id: 3,
-//     label: "Legend",
-//     subAccordions: [
-//       {
-//         id: "leg-options",
-//         label: "Options",
-//         data: {
-//           positions: "Bottom Center",
-//           style: "Circular Marker",
-//         },
-//       },
-//       {
-//         id: "leg-text",
-//         label: "Text",
-//         data: {
-//           isChecked: true,
-//           titleText: "Auto",
-//           font: "Inter UI",
-//           fontSize: 9,
-//           textStyle: [],
-//           color: "#000000",
-//         },
-//       },
-//       // add column colors accordion
-//       {
-//         id: "col-colors",
-//         label: "Column Colours",
-//         data: {
-//           color1: "#255FD1",
-//           color2: "#FF7F0E",
-//         },
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     label: "Gridlines",
-//     subAccordions: [
-//       {
-//         id: "grid-horizontal",
-//         label: "Horizontal",
-//         data: {
-//           color: "#000000",
-//           transparency: 25,
-//           lineStyle: "solid",
-//         },
-//       },
-//       {
-//         id: "grid-vertical",
-//         label: "Vertical",
-//         data: {
-//           color: "#000000",
-//           transparency: 25,
-//           lineStyle: "solid",
-//         },
-//       },
-//     ],
-//   },
-// ];
-
 const VisualsAccordions = ({ setIsVisualizeActive }) => {
   const {
     selectedChartType,
@@ -259,16 +128,24 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [activeAxis, setActiveAxis] = useState(null);
   const [axisMenuData, setAxisMenuData] = useState(sqlData);
+  const [formatVisualsData, setFormatVisualsData] = useState(selectedChart?.formatVisuals)
   const [isFormatVisualsActive, setIsFormatVisualsActive] = useState(true);
   // const [selectedItems, setSelectedItems] = useState(selectedChartType?.axisData || {});
   const [showYearlyMenu, setShowYearlyMenu] = useState(false);
 
-  const formatVisualsData = useMemo(() => {
-    const selectedChartData = chartConfig.find(
-      (item) => item.id === selectedChart?.id
-    );
-    return selectedChartData?.formatVisuals || [];
-  }, [chartConfig, selectedChart.id]);
+  // useEffect(()=> {
+  //   const selectedChartData = chartConfig.find(
+  //     (item) => item.id === selectedChart?.id
+  //   );
+  //   setFormatVisualsData(selectedChartData?.formatVisuals)
+  // }, [])
+
+  // const formatVisualsData = useMemo(() => {
+  //   const selectedChartData = chartConfig.find(
+  //     (item) => item.id === selectedChart?.id
+  //   );
+  //   return selectedChartData?.formatVisuals || [];
+  // }, [chartConfig, selectedChart.id]);
 
   const selectedItems = useMemo(() => {
     const selectedChartData = chartConfig.find((item) => item.id === selectedChart?.id);
@@ -276,17 +153,6 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     return selectedChartItem?.axisData || {};
   }, [chartConfig, selectedChart?.id, selectedChartType?.id]);
 
-  // const createAxisData = (val) => {
-  //   const obj = {
-  //     axisData: selectedItems,
-  //     visualsData: formatVisualsData,
-  //   };
-  //   if (val) {
-  //     setLeftMenuData(obj);
-  //   } else {
-  //     setLeftMenuData(null);
-  //   }
-  // };
 
   useEffect(() => {
     if (areItemsFilled(selectedItems)) {
@@ -350,7 +216,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     const chartToUpdate = newChartConfig.find(
       (config) => config.id === selectedChart.id
     );
-    
+
     chartToUpdate.types.forEach((type) => {
       if (indexToDelete !== null && Array.isArray(type.axisData[axis])) {
         type.axisData[axis] && (type.axisData[axis].splice(indexToDelete, 1));
@@ -684,6 +550,15 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       ),
     }));
 
+    // setFormatVisualsData(newFormatVisualsData);
+    setFormatVisualsData((prevData) =>
+      prevData.map((item) => ({
+        ...item,
+        subAccordions: item.subAccordions.map((sub) =>
+          sub.id === subAccordionId ? { ...sub, data: { ...sub.data, ...newValues } } : sub
+        ),
+      }))
+    );
     setChartConfig((prevArray) =>
       prevArray.map((item) => {
         if (item.id === selectedChart.id) {
@@ -702,14 +577,14 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     const data = dataPoints?.filter(item => item >= minValue && item <= maxValue);
     return data
   };
-  
+
   const updateMarkerColor = (existingMarker, color) => {
     return {
       ...existingMarker,
       color
     };
   };
-  
+
   const createFontConfig = (config) => ({
     family: config.font,
     size: config.fontSize,
@@ -717,14 +592,14 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     weight: config.textStyle.includes("bold") ? 600 : 500,
     style: config.textStyle.includes("italic") ? "italic" : "normal"
   });
-  
+
   const createAxisTitle = (titleConfig) => ({
     text: titleConfig.textStyle.includes("underlined")
       ? `<u>${titleConfig.titleText}</u>`
       : titleConfig.titleText,
     font: createFontConfig(titleConfig)
   });
-  
+
   const createAxisConfig = (valuesConfig, titleConfig, gridColor, gridDash) => ({
     title: createAxisTitle(titleConfig),
     tickfont: createFontConfig(valuesConfig),
@@ -736,7 +611,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     if(isPercentage) return 'percent'
     return 'value'
   }
-  
+
   const updateChartDataAndLayout = (prevItem, formatConfig) => {
     const {
       xValuesObj,
@@ -804,7 +679,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       layout = {
         ...prevItem.layout,
         width: labelOptionsObj.radius,
-        height: labelOptionsObj.radius, 
+        height: labelOptionsObj.radius,
         legend: {
           ...getLegendPosition(legendOptionsObj.positions),
           symbolshape: legendOptionsObj.style,
@@ -819,13 +694,39 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
         },
       };
     }
+    if(selectedChartType.parent === 'area') {
+      data = prevItem.data.map((dataset, index) => ({
+        ...dataset,
+        // x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
+        // marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
+      }))
+
+      layout = {
+        ...prevItem.layout,
+        xaxis: createAxisConfig(
+          xValuesObj,
+          xTitlesObj,
+          gridXcolorObj.color,
+          gridYcolorObj.lineStyle
+        ),
+        yaxis: createAxisConfig(
+          yValuesObj,
+          yTitlesObj,
+          gridYcolorObj.color,
+          gridXcolorObj.lineStyle
+        ),
+        legend: {
+          ...getLegendPosition(legendOptionsObj.positions)
+        }
+      }
+    }
 
     console.log('updating chart new data', {
-      data: data,  
+      data: data,
       layout: layout
     })
     return {
-      data: data,  
+      data: data,
       layout: layout
     };
   };
@@ -833,12 +734,12 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
   const findObjectById = (array, targetId) => {
     const mainLevel = array.find(item => item.id === targetId);
     if (mainLevel) return mainLevel;
-    
+
     return array
       .flatMap(item => item.subAccordions || [])
       .find(subItem => subItem.id === targetId);
   };
-  
+
   // Helper function to extract configuration data
   const extractConfigData = (formatVisualsData) => ({
     xValuesObj: findObjectById(formatVisualsData, 'x-values')?.data,
@@ -850,18 +751,19 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     legendTitlesObj: findObjectById(formatVisualsData, 'leg-titles')?.data,
     legendTextObj: findObjectById(formatVisualsData, 'leg-text')?.data,
     legendColorsObj: findObjectById(formatVisualsData, 'leg-colors')?.data,
-    gridXcolorObj: findObjectById(formatVisualsData, 'grid-h')?.data,
-    gridYcolorObj: findObjectById(formatVisualsData, 'grid-v')?.data,
+    gridXcolorObj: findObjectById(formatVisualsData, 'grid-v')?.data,
+    gridYcolorObj: findObjectById(formatVisualsData, 'grid-h')?.data,
     labelOptionsObj: findObjectById(formatVisualsData, 'label-options')?.data,
     labelValuesObj: findObjectById(formatVisualsData, 'label-values')?.data,
-    sliceColorsObj: findObjectById(formatVisualsData, 'slices-colors')?.data    
+    sliceColorsObj: findObjectById(formatVisualsData, 'slices-colors')?.data
   });
-  
+
   // Updated useEffect
   useEffect(() => {
+    console.log('format visuals data changed', formatVisualsData)
     if (selectedChartData) {
-      console.log('format visuals data changed', formatVisualsData)
-      setSelectedChartData(prevItem => 
+      // console.log('format visuals data changed', formatVisualsData)
+      setSelectedChartData(prevItem =>
         updateChartDataAndLayout(prevItem, formatVisualsData)
       );
     }
@@ -1180,14 +1082,13 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
             ))}
           </Styled.AccordionDetailsWrapper>
         </Accordion>
-        {/* disabled={!isFormatVisualsActive} */}
-        <Accordion>
+        <Accordion disabled={!isFormatVisualsActive}>
           <Styled.AccordionSummaryBtn className="formatVisuals">
             <Typography>Format Visuals</Typography>
           </Styled.AccordionSummaryBtn>
           <Styled.AccordionDetailsWrapper className="hello">
             <AccordionGroup disableDivider sx={{ gap: "0.75rem" }}>
-              {formatVisualsData.map((item) => (
+              {formatVisualsData?.map((item) => (
                 <Accordion key={item.id}>
                   <Styled.VisualsTitle>{item.label}</Styled.VisualsTitle>
                   <Styled.VisualsAccordionDetails>
@@ -1229,8 +1130,8 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
                               gridHorizAccordionDisplay(sub.data, sub.id)}
                             {sub.id === "grid-v" &&
                               gridVertAccordionDisplay(sub.data, sub.id)}
-                            {sub.id === "grid-v" &&
-                              gridVertAccordionDisplay(sub.data, sub.id)}
+                            {/* {sub.id === "grid-v" &&
+                              gridVertAccordionDisplay(sub.data, sub.id)} */}
                             {sub.id === "label-options" &&
                               labelTitlesAccordionDisplay(sub.data, sub.id)}
                             {sub.id === "label-values" &&

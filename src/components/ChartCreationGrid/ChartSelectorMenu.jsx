@@ -29,7 +29,7 @@ const [parentChartObj, setParentChartObj] = useState(null);
   useEffect(() => {
     const data = chartConfig.find((item) => item.id === selectedChart?.id) 
     setParentChartObj(data)
-  }, [chartConfig])
+  }, [chartConfig, selectedChart?.id])
 
   const handleChange = (newValue) => {
     const foundObject = parentChartObj?.types.find((chart) => chart.id === newValue);

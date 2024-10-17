@@ -74,17 +74,23 @@ export const RecommendedChartsWrapper = styled("div")(() => ({
   },
 }));
 
-export const PreviewChartButton = styled(Button)(({ theme, isactive }) => ({
+export const PreviewChartButton = styled(Button)(({ theme }) => ({
   width: "100%",
   borderRadius: "2.0625rem",
-  background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
+  backgroundColor: theme.palette.primary[400],
   color: theme.palette.primary[500],
   fontSize: "1rem",
   fontWeight: 400,
   marginTop: "6.5rem",
   "&:hover": {
-    background: isactive==='true' ? theme.palette.primary[100] : theme.palette.primary[400],
+    background: theme.palette.primary[400],
   },
+  "&.isActive": {
+    backgroundColor : theme.palette.primary[100],
+    "&:hover": {
+      background: theme.palette.primary[100],
+    },
+  }
 }));
 
 

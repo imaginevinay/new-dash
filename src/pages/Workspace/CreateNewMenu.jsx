@@ -12,17 +12,19 @@ import NewFolderModal from '../../components/modals/CreateNewMenuModals/NewFolde
 import ReportModal from '../../components/modals/CreateNewMenuModals/ReportModal';
 import ChartModal from '../../components/modals/CreateNewMenuModals/ChartModal';
 import DataFlowModal from '../../components/modals/CreateNewMenuModals/DataFlowModal';
+import { useNavigate } from 'react-router-dom';
 
 
 
 import {randomNumberGenerator} from '../../utils/common'
 import { useState } from "react";
 
-export default function CreateNewMenu({setTableData, setShowChartCreation, setOpenWorkspace}) {
+export default function CreateNewMenu({setTableData}) {
   const [isFolderModalOpen, setIsFolderModalOpen] = useState(false)
   const [isReportModalOpen, setIsReportModalOpen] = useState(false)
   const [isChartModalOpen, setIsChartModalOpen] = useState(false)
   const [isDataflowModalOpen, setIsDataflowModalOpen] = useState(false)
+  const navigate = useNavigate();
 
   const handleFolderModalOnClose = (val) => {
     setIsFolderModalOpen(false);
@@ -46,11 +48,10 @@ export default function CreateNewMenu({setTableData, setShowChartCreation, setOp
     setIsReportModalOpen(false);
   }
 
+  // eslint-disable-next-line no-unused-vars
   const handleChartModalOnClose = (value, type) => {
-    // console.log('value, type', value, type)
     setIsChartModalOpen(false);
-    setShowChartCreation(true);
-    setOpenWorkspace(false);
+    navigate('/create-chart');
   }
 
   const handleDataFlowModalOnClose = () => {

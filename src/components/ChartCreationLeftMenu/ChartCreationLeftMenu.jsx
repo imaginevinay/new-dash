@@ -4,14 +4,17 @@ import LeftArrow from '../../assets/images/left-arrow.svg'
 import TabPanel from '@mui/joy/TabPanel';
 import Divider from '@mui/joy/Divider';
 import RecommendedCharts from "./RecommendedCharts";
+import { useNavigate } from 'react-router-dom';
 
 
-const ChartCreationLeftMenu = ({setShowChartCreation}) => {
+const ChartCreationLeftMenu = () => {
+  const navigate = useNavigate();
+
   return (
     <Styled.LeftMenuWrapper className="LeftMenuWrapper">
 
       <Styled.MenuTitle>
-        <img src={LeftArrow} onClick={() => setShowChartCreation(false)} style={{cursor: 'pointer'}}/>
+        <img src={LeftArrow} onClick={() => navigate(-1)} style={{cursor: 'pointer'}}/>
         <span>Chart creation</span>
       </Styled.MenuTitle>
 

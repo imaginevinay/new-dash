@@ -17,6 +17,8 @@ const theme = extendTheme({
           900: undefined,
           solidBg: 'var(--joy-palette-primary-100)',
           solidColor: 'var(--joy-palette-primary-50)',
+          // outlinedBorder: 'var(--joy-palette-primary-100)',
+          // outlinedColor: 'var(--joy-palette-primary-100)',
         },
         secondary: {
           50: 'rgba(212, 175, 55, 0.10)',
@@ -78,6 +80,9 @@ const theme = extendTheme({
           800: undefined,
           900: undefined,
         },
+        neutral: {
+          // outlinedBorder: 'var(--joy-palette-primary-100)',
+        }
       },
     },
     dark: {
@@ -139,7 +144,7 @@ const theme = extendTheme({
           "&>[data-first-child]": {
             borderRight: 0
           },
-          "& .MuiButton-root[aria-pressed='true']": {
+          "& :not(.chartBtnToggles).MuiButton-colorSecondary.MuiButton-root[aria-pressed='true']": {
             backgroundColor: "var(--joy-palette-secondary-200)",
             color: "var(--joy-palette-primary-100)"
           }

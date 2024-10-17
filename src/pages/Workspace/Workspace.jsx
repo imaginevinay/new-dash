@@ -11,8 +11,8 @@ import EqualizerOutlinedIcon from "@mui/icons-material/EqualizerOutlined";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import TanstackTable from "../../components/TanstackTable/TanstackTable";
 import { WORKSPACES_COLS, WORKSPACES_DATA } from "../../utils/dummyData";
-import ChartCreationLeftMenu from "../../components/ChartCreationLeftMenu/ChartCreationLeftMenu";
-import ChartCreationGrid from "../../components/ChartCreationGrid/ChartCreationGrid";
+// import ChartCreationLeftMenu from "../../components/ChartCreationLeftMenu/ChartCreationLeftMenu";
+// import ChartCreationGrid from "../../components/ChartCreationGrid/ChartCreationGrid";
 import { useParams } from "react-router";
 
 const Workspace = () => {
@@ -21,7 +21,7 @@ const Workspace = () => {
   const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
   const [selectedButton, setSelectedButton] = useState("all");
   const [tableData, setTableData] = useState([]);
-  const [showChartCreation, setShowChartCreation] = useState(true);
+  // const [showChartCreation, setShowChartCreation] = useState(true);
 
   const { path } = useParams();
 
@@ -65,73 +65,68 @@ const Workspace = () => {
     setSettingsDrawerOpen(false);
   };
 
-  return !showChartCreation ? (
-    <div>
-      <Styled.Header>
-        <Styled.WorkspaceTitle>
-          <GroupIcon />
-          <span>{workspaceTitle}</span>
-        </Styled.WorkspaceTitle>
-        <Styled.SettingsBtn onClick={() => setSettingsDrawerOpen(true)}>
-          <SettingsIcon />
-          Workspace Settings
-        </Styled.SettingsBtn>
-      </Styled.Header>
-      <Styled.MidRow>
-        <Styled.ButtonWrapper>
-          <CreateNewMenu setTableData={setTableData} setShowChartCreation={setShowChartCreation}/>
-          <Styled.ButtonItem
-            isSelected={selectedButton === "all"}
-            onClick={() => setSelectedButton("all")}
-          >
-            <FolderOutlinedIcon />
-            <span>All</span>
-          </Styled.ButtonItem>
-          <Styled.ButtonItem
-            isSelected={selectedButton === "reports"}
-            onClick={() => setSelectedButton("reports")}
-          >
-            <SummarizeOutlinedIcon />
-            <span>Reports</span>
-          </Styled.ButtonItem>
-          <Styled.ButtonItem
-            isSelected={selectedButton === "charts"}
-            onClick={() => setSelectedButton("charts")}
-          >
-            <EqualizerOutlinedIcon />
-            <span>Charts</span>
-          </Styled.ButtonItem>
-        </Styled.ButtonWrapper>
-      </Styled.MidRow>
+  return (
+  <div>
+  <Styled.Header>
+    <Styled.WorkspaceTitle>
+      <GroupIcon />
+      <span>{workspaceTitle}</span>
+    </Styled.WorkspaceTitle>
+    <Styled.SettingsBtn onClick={() => setSettingsDrawerOpen(true)}>
+      <SettingsIcon />
+      Workspace Settings
+    </Styled.SettingsBtn>
+  </Styled.Header>
+  <Styled.MidRow>
+    <Styled.ButtonWrapper>
+      <CreateNewMenu setTableData={setTableData}/>
+      <Styled.ButtonItem
+        isSelected={selectedButton === "all"}
+        onClick={() => setSelectedButton("all")}
+      >
+        <FolderOutlinedIcon />
+        <span>All</span>
+      </Styled.ButtonItem>
+      <Styled.ButtonItem
+        isSelected={selectedButton === "reports"}
+        onClick={() => setSelectedButton("reports")}
+      >
+        <SummarizeOutlinedIcon />
+        <span>Reports</span>
+      </Styled.ButtonItem>
+      <Styled.ButtonItem
+        isSelected={selectedButton === "charts"}
+        onClick={() => setSelectedButton("charts")}
+      >
+        <EqualizerOutlinedIcon />
+        <span>Charts</span>
+      </Styled.ButtonItem>
+    </Styled.ButtonWrapper>
+  </Styled.MidRow>
 
-    <div style={{paddingLeft: '2.5rem', paddingRight: '2.5rem'}}>
-    <TanstackTable
-        tableData={tableData}
-        columnData={WORKSPACES_COLS}
-        deleteIcon
-        exportIcon
-        moreIcon
-        showMainSearch
-      />
-    </div>
-      
+<div style={{paddingLeft: '2.5rem', paddingRight: '2.5rem'}}>
+<TanstackTable
+    tableData={tableData}
+    columnData={WORKSPACES_COLS}
+    deleteIcon
+    exportIcon
+    moreIcon
+    showMainSearch
+  />
+</div>
+  
 
-      <BottomDrawer onClick={handleBottomDrawerClick} />
-      <WorkspacesDrawer
-        open={bottomDrawerOpen}
-        onClose={handleBottomDrawerClose}
-      />
-      <SettingsDrawer
-        open={settingsDrawerOpen}
-        onClose={handleSettingsDrawerClose}
-      />
-    </div>
-  ) : (
-    <Styled.ChartCreationWrapper>
-      <ChartCreationLeftMenu setShowChartCreation={setShowChartCreation}/>
-      <ChartCreationGrid />
-    </Styled.ChartCreationWrapper>
-  );
+  <BottomDrawer onClick={handleBottomDrawerClick} />
+  <WorkspacesDrawer
+    open={bottomDrawerOpen}
+    onClose={handleBottomDrawerClose}
+  />
+  <SettingsDrawer
+    open={settingsDrawerOpen}
+    onClose={handleSettingsDrawerClose}
+  />
+  </div>
+  )
 };
 
 export default Workspace;

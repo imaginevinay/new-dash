@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Workspace from "./pages/Workspace/Workspace";
+import CreateChart from "./pages/CreateChart/CreateChart";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/workspace/:path" element={<Workspace />} />
+            <Route path="/create-chart" element={<CreateChart />} />
           </Routes>
         </div>
       </div>
