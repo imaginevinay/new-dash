@@ -264,6 +264,56 @@ const RecommendedCharts = () => {
         })
       }
     }
+    if(parentChartName === 'funnel') {
+      if (!isArraySecData) {
+        let data = {}
+        data = {
+          type: childChartObj.type, 
+          y: primaryData.data, 
+          x: secondaryData.data, 
+          // origX: secondaryData.data,
+          // origY: primaryData.data
+        }
+
+        if(childChartObj.type === 'funnelarea') {
+          data = {
+            type: childChartObj.type, 
+            text: primaryData.data, 
+            values: secondaryData.data, 
+            // origX: secondaryData.data,
+            // origY: primaryData.data
+          }
+        }
+
+        layout = {
+          margin: {l: 150},
+          width:600, 
+          height: 500
+        }
+
+        // if(childChartObj?.id === 'vArea') {
+        //   [data.x, data.y] = [data.y, data.x];
+        //   data.isVArea = true
+        // }
+
+        traces.push(data);
+      }
+      if (isArraySecData) {
+        secondaryData.forEach((yAxisItem) => {
+          let data = {
+            y: primaryData.data,
+            x: yAxisItem.data,
+            type: childChartObj.type,
+          }
+          traces.push(data);
+        })
+        layout = {
+          margin: {l: 150},
+          width:600, 
+          height: 500
+        }
+      }
+    }
 
     const dataCreator = {
       data: traces,
@@ -347,6 +397,33 @@ const RecommendedCharts = () => {
                   },
                 };
               } 
+              if(typeItem.parent === 'funnel'){
+                if(typeItem?.id === 'funnelArea') {
+                  const modifiedData = dataCreator.data.map(dataItem => {
+                    const newData = {
+                      ...dataItem,
+                      type: typeItem?.type,
+                      values: dataItem.x,
+                      text: dataItem.y,
+                    }
+                    return newData
+                  }
+                );
+                console.log('modified data', modifiedData)
+                return {
+                  ...typeItem,
+                  plotData: {
+                    ...dataCreator,
+                    data: modifiedData,
+                  },
+                };
+                } else {
+                  return {
+                    ...typeItem,
+                    plotData: dataCreator,
+                  };
+                }
+              }
               
               else {
                 return {

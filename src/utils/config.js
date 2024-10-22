@@ -735,6 +735,56 @@ export const CHART_DATA_CONFIG = [
         },
       ]
     },
+    {
+      id: "funnel",
+      name: "Funnel",
+      icon: "/src/assets/charts/categories/funnel.svg",
+      previewImage: '/src/assets/images/funnel-preview.svg',
+      types: [
+        {
+          id: "funnel",
+          name: "Funnel",
+          parent: 'funnel',
+          type: 'funnel',
+          inputType: 'single',
+          icon: "/src/assets/charts/chart-types/funnel.svg",
+          previewImage: "/src/assets/charts/previews/funnel.svg",
+          axisData: {category: {}, value: {}},
+          buildVisuals: [
+            {label : 'Category', helperLabel: '(Y - axis)', axisControl: 'category'},
+            {label : 'Value', helperLabel: '(X - axis)', axisControl: 'value'},
+          ]
+        },
+        {
+          id: "funnelArea",
+          name: "Funnel Area",
+          parent: 'funnel',
+          type: 'funnelarea',
+          inputType: 'single',
+          icon: "/src/assets/charts/chart-types/funnelarea.svg",
+          previewImage: "/src/assets/charts/previews/Multiple Line Chart.svg",
+          axisData: {text: {}, value: {}},
+          buildVisuals: [
+            {label : 'Text', helperLabel: '(Y - axis)', axisControl: 'text'},
+            {label : 'Value', helperLabel: '(X - axis)', axisControl: 'value'},
+          ]
+        },
+        {
+          id: "funnelStacked",
+          name: "Funnel Stacked",
+          icon: "/src/assets/charts/chart-types/sfunnel.svg",
+          previewImage: "/src/assets/charts/previews/sfunnel.svg",
+          parent: 'funnel',
+          type: 'funnel',
+          inputType: 'multi',
+          axisData: {category: {}, value: [{}]},
+          buildVisuals: [
+            {label : 'Category', helperLabel: '(Y - axis)', axisControl: 'category'},
+            {label : 'Value', helperLabel: '(X - axis)', axisControl: 'value'},
+          ]
+        }
+      ],
+    },
     // {
     //   id: "sunburst",
     //   name: "Sunburst",

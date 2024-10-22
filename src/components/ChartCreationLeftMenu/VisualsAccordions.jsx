@@ -87,6 +87,27 @@ const sqlData = [
           159, 287, 298,
         ],
       },
+      {
+        id: 5,
+        label: "Product Category",
+        icon: QueueIcon,
+        isChecked: false,
+        data: ['Office Supplies', 'Furniture', 'Technology'],
+      },
+      {
+        id: 6,
+        label: "Profit",
+        icon: QueueIcon,
+        isChecked: false,
+        data: [178000, 158000, 105000],
+      },
+      {
+        id: 7,
+        label: "Sales",
+        icon: QueueIcon,
+        isChecked: false,
+        data: [16000, 19000, 21000],
+      }
     ],
   },
   {
@@ -1076,7 +1097,10 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
           <Styled.AccordionDetailsWrapper className="hello">
             {selectedChartType?.buildVisuals.map((item) => (
               <Styled.SMFlexCol key={item.axisControl}>
-                <span>{item.label}</span>
+                <p>
+                  <span>{item.label}</span>{' '}
+                  <span>{item?.helperLabel}</span>
+                </p>                
                 {renderAxisControl(item.axisControl)}
               </Styled.SMFlexCol>
             ))}

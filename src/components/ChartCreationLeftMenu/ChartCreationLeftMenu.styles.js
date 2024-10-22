@@ -383,7 +383,10 @@ export const SMFlexCol = styled(FlexCol)({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
-  marginTop: '1.5rem'
+  marginTop: '1.5rem',
+  "& .bold": {
+    fontWeight: 500
+  }
 })
 
 export const YearAccordionDetails = styled(AccordionDetails)({
