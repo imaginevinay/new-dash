@@ -784,6 +784,71 @@ export const CHART_DATA_CONFIG = [
           ]
         }
       ],
+      formatVisuals: [
+        {
+          id: 1,
+          label: "Conversion Rate",
+          sublabel: '(X - axis)',
+          subAccordions: [
+            {
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            }
+          ],
+        },
+        {
+          id: 2,
+          label: "Category Labels",
+          sublabel: '(Y - axis)',
+          subAccordions: [
+            {
+              id: "y-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            }
+          ],
+        },
+        {
+          id: 3,
+          label: "Data Labels",
+          subAccordions: [
+            {
+              id: "leg-options",
+              label: "Options",
+              data: {
+                positions: "middle",
+                options: [
+                  {label: 'Center', value: 'middle'},
+                  {label: 'Left', value: 'start'},
+                  {label: 'Right', value: 'end'},
+                ]
+              },
+            },
+            {
+              id: "leg-colors",
+              label: "Colours",
+              data: {
+                color1: "#255FD1",
+              },
+            },
+          ],
+        },
+      ]
     },
     // {
     //   id: "sunburst",

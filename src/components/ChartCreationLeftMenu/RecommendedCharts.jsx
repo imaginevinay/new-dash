@@ -271,6 +271,7 @@ const RecommendedCharts = () => {
           type: childChartObj.type, 
           y: primaryData.data, 
           x: secondaryData.data, 
+          // marker: {color: }
           // origX: secondaryData.data,
           // origY: primaryData.data
         }
@@ -409,7 +410,6 @@ const RecommendedCharts = () => {
                     return newData
                   }
                 );
-                console.log('modified data', modifiedData)
                 return {
                   ...typeItem,
                   plotData: {
@@ -433,7 +433,18 @@ const RecommendedCharts = () => {
               }              
             }
             return typeItem;
-          })
+          }),
+          // formatVisuals: item.formatVisuals.map(visualsItem => {
+          //   if(item.id==='funnel' && visualsItem.id === 3){
+          //     visualsItem.subAccordions.map(subAcc => {
+          //       if(subAcc.id === 'leg-colors'){
+          //         subAcc['colors'] = selectedChartType
+          //       }
+          //     })
+          //   }
+          //   return visualsItem
+
+          // })
         };
       });
     });

@@ -1,6 +1,6 @@
 import * as Styled from "./ChartCreationGrid.styles";
 import SettingsIcon from "../../assets/icons/settings.svg";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AppContext } from "../../context/AppContext";
 import Plot from "react-plotly.js";
 import { Stack, Typography } from "@mui/joy";
@@ -8,6 +8,7 @@ import ChartSelectorMenu from "./ChartSelectorMenu";
 
 const ChartCreationGrid = () => {
   const { selectedChart, selectedChartData } = useContext(AppContext);
+  const plotlyRef = useRef(null)
   return (
     <Styled.CanvasGridWrapper
       className={`${selectedChart?.id ? selectedChartData ? "hidePreview": "showBasicPreview": "showGridLines"}`}
@@ -30,6 +31,7 @@ const ChartCreationGrid = () => {
 
       {selectedChartData && (
         <Plot
+          ref={plotlyRef}
           data={selectedChartData?.data}
           layout={{
             ...selectedChartData?.layout,
@@ -46,6 +48,13 @@ const ChartCreationGrid = () => {
               "zoomOut2d",
             ],
             displaylogo: false,
+          }}
+          onAfterPlot={() => {
+            console.log('hellooooooooo', plotlyRef)
+            const traces = plotlyRef.current.data; // Access rendered data
+            traces.forEach((trace, index) => {
+              console.log(`Color used for trace ${index}:`, trace.marker?.color || 'default color');
+            });
           }}
         />
       )}

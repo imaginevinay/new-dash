@@ -741,6 +741,22 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
         }
       }
     }
+    if(selectedChartType.parent === 'funnel'){
+      data = prevItem.data.map((dataset) => ({
+        ...dataset,
+        // x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
+        // marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
+        textfont: createFontConfig(xValuesObj),
+        insidetextanchor: legendOptionsObj?.positions
+      }))
+
+      layout = {
+        ...prevItem.layout,
+        yaxis: {
+          tickfont: createFontConfig(yValuesObj)
+        }
+      }
+    }
 
     console.log('updating chart new data', {
       data: data,
