@@ -850,6 +850,59 @@ export const CHART_DATA_CONFIG = [
         },
       ]
     },
+    {
+      id: "waterfall",
+      name: "Waterfall",
+      icon: "/src/assets/charts/categories/waterfall.svg",
+      previewImage: '/src/assets/images/waterfall-preview.svg',
+      types: [
+        {
+          id: "vertWaterfall",
+          name: "Vertical Waterfall",
+          parent: 'waterall',
+          type: 'waterfall',
+          inputType: 'single',
+          icon: "/src/assets/charts/chart-types/waterfall.svg",
+          previewImage: "/src/assets/charts/previews/waterfall.svg",
+          orientation: 'v',
+          axisData: {xAxis: {}, yAxis: {}},
+          buildVisuals: [
+            {label : 'X - axis', axisControl: 'xAxis'},
+            {label : 'Y - axis', axisControl: 'yAxis'},
+          ]
+        },
+        {
+          id: "horiWaterfall",
+          name: "Horizontal Waterfall",
+          icon: "/src/assets/charts/chart-types/waterfall2.svg",
+          previewImage: "/src/assets/charts/previews/waterfall2.svg",
+          parent: 'waterfall',
+          type: 'waterfall',
+          inputType: 'single',
+          orientation: 'h',
+          axisData: {xAxis: {}, yAxis: {}},
+          buildVisuals: [
+            {label : 'X - axis', axisControl: 'xAxis'},
+            {label : 'Y - axis', axisControl: 'yAxis'},
+          ]
+        },
+        {
+          id: "multiCatWaterfall",
+          name: "Multi-Category Waterfall",
+          icon: "/src/assets/charts/chart-types/waterfall3.svg",
+          previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
+          parent: 'waterfall',
+          type: 'waterfall',
+          inputType: 'multi',
+          orientation: 'v',
+          axisData: {xAxis: {}, yAxis: [{}]},
+          buildVisuals: [
+            {label : 'X - axis', axisControl: 'xAxis'},
+            {label : 'Y - axis', axisControl: 'yAxis'},
+          ]
+        }
+      ],
+    },
     // {
     //   id: "sunburst",
     //   name: "Sunburst",
@@ -889,37 +942,7 @@ export const CHART_DATA_CONFIG = [
     //   ],
     // },
 
-    // {
-    //   id: "waterfall",
-    //   name: "Waterfall",
-    //   icon: "/src/assets/charts/categories/waterfall.svg",
-    //   types: [
-    //     {
-    //       id: "VerticalWaterfall",
-    //       name: "Vertical Waterfall",
-    //       icon: "/src/assets/charts/chart-types/waterfall.svg",
-    //       previewImage: "/src/assets/charts/previews/waterfall.svg",
-    //     },
-    //     {
-    //       id: "VerticalGroupedWaterfall",
-    //       name: "Vertical Grouped Waterfall",
-    //       icon: "/src/assets/charts/chart-types/waterfall1.svg",
-    //       previewImage: "/src/assets/charts/previews/Vertical Bar Chart Stacked.svg",
-    //     },
-    //     {
-    //       id: "HorizontalWaterfall",
-    //       name: "Horizontal Waterfall",
-    //       icon: "/src/assets/charts/chart-types/waterfall2.svg",
-    //       previewImage: "/src/assets/charts/previews/waterfall2.svg",
-    //     },
-    //     {
-    //       id: "HorizontalGroupedWaterfall",
-    //       name: "Horizontal Grouped Waterfall",
-    //       icon: "/src/assets/charts/chart-types/waterfall3.svg",
-    //       previewImage: "/src/assets/charts/previews/Horizontal Bar Chart.svg",
-    //     }
-    //   ],
-    // },
+    
     // {
     //   id: "treemap",
     //   name: "Tree Map",

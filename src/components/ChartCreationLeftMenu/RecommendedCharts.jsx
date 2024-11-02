@@ -315,6 +315,38 @@ const RecommendedCharts = () => {
         }
       }
     }
+    if(parentChartName === 'waterfall'){
+      if (!isArraySecData) {
+        let data = {
+          x: primaryData.data,
+          y: secondaryData.data,
+          type: childChartObj.type,
+          orientation: childChartObj.orientation
+        }
+        traces.push(data);
+      }
+      if (isArraySecData) {
+        secondaryData.forEach((yAxisItem) => {
+          let data = {
+            x: primaryData.data,
+            y: yAxisItem.data,
+            type: childChartObj.type,
+            orientation: childChartObj.orientation,
+          };
+          traces.push(data);
+        })
+      }
+      layout = {
+        xaxis: {
+            type: "category"
+        },
+        yaxis: {
+            type: "linear"
+        },
+        autosize: true,
+        showlegend: true
+    };
+    }
 
     const dataCreator = {
       data: traces,
@@ -424,6 +456,18 @@ const RecommendedCharts = () => {
                   };
                 }
               }
+              if(typeItem.parent === 'waterfall'){
+                console.log('typeiteam', typeItem.id)
+                const modifiedData = dataCreator.data.map(dataItem => ({...dataItem,orientation: typeItem.orientation}));
+                return {
+                  ...typeItem,
+                  plotData: {
+                    ...dataCreator,
+                    data: modifiedData,
+                  },
+                };
+              }
+
               
               else {
                 return {

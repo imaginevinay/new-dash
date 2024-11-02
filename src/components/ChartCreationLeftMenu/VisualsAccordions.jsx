@@ -107,7 +107,14 @@ const sqlData = [
         icon: QueueIcon,
         isChecked: false,
         data: [16000, 19000, 21000],
-      }
+      },
+      // {
+      //   id: 8,
+      //   label: "Categories",
+      //   icon: QueueIcon,
+      //   isChecked: false,
+      //   data: ['Office Supplies', 'Infrastructure', 'Technology', 'Furniture', 'Total'],
+      // }
     ],
   },
   {
