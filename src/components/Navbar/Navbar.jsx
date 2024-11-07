@@ -10,7 +10,6 @@ const buttonList = [
   { id: 1, label: "Home", type: "link", route: "/" },
   { id: 2, label: "Data", type: "menu" },
   { id: 3, label: "Workspace", type: "menu" },
-  // { id: 3, label: "Workspace", type: "link", route: '/workspace' },
   { id: 4, label: "Goals", type: "link", route: "/goals" },
   { id: 5, label: "Apps", type: "link", route: "/apps" },
   { id: 6, label: "Monitor", type: "link", route: "/monitor" },

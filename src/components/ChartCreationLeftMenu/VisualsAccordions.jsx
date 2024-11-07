@@ -309,14 +309,17 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       setSelectedChartData((prevItem) => {
         const newData = JSON.parse(JSON.stringify(prevItem));
         if (selectedItems["xAxis"]?.label.toLowerCase().includes("date")) {
-          newData.data[0].x &&
-            (newData.data[0].x = selectedItems["xAxis"]?.monthly);
-          newData.data[1].x &&
-            (newData.data[1].x = selectedItems["xAxis"]?.monthly);
-          newData.data[0].y &&
-            (newData.data[0].y = selectedItems["yAxis"]?.monthly);
-          newData.data[1].y &&
-            (newData.data[1].y = selectedItems["legend"]?.monthly);
+          if(newData.data.length > 0 &&  newData.data.length<= 1) {
+            newData.data.forEach(item => {
+              item.x = selectedItems['xAxis']?.monthly;
+              item.y = selectedItems["yAxis"]?.monthly;
+            })
+          } else {
+            newData.data.forEach((item, index) => {
+              item.x = selectedItems?.xAxis?.monthly;
+              item.y = selectedItems?.yAxis[index]?.monthly;
+            })
+          }
         }
         newData.layout = {
           ...prevItem.layout,
@@ -328,14 +331,17 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       setSelectedChartData((prevItem) => {
         const newData = JSON.parse(JSON.stringify(prevItem));
         if (selectedItems["xAxis"]?.label.toLowerCase().includes("date")) {
-          newData.data[0].x &&
-            (newData.data[0].x = selectedItems["xAxis"]?.monthly);
-          newData.data[1].x &&
-            (newData.data[1].x = selectedItems["xAxis"]?.monthly);
-          newData.data[0].y &&
-            (newData.data[0].y = selectedItems["yAxis"]?.monthly);
-          newData.data[1].y &&
-            (newData.data[1].y = selectedItems["legend"]?.monthly);
+          if(newData.data.length > 0 &&  newData.data.length<= 1) {
+            newData.data.forEach(item => {
+              item.x = selectedItems['xAxis']?.monthly;
+              item.y = selectedItems["yAxis"]?.monthly;
+            })
+          } else {
+            newData.data.forEach((item, index) => {
+              item.x = selectedItems?.xAxis?.monthly;
+              item.y = selectedItems?.yAxis[index]?.monthly;
+            })
+          }
         }
         newData.layout = {
           ...prevItem.layout,
@@ -387,14 +393,17 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       setSelectedChartData((prevItem) => {
         const newData = JSON.parse(JSON.stringify(prevItem));
         if (selectedItems["xAxis"]?.label.toLowerCase().includes("date")) {
-          newData.data[0].x &&
-            (newData.data[0].x = selectedItems["xAxis"]?.daily);
-          newData.data[1].x &&
-            (newData.data[1].x = selectedItems["xAxis"]?.daily);
-          newData.data[0].y &&
-            (newData.data[0].y = selectedItems["yAxis"]?.daily);
-          newData.data[1].y &&
-            (newData.data[1].y = selectedItems["legend"]?.daily);
+          if(newData.data.length > 0 &&  newData.data.length<= 1) {
+            newData.data.forEach(item => {
+              item.x = selectedItems['xAxis']?.daily;
+              item.y = selectedItems["yAxis"]?.daily;
+            })
+          } else {
+            newData.data.forEach((item, index) => {
+              item.x = selectedItems?.xAxis?.daily;
+              item.y = selectedItems?.yAxis[index]?.daily;
+            })
+          }
         }
 
         newData.layout = {
@@ -410,16 +419,19 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     selectedItems[axis] && setShowYearlyMenu(true);
     setSelectedChartData((prevItem) => {
       const newData = JSON.parse(JSON.stringify(prevItem));
-      if (
-        axis === "xAxis" &&
-        selectedItems[axis]?.label.toLowerCase().includes("date")
-      ) {
-        newData.data[0].x && (newData.data[0].x = selectedItems[axis]?.monthly);
-        newData.data[1].x && (newData.data[1].x = selectedItems[axis]?.monthly);
-        newData.data[0].y &&
-          (newData.data[0].y = selectedItems["yAxis"]?.monthly);
-        newData.data[1].y &&
-          (newData.data[1].y = selectedItems["legend"]?.monthly);
+      console.log('new data', newData)
+      if (axis === "xAxis" && selectedItems[axis]?.label.toLowerCase().includes("date")) {
+        if(newData.data.length > 0 &&  newData.data.length<= 1) {
+          newData.data.forEach(item => {
+            item.x = selectedItems['xAxis']?.monthly;
+            item.y = selectedItems["yAxis"]?.monthly;
+          })
+        } else {
+          newData.data.forEach((item, index) => {
+            item.x = selectedItems?.xAxis?.monthly;
+            item.y = selectedItems?.yAxis[index]?.monthly;
+          })
+        }
       }
       return newData;
     });
@@ -621,15 +633,16 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     style: config.textStyle.includes("italic") ? "italic" : "normal"
   });
 
-  const createAxisTitle = (titleConfig) => ({
+  const createAxisTitle = (titleConfig, standoff) => ({
     text: titleConfig.textStyle.includes("underlined")
       ? `<u>${titleConfig.titleText}</u>`
       : titleConfig.titleText,
-    font: createFontConfig(titleConfig)
+    font: createFontConfig(titleConfig),
+    standoff: standoff
   });
 
-  const createAxisConfig = (valuesConfig, titleConfig, gridColor, gridDash) => ({
-    title: createAxisTitle(titleConfig),
+  const createAxisConfig = (valuesConfig, titleConfig, gridColor, gridDash, standoff) => ({
+    title: createAxisTitle(titleConfig, standoff),
     tickfont: createFontConfig(valuesConfig),
     gridcolor: gridColor,
     griddash: gridDash
@@ -658,11 +671,11 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     } = extractConfigData(formatConfig);
     let data, layout;
     console.log('sliceColorsObj', sliceColorsObj)
-    if(selectedChartType.id === 'bar' || selectedChartType.id === 'line') {
+    if(selectedChartType.parent === 'bar' || selectedChartType.parent === 'line') {
       data = prevItem.data.map((dataset, index) => ({
         ...dataset,
         x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
-        marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
+        marker: updateMarkerColor(dataset.marker, legendColorsObj.color[index])
       }))
 
       layout = {
@@ -671,13 +684,13 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
           xValuesObj,
           xTitlesObj,
           gridXcolorObj.color,
-          gridYcolorObj.lineStyle
+          gridXcolorObj.lineStyle
         ),
         yaxis: createAxisConfig(
           yValuesObj,
           yTitlesObj,
           gridYcolorObj.color,
-          gridXcolorObj.lineStyle
+          gridYcolorObj.lineStyle
         ),
         legend: {
           ...getLegendPosition(legendOptionsObj.positions)
@@ -700,7 +713,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
         sort: true,
         direction: labelOptionsObj.sorting,
         marker: {
-          colors: [sliceColorsObj.color1, sliceColorsObj.color2, sliceColorsObj.color3, sliceColorsObj.color4]
+          colors: sliceColorsObj.color
         }
       }));
 
@@ -725,8 +738,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
     if(selectedChartType.parent === 'area') {
       data = prevItem.data.map((dataset, index) => ({
         ...dataset,
-        // x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
-        marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
+        fillcolor: legendColorsObj.color[index]
       }))
 
       layout = {
@@ -749,12 +761,11 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       }
     }
     if(selectedChartType.parent === 'funnel'){
-      data = prevItem.data.map((dataset) => ({
+      data = prevItem.data.map((dataset, index) => ({
         ...dataset,
-        // x: filterDataPoints(dataset.x, yRangeObj.minRange, yRangeObj.maxRange),
-        // marker: updateMarkerColor(dataset.marker, legendColorsObj[`color${index + 1}`])
         textfont: createFontConfig(xValuesObj),
-        insidetextanchor: legendOptionsObj?.positions
+        insidetextanchor: legendOptionsObj?.positions,
+        marker: updateMarkerColor(dataset.marker, legendColorsObj.color[index])
       }))
 
       layout = {
@@ -764,6 +775,40 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
         }
       }
     }
+    if(selectedChartType.parent === 'waterfall') {
+      data = prevItem.data.map((dataset) => ({
+        ...dataset,
+        decreasing : {"marker":{"color":legendColorsObj.color[0]}},
+        increasing : {"marker":{"color":legendColorsObj.color[0]}},
+      }))
+
+      layout = {
+        ...prevItem.layout,
+        xaxis: {
+          ...createAxisConfig(
+            xValuesObj,
+            xTitlesObj,
+            gridXcolorObj.color,
+            gridXcolorObj.lineStyle,
+            50
+          ),
+          type: 'category'
+        },
+        yaxis: {
+          ...createAxisConfig(
+            yValuesObj,
+            yTitlesObj,
+            gridYcolorObj.color,
+            gridYcolorObj.lineStyle,
+            200
+          ),
+          type: 'linear'
+        },
+        legend: {
+          ...getLegendPosition(legendOptionsObj.positions)
+        }
+      }
+    }   
 
     console.log('updating chart new data', {
       data: data,
@@ -806,7 +851,6 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
   useEffect(() => {
     console.log('format visuals data changed', formatVisualsData)
     if (selectedChartData) {
-      // console.log('format visuals data changed', formatVisualsData)
       setSelectedChartData(prevItem =>
         updateChartDataAndLayout(prevItem, formatVisualsData)
       );
@@ -909,6 +953,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       <Styled.ValuesWrapper>
         <TitlesAccordion
           data={data}
+          titleCheck={'xaxis'}
           onValuesChange={(values) =>
             handleFormatVisualsChange(subAccordionId, values)
           }
@@ -951,6 +996,7 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
       <Styled.ValuesWrapper>
         <TitlesAccordion
           data={data}
+          titleCheck={'yaxis'}
           onValuesChange={(values) =>
             handleFormatVisualsChange(subAccordionId, values)
           }

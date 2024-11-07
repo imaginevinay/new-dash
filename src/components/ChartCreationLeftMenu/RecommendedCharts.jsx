@@ -5,6 +5,7 @@ import SelectChartsModal from "./SelectChartsModal";
 import VisualsAccordions from "./VisualsAccordions";
 import { AppContext } from "../../context/AppContext";
 // import { removeInitialLowercaseH } from "../../utils/common";
+import {defaultColors} from '../../utils/common'
 
 const buttonLabels = [
   {
@@ -130,6 +131,9 @@ const RecommendedCharts = () => {
           type: childChartObj.type,
           origX: primaryData.data,
           origY: secondaryData.data,
+          marker: {
+            color: defaultColors[0]
+          }
         }
         if(parentChartName === 'bar' && childChartObj.orientation) {
           data['orientation'] = childChartObj.orientation
@@ -137,7 +141,7 @@ const RecommendedCharts = () => {
         traces.push(data);
       }
       if (isArraySecData) {
-        secondaryData.forEach((yAxisItem) => {
+        secondaryData.forEach((yAxisItem,idx) => {
           let data = {
             x: primaryData.data,
             y: yAxisItem.data,
@@ -145,6 +149,9 @@ const RecommendedCharts = () => {
             type: childChartObj.type,
             origX: primaryData.data,
             origY: yAxisItem.data,
+            marker: {
+              color: defaultColors[idx]
+            }
           }
 
           if(parentChartName === 'bar') {
@@ -218,11 +225,14 @@ const RecommendedCharts = () => {
           labels: ['Central', 'South', 'East', 'West'],
           name: primaryData.label,
           type: childChartObj.type,
-          marker: {
-            colors: ['#516B75', '#EDD088', '#D4A373', '#55B1A5']
-          },
           hole: childChartObj.hole
         }
+        data = {
+          ...data,
+          marker: {
+            colors: defaultColors.slice(0, data.values.length)
+          }
+        };
 
         traces.push(data);
         layout = {
@@ -241,13 +251,8 @@ const RecommendedCharts = () => {
           origY: secondaryData.data,
           type: childChartObj.type,
           fill: 'tozeroy',
+          fillcolor: defaultColors[0]
         }
-
-        // if(childChartObj?.id === 'vArea') {
-        //   [data.x, data.y] = [data.y, data.x];
-        //   data.isVArea = true
-        // }
-
         traces.push(data);
       }
       if (isArraySecData) {
@@ -259,9 +264,58 @@ const RecommendedCharts = () => {
             origY: secondaryData.data,
             type: childChartObj.type,
             fill: idx == 0 ? 'tozeroy' : 'tonexty',
+            fillcolor: defaultColors[idx]
           }
           traces.push(data);
         })
+      }
+      layout = {
+        xaxis: {
+          title: {
+            text: primaryData.label,
+            standoff: 50,
+            font: {
+              family: parentChartObj.formatVisuals[0].subAccordions[1].data.font,
+              size: parentChartObj.formatVisuals[0].subAccordions[1].data.fontSize,
+              color: parentChartObj.formatVisuals[0].subAccordions[1].data.color,
+              weight: 500,
+              style: "normal",
+            },
+          },
+          type: "category",
+          tickfont: {
+            family: parentChartObj.formatVisuals[0].subAccordions[0].data.font,
+            size: parentChartObj.formatVisuals[0].subAccordions[0].data.fontSize,
+            color: parentChartObj.formatVisuals[0].subAccordions[0].data.color,
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.lineStyle
+        },
+        yaxis: {
+          title: {
+            text: isArraySecData ? secondaryData[0].label : secondaryData.label,
+            standoff: 200,
+            font: {
+              family: parentChartObj.formatVisuals[1].subAccordions[2].data.font,
+              size: parentChartObj.formatVisuals[1].subAccordions[2].data.fontSize,
+              color: parentChartObj.formatVisuals[1].subAccordions[2].data.color,
+              weight: 500,
+              style: "normal",
+            },
+          },
+          tickfont: {
+            family: parentChartObj.formatVisuals[1].subAccordions[1].data.font,
+            size: parentChartObj.formatVisuals[1].subAccordions[1].data.fontSize,
+            color: parentChartObj.formatVisuals[1].subAccordions[1].data.color,
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.lineStyle
+        },
+        barmode: childChartObj?.barmode
       }
     }
     if(parentChartName === 'funnel') {
@@ -271,7 +325,7 @@ const RecommendedCharts = () => {
           type: childChartObj.type, 
           y: primaryData.data, 
           x: secondaryData.data, 
-          // marker: {color: }
+          marker: {color: defaultColors[0]}
           // origX: secondaryData.data,
           // origY: primaryData.data
         }
@@ -281,6 +335,7 @@ const RecommendedCharts = () => {
             type: childChartObj.type, 
             text: primaryData.data, 
             values: secondaryData.data, 
+            marker: {color: defaultColors[0]}
             // origX: secondaryData.data,
             // origY: primaryData.data
           }
@@ -305,6 +360,7 @@ const RecommendedCharts = () => {
             y: primaryData.data,
             x: yAxisItem.data,
             type: childChartObj.type,
+            marker: {color: defaultColors.slice(0, primaryData.data.length)}
           }
           traces.push(data);
         })
@@ -321,7 +377,9 @@ const RecommendedCharts = () => {
           x: primaryData.data,
           y: secondaryData.data,
           type: childChartObj.type,
-          orientation: childChartObj.orientation
+          orientation: childChartObj.orientation,
+          decreasing : {"marker":{"color":defaultColors[0]}},
+          increasing : {"marker":{"color":defaultColors[0]}},
         }
         traces.push(data);
       }
@@ -332,16 +390,65 @@ const RecommendedCharts = () => {
             y: yAxisItem.data,
             type: childChartObj.type,
             orientation: childChartObj.orientation,
+            decreasing : {"marker":{"color":defaultColors[0]}},
+            increasing : {"marker":{"color":defaultColors[0]}},
           };
           traces.push(data);
         })
       }
       layout = {
         xaxis: {
-            type: "category"
+          title: {
+            text: primaryData.label,
+            standoff: 50,
+            font: {
+              family: parentChartObj.formatVisuals[0].subAccordions[1].data.font,
+              size: parentChartObj.formatVisuals[0].subAccordions[1].data.fontSize,
+              color: parentChartObj.formatVisuals[0].subAccordions[1].data.color,
+              weight: 500,
+              style: "normal",
+            },
+          },
+          type: "category",
+          tickfont: {
+            family: parentChartObj.formatVisuals[0].subAccordions[0].data.font,
+            size: parentChartObj.formatVisuals[0].subAccordions[0].data.fontSize,
+            color: parentChartObj.formatVisuals[0].subAccordions[0].data.color,
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.lineStyle,
         },
         yaxis: {
-            type: "linear"
+          title: {
+            text: isArraySecData ? secondaryData[0].label : secondaryData.label,
+            standoff: 200,
+            font: {
+              family: parentChartObj.formatVisuals[1].subAccordions[1].data.font,
+              size: parentChartObj.formatVisuals[1].subAccordions[1].data.fontSize,
+              color: parentChartObj.formatVisuals[1].subAccordions[1].data.color,
+              weight: 500,
+              style: "normal",
+            },
+          },
+          tickfont: {
+            family: parentChartObj.formatVisuals[1].subAccordions[0].data.font,
+            size: parentChartObj.formatVisuals[1].subAccordions[0].data.fontSize,
+            color: parentChartObj.formatVisuals[1].subAccordions[0].data.color,
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.lineStyle,
+          type: "linear"
+        },
+         legend: {
+          x: 1.1,
+          y: 1,
+          xanchor: "left",
+          yanchor: "bottom",
+          orientation: "v",
         },
         autosize: true,
         showlegend: true
@@ -457,7 +564,6 @@ const RecommendedCharts = () => {
                 }
               }
               if(typeItem.parent === 'waterfall'){
-                console.log('typeiteam', typeItem.id)
                 const modifiedData = dataCreator.data.map(dataItem => ({...dataItem,orientation: typeItem.orientation}));
                 return {
                   ...typeItem,
@@ -478,17 +584,41 @@ const RecommendedCharts = () => {
             }
             return typeItem;
           }),
-          // formatVisuals: item.formatVisuals.map(visualsItem => {
-          //   if(item.id==='funnel' && visualsItem.id === 3){
-          //     visualsItem.subAccordions.map(subAcc => {
-          //       if(subAcc.id === 'leg-colors'){
-          //         subAcc['colors'] = selectedChartType
-          //       }
-          //     })
-          //   }
-          //   return visualsItem
+          formatVisuals: item.formatVisuals.map(visualsItem => {
+            if((item.id=== 'bar' || item.id=== 'line' || item.id==='area' ||item.id === 'funnel') && visualsItem.id === 3){
+              visualsItem.subAccordions.map(subAcc => {
+                if(subAcc.id === 'leg-colors'){
+                  subAcc.data.color = defaultColors.slice(0, dataCreator.data.length)
+                }
+              })
+            }
+            if(item.id==='waterfall' || item.id=== 'bar' || item.id=== 'line' || item.id === 'area' && (visualsItem.id === 1 || visualsItem.id === 2)){
+                 visualsItem.subAccordions.map(subAcc => {
+                if(subAcc.id === 'x-titles'){
+                  subAcc.data.titleText = dataCreator.layout.xaxis.title.text
+                }
+                if(subAcc.id === 'y-titles'){
+                  subAcc.data.titleText = dataCreator.layout.yaxis.title.text
+                }
+              })
+            }
+            if(item.id==='pie'  && (visualsItem.id === 3)){
+              visualsItem.subAccordions.map(subAcc => {
+                if(subAcc.id === 'slices-colors'){
+                  subAcc.data.color = defaultColors.slice(0, dataCreator.data[0].values.length)
+                }
+              })
+            }
+            if(item.id==='waterfall'  && (visualsItem.id === 3)){
+              visualsItem.subAccordions.map(subAcc => {
+                if(subAcc.id === 'leg-colors'){
+                  subAcc.data.color = [defaultColors[0]]
+                }
+              })
+            }
+            return visualsItem
 
-          // })
+          })
         };
       });
     });

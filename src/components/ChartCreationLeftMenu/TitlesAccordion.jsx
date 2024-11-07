@@ -1,4 +1,11 @@
-import { memo, useCallback, useState } from "react";
+import {
+  memo,
+  useCallback,
+  // useContext,
+  // useEffect,
+  // useMemo,
+  useState,
+} from "react";
 import {
   Select,
   Option,
@@ -12,9 +19,53 @@ import {
 import { selectClasses } from "@mui/joy/Select";
 import { SketchPicker } from "react-color";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+// import { AppContext } from "../../context/AppContext";
+
+let fonts = [
+  "Arial",
+  "Balto",
+  "Courier New",
+  "Droid Sans",
+  "Droid Serif",
+  "Droid Sans Mono",
+  "Gravitas One",
+  "Old Standard TT",
+  "Open Sans",
+  "Overpass",
+  "PT Sans Narrow",
+  "Raleway",
+  "Times New Roman",
+];
 
 const TitlesAccordion = memo(({ onValuesChange, data }) => {
   const [localData, setLocalData] = useState(data);
+  // const { selectedChart, selectedChartType, chartConfig } =
+  //   useContext(AppContext);
+
+  // const plotDataObj = useMemo(() => {
+  //   const selectedChartData = chartConfig.find(
+  //     (item) => item.id === selectedChart?.id
+  //   );
+  //   const selectedChartItem = selectedChartData?.types.find(
+  //     (item) => item.id === selectedChartType?.id
+  //   );
+  //   return selectedChartItem?.plotData
+  //     ? selectedChartItem?.plotData?.layout
+  //     : {};
+  // }, [chartConfig, selectedChart?.id, selectedChartType?.id]);
+
+  // useEffect(() => {
+  //   setLocalData((prevData) => ({
+  //     ...prevData,
+  //     titleText: plotDataObj[titleCheck]?.title?.text || "",
+  //   }));
+  // }, [plotDataObj, titleCheck]);
+
+
+  // useEffect(() => {
+  //   console.log('updating localdata', localData)
+  // }, [localData])
+  
 
   const handleChange = useCallback(
     (type, value) => {
@@ -27,13 +78,15 @@ const TitlesAccordion = memo(({ onValuesChange, data }) => {
 
   return (
     <div className="flexCol-lg">
-      {localData.titleText && <div className="flexCol-md">
-        <span className="title">Title Text</span>
-        <Input
-          value={localData.titleText}
-          onChange={(event) => handleChange("titleText", event.target.value)}
-        />
-      </div>}
+      {localData.titleText && (
+        <div className="flexCol-md">
+          <span className="title">Title Text</span>
+          <Input
+            value={localData.titleText}
+            onChange={(event) => handleChange("titleText", event.target.value)}
+          />
+        </div>
+      )}
       <div className="flexCol-md">
         <span className="title">Font</span>
         <div className="flexRow">
@@ -51,9 +104,11 @@ const TitlesAccordion = memo(({ onValuesChange, data }) => {
               },
             }}
           >
-            <Option value="Inter UI">Inter UI</Option>
-            <Option value="Arial">Arial</Option>
-            <Option value="Helvetica">Helvetica</Option>
+            {fonts.map((font, idx) => (
+              <Option value={font} key={idx}>
+                {font}
+              </Option>
+            ))}
           </Select>
           <Select
             value={localData.fontSize}

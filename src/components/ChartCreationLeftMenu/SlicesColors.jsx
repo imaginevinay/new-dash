@@ -9,8 +9,9 @@ const SlicesColors = memo(({ onValuesChange, data }) => {
   //   const { selectedChartType } = useContext(AppContext);
   // const showColors2 = containsStackOrGroup(selectedChartType);
   const handleChange = useCallback(
-    (type, value) => {
-      const newData = { ...localData, [type]: value };
+    (type, value, idx) => {
+      const newData = { ...localData };
+      newData.color[idx] = value;
       setLocalData(newData);
       onValuesChange(newData);
     },
@@ -22,86 +23,29 @@ const SlicesColors = memo(({ onValuesChange, data }) => {
       <div className="flexCol-md">
         <span className="title">Change Color Settings</span>
         <div className="flexRow">
-          <Dropdown>
+        {localData.color.map((item, idx) => (
+            <Dropdown key={idx}>
             <MenuButton
               sx={{
-                backgroundColor: localData.color1,
+                backgroundColor: item,
                 color: "white",
                 "&:hover": {
-                  backgroundColor: localData.color1,
+                  backgroundColor: item,
                 },
               }}
-            ></MenuButton>
+            >
+            </MenuButton>
             <Menu sx={{ padding: 0 }} placement="right">
               <SketchPicker
-                color={localData.color1}
+                color={item}
                 onChangeComplete={(newColor) =>
-                  handleChange("color1", newColor.hex)
+                  handleChange("color", newColor.hex, idx)
                 }
                 disableAlpha={true}
               />
             </Menu>
           </Dropdown>
-          <Dropdown>
-            <MenuButton
-              sx={{
-                backgroundColor: localData.color2,
-                color: "white",
-                "&:hover": {
-                  backgroundColor: localData.color2,
-                },
-              }}
-            ></MenuButton>
-            <Menu sx={{ padding: 0 }} placement="right">
-              <SketchPicker
-                color={localData.color2}
-                onChangeComplete={(newColor) =>
-                  handleChange("color2", newColor.hex)
-                }
-                disableAlpha={true}
-              />
-            </Menu>
-          </Dropdown>
-          <Dropdown>
-            <MenuButton
-              sx={{
-                backgroundColor: localData.color3,
-                color: "white",
-                "&:hover": {
-                  backgroundColor: localData.color3,
-                },
-              }}
-            ></MenuButton>
-            <Menu sx={{ padding: 0 }} placement="right">
-              <SketchPicker
-                color={localData.color3}
-                onChangeComplete={(newColor) =>
-                  handleChange("color3", newColor.hex)
-                }
-                disableAlpha={true}
-              />
-            </Menu>
-          </Dropdown>
-          <Dropdown>
-            <MenuButton
-              sx={{
-                backgroundColor: localData.color4,
-                color: "white",
-                "&:hover": {
-                  backgroundColor: localData.color4,
-                },
-              }}
-            ></MenuButton>
-            <Menu sx={{ padding: 0 }} placement="right">
-              <SketchPicker
-                color={localData.color4}
-                onChangeComplete={(newColor) =>
-                  handleChange("color4", newColor.hex)
-                }
-                disableAlpha={true}
-              />
-            </Menu>
-          </Dropdown>
+          ))}
         </div>
       </div>
     </div>

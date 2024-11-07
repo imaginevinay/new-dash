@@ -12,7 +12,7 @@ import { selectClasses } from "@mui/joy/Select";
 import { SketchPicker } from "react-color";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 
-
+let fonts = ["Arial", "Balto", "Courier New", "Droid Sans", "Droid Serif", "Droid Sans Mono", "Gravitas One", "Old Standard TT", "Open Sans", "Overpass", "PT Sans Narrow", "Raleway", "Times New Roman"]
 const ValuesAccordion = memo(({ onValuesChange, data }) => {
 
   const [localData, setLocalData] = useState(data);
@@ -46,9 +46,9 @@ const ValuesAccordion = memo(({ onValuesChange, data }) => {
               },
             }}
           >
-            <Option value="Inter UI">Inter UI</Option>
-            <Option value="Arial">Arial</Option>
-            <Option value="Helvetica">Helvetica</Option>
+            {fonts.map((font, idx) => (
+              <Option value={font} key={idx}>{font}</Option>
+            ))}
           </Select>
           <Select
             value={localData.fontSize}

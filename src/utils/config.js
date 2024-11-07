@@ -128,7 +128,7 @@ export const CHART_DATA_CONFIG = [
               label: "Titles",
               data: {
                 isChecked: true,
-                titleText: "Order Date",
+                titleText: "",
                 font: "Arial",
                 fontSize: 18,
                 textStyle: [],
@@ -167,7 +167,7 @@ export const CHART_DATA_CONFIG = [
               label: "Titles",
               data: {
                 isChecked: true,
-                titleText: "Order Sales",
+                titleText: "",
                 font: "Arial",
                 fontSize: 18,
                 textStyle: [],
@@ -205,8 +205,8 @@ export const CHART_DATA_CONFIG = [
               id: "leg-colors",
               label: "Column Colours",
               data: {
-                color1: "#255FD1",
-                color2: "#FF7F0E",
+                color: [],
+                // color2: "#FF7F0E",
               },
             },
           ],
@@ -404,8 +404,7 @@ export const CHART_DATA_CONFIG = [
               id: "leg-colors",
               label: "Column Colours",
               data: {
-                color1: "#255FD1",
-                color2: "#FF7F0E",
+                color: [],
               },
             },
           ],
@@ -538,10 +537,7 @@ export const CHART_DATA_CONFIG = [
               id: "slices-colors",
               label: "Colors",
               data: {
-                color1: "#516B75",
-                color2: "#EDD088",
-                color3: "#D4A373",
-                color4: "#55B1A5"
+                color: []
               },
             },
           ],
@@ -626,7 +622,7 @@ export const CHART_DATA_CONFIG = [
               label: "Titles",
               data: {
                 isChecked: true,
-                titleText: "Order Date",
+                titleText: "",
                 font: "Arial",
                 fontSize: 18,
                 textStyle: [],
@@ -665,7 +661,7 @@ export const CHART_DATA_CONFIG = [
               label: "Titles",
               data: {
                 isChecked: true,
-                titleText: "Order Sales",
+                titleText: "",
                 font: "Arial",
                 fontSize: 18,
                 textStyle: [],
@@ -703,8 +699,7 @@ export const CHART_DATA_CONFIG = [
               id: "leg-colors",
               label: "Column Colours",
               data: {
-                color1: "#255FD1",
-                color2: "#FF7F0E",
+                color: []
               },
             },
           ],
@@ -843,7 +838,7 @@ export const CHART_DATA_CONFIG = [
               id: "leg-colors",
               label: "Colours",
               data: {
-                color1: "#255FD1",
+                color: []
               },
             },
           ],
@@ -859,7 +854,7 @@ export const CHART_DATA_CONFIG = [
         {
           id: "vertWaterfall",
           name: "Vertical Waterfall",
-          parent: 'waterall',
+          parent: 'waterfall',
           type: 'waterfall',
           inputType: 'single',
           icon: "/src/assets/charts/chart-types/waterfall.svg",
@@ -902,6 +897,113 @@ export const CHART_DATA_CONFIG = [
           ]
         }
       ],
+      formatVisuals: [
+        {
+          id: 1,
+          label: "X - Axis",
+          subAccordions: [
+            {
+              id: "x-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "x-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 2,
+          label: "Y - Axis",
+          subAccordions: [
+            {
+              id: "y-values",
+              label: "Values",
+              data: {
+                isChecked: true,
+                font: "Arial",
+                fontSize: 12,
+                textStyle: [],
+                color: "#000000",
+                displayUnit: "Auto",
+              },
+            },
+            {
+              id: "y-titles",
+              label: "Titles",
+              data: {
+                isChecked: true,
+                titleText: "",
+                font: "Arial",
+                fontSize: 18,
+                textStyle: [],
+                color: "#000000",
+              },
+            },
+          ],
+        },
+        {
+          id: 3,
+          label: "Legend",
+          subAccordions: [
+            {
+              id: "leg-options",
+              label: "Options",
+              data: {
+                positions: "Top Right Stacked",
+                style: "Circular Marker",
+              },
+            },
+            {
+              id: "leg-colors",
+              label: "Column Colours",
+              data: {
+                color: []
+              },
+            },
+          ],
+        },
+        {
+          id: 4,
+          label: "Gridlines",
+          subAccordions: [
+            {
+              id: "grid-h",
+              label: "Horizontal",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+            {
+              id: "grid-v",
+              label: "Vertical",
+              data: {
+                color: "#000000",
+                transparency: 25,
+                lineStyle: "solid",
+              },
+            },
+          ],
+        },
+      ]
     },
     // {
     //   id: "sunburst",
