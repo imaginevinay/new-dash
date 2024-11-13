@@ -118,6 +118,7 @@ const RecommendedCharts = () => {
     const primaryData = axisData[axisItems[0]];
     const secondaryData = axisData[axisItems[1]];
     const isArraySecData = Array.isArray(secondaryData);
+    const isArrayPrimData = Array.isArray(primaryData);
     let layout = {};
     let traces = [];
 
@@ -217,7 +218,6 @@ const RecommendedCharts = () => {
         barmode: childChartObj?.barmode
       }
     }
-
     if(parentChartName === 'pie') {
       if (!isArraySecData) {
         let data = {
@@ -241,7 +241,6 @@ const RecommendedCharts = () => {
         };
       }
     }
-
     if(parentChartName === 'area') {
       if (!isArraySecData) {
         let data = {
@@ -455,6 +454,123 @@ const RecommendedCharts = () => {
     };
     }
 
+    if(parentChartName === 'histogram'){
+      if (!isArrayPrimData) {
+        let data = {}
+         data = {
+          x: primaryData.data,
+          type: childChartObj.type,
+          origData: primaryData.data,
+          marker: {
+            color: defaultColors[0],
+          },
+        }
+        
+        if(selectedChartType.id === 'horizHistogram') {
+          data = {
+            y: primaryData.data,
+            type: childChartObj.type,
+            origData: primaryData.data,
+            marker: {
+              color: defaultColors[0],
+            },
+          }
+        }
+        if(selectedChartType.id === 'cumulativeHistogram') {
+          data = {
+            x: primaryData.data,
+            type: childChartObj.type,
+            cumulative: {enabled: true},
+            origData: primaryData.data,
+            marker: {
+              color: defaultColors[0],
+            },
+          }
+        }
+        traces.push(data);
+      }
+      if(isArrayPrimData) {
+        primaryData.forEach((xAxisItem, idx) => {
+          let data = {};
+          if(selectedChartType.id === 'vertStackedHistogram') {
+            data = {
+              x: xAxisItem.data,
+              type: childChartObj.type,
+              origData: xAxisItem.data,
+              marker: {
+                color: defaultColors[idx],
+              },
+            }
+          } if(selectedChartType.id === 'horizStackedHistogram') {
+            data = {
+              y: xAxisItem.data,
+              type: childChartObj.type,
+              origData: xAxisItem.data,
+              marker: {
+                color: defaultColors[idx],
+              },
+            }
+          }
+          traces.push(data);
+        })
+        
+      }
+      layout = {
+        xaxis: {
+          title: {
+            text: selectedChartType?.orientation === 'v' ? isArrayPrimData ? primaryData[0].label: primaryData.label: 'Count',
+            standoff: 50,
+            font: {
+              family: parentChartObj.formatVisuals[0].subAccordions[1].data.font,
+              size: parentChartObj.formatVisuals[0].subAccordions[1].data.fontSize,
+              color: parentChartObj.formatVisuals[0].subAccordions[1].data.color,
+              weight: 500,
+              style: "normal",
+            },
+          },
+          tickfont: {
+            family: parentChartObj.formatVisuals[0].subAccordions[0].data.font,
+            size: parentChartObj.formatVisuals[0].subAccordions[0].data.fontSize,
+            color: parentChartObj.formatVisuals[0].subAccordions[0].data.color,
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[0]?.data?.lineStyle,
+        },
+        yaxis: {
+          title: {
+            text: selectedChartType?.orientation === 'v' ? 'Count': isArrayPrimData ? primaryData[0].label : primaryData.label,
+            standoff: 200,
+            font: {
+              family: parentChartObj.formatVisuals[1].subAccordions[1].data.font,
+              size: parentChartObj.formatVisuals[1].subAccordions[1].data.fontSize,
+              color: parentChartObj.formatVisuals[1].subAccordions[1].data.color,
+              weight: 500,
+              style: "normal",
+            },
+          },
+          tickfont: {
+            family: parentChartObj.formatVisuals[1].subAccordions[0].data.font,
+            size: parentChartObj.formatVisuals[1].subAccordions[0].data.fontSize,
+            color: parentChartObj.formatVisuals[1].subAccordions[0].data.color,
+            weight: 500,
+            style: "normal",
+          },
+          gridcolor: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.color,
+          griddash: parentChartObj.formatVisuals[3]?.subAccordions?.[1]?.data?.lineStyle,
+        },
+        legend: {
+          x: 1.1,
+          y: 1,
+          xanchor: "left",
+          yanchor: "bottom",
+          orientation: "v",
+        },
+        barmode: selectedChartType?.barmode
+      };
+    }
+
     const dataCreator = {
       data: traces,
       layout: layout,
@@ -570,6 +686,27 @@ const RecommendedCharts = () => {
                   plotData: {
                     ...dataCreator,
                     data: modifiedData,
+                  },
+                };
+              }
+              if(typeItem.parent === 'histogram'){
+                const modifiedData = dataCreator.data.map(dataItem => {
+                  // eslint-disable-next-line no-unused-vars
+                  const { x, ...rest } = dataItem;
+                  return {
+                      ...rest,
+                      [typeItem.orientation === 'v' ? 'x' : 'y']: dataItem.origData
+                  };
+              });
+                return {
+                  ...typeItem,
+                  plotData: {
+                    ...dataCreator,
+                    data: modifiedData,
+                    layout: {
+                      ...dataCreator.layout,
+                      barmode:typeItem.barmode 
+                    }
                   },
                 };
               }

@@ -1148,13 +1148,22 @@ const VisualsAccordions = ({ setIsVisualizeActive }) => {
   //   });
   // };
   const isMenuItemDisabled = (column) => {
+    // Get all axis names from selectedItems
     const axisItemsArray = Object.keys(selectedItems);
+    
+    // If there's only one axis or no axis, return false (nothing should be disabled)
+    if (axisItemsArray.length <= 1) {
+        return false;
+    }
+    
+    // Original logic for when there are multiple axes
     const axisToCheck = activeAxis === axisItemsArray[0] ? axisItemsArray[1] : axisItemsArray[0];
+    
     if (Array.isArray(selectedChart[axisToCheck])) {
-      return selectedItems[axisToCheck].find((item) => item.id === column.id);
+        return selectedItems[axisToCheck].find((item) => item.id === column.id);
     }
     return selectedItems[axisToCheck].id === column.id;
-  };
+};
 
   return (
     <Styled.WrapperBox>

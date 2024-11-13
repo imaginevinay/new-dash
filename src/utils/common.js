@@ -30,22 +30,40 @@ export const containsStackOrGroup = (str) => {
 }
 
 export const areItemsFilled = (selectedItems) => {
+  // Get array of axis names from selectedItems object
   const axisItemsArray = Object.keys(selectedItems);
-  const key1 = axisItemsArray[0];
-  const key2 = axisItemsArray[1];
-  // Check if key1 has any properties
-  const isKey1Filled = Object.keys(selectedItems[key1]).length > 0;
   
-  // Check yAxis based on its type
-  let isKey2Filled = false;
-  if (Array.isArray(selectedItems[key2])) {
-      // If key2 is an array, check if first object has properties
-      isKey2Filled = selectedItems[key2].length > 0 && Object.keys(selectedItems[key2][0]).length > 0;
-  } else {
-      // If key2 is an object, check if it has properties
-      isKey2Filled = Object.keys(selectedItems[key2]).length > 0;
+  // If no axes exist, return false
+  if (axisItemsArray.length === 0) {
+      return false;
   }
   
+  // Check first axis (key1)
+  const key1 = axisItemsArray[0];
+  const isKey1Filled = selectedItems[key1] && Object.keys(selectedItems[key1]).length > 0;
+  
+  // If only one axis exists, return based on key1's status
+  if (axisItemsArray.length === 1) {
+      return isKey1Filled;
+  }
+  
+  // If we have multiple axes, check second axis (key2)
+  const key2 = axisItemsArray[1];
+  let isKey2Filled = false;
+  
+  if (selectedItems[key2]) {  // Check if key2 exists
+      if (Array.isArray(selectedItems[key2])) {
+          // If key2 is an array, check if it's non-empty and first item has properties
+          isKey2Filled = selectedItems[key2].length > 0 && 
+                        selectedItems[key2][0] && 
+                        Object.keys(selectedItems[key2][0]).length > 0;
+      } else {
+          // If key2 is an object, check if it has properties
+          isKey2Filled = Object.keys(selectedItems[key2]).length > 0;
+      }
+  }
+  
+  // Return true only if all required axes are filled
   return isKey1Filled && isKey2Filled;
 }
 
